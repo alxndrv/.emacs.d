@@ -1,4 +1,4 @@
-(setq delete-by-movind-trash 't)
+(setq delete-by-moving-to-trash 't)
 
 (global-hl-line-mode t)
 
@@ -15,7 +15,10 @@
 
 (electric-pair-mode)
 
-(setq defalt-major-mode 'text-mode)
+(setq default-major-mode 'text-mode)
+
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "backups"))))
 
 (ido-mode t)
 
@@ -37,10 +40,13 @@
 (use-package solarized-theme
   :demand
   :config
-  (load-theme 'solarized-dark t)
-  (setq cursor-type 'bar
-	visible-bell 't)
-  (set-cursor-color "#00ff00"))
+  (load-theme 'solarized-dark t))
+
+(setq-default cursor-type 'bar
+              visible-bell 't
+              ring-bell-function 'ignore)
+
+(set-cursor-color "#00ff00")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -57,6 +63,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(defun indent-buffer ()
+  "Indents an entire buffer using the default intenting scheme."
+  (interactive)
+  (save-excursion
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max) nil)
+    (untabify (point-min) (point-max))))
 
 (use-package helm
   :config
@@ -80,7 +94,7 @@
   :bind ("C-c g" . helm-grep-do-git-grep)
   :bind (:map helm-map
               ("C-j" . helm-next-line)
-	      ("C-k" . helm-previous-line)
+              ("C-k" . helm-previous-line)
               ("C-h" . helm-next-source)
               ("C-j" . helm-next-line)
               ([escape] . helm-keyboard-quit)))
@@ -102,3 +116,5 @@
 (global-unset-key "\C-z")
 (global-set-key (kbd "C-z") 'universal-argument)
 (global-linum-mode 1)
+
+(message "Initialized successfully.")
