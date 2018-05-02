@@ -55,8 +55,8 @@
  ;; If there is more than one, they won't work right.
  '(global-linum-mode t)
  '(package-selected-packages
-   (quote
-    (nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+	 (quote
+		(rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -102,7 +102,11 @@
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
+
 (use-package rainbow-mode)
+
+(use-package rjsx-mode)
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
 
 (use-package which-key
   :config
