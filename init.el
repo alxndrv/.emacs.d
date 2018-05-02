@@ -1,4 +1,5 @@
 (setq delete-by-moving-to-trash 't)
+(setq inhibit-startup-screen t)
 
 (global-hl-line-mode t)
 
@@ -37,10 +38,10 @@
 (setq use-package-always-ensure t
       use-package-verbose t)
 
-(use-package solarized-theme
+(use-package dracula-theme
   :demand
   :config
-  (load-theme 'solarized-dark t))
+  (load-theme 'dracula t))
 
 (setq-default cursor-type 'bar
               visible-bell 't
@@ -56,7 +57,7 @@
  '(global-linum-mode t)
  '(package-selected-packages
 	 (quote
-		(rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
