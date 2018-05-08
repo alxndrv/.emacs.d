@@ -1,3 +1,5 @@
+
+;;; Basic settings
 (setq delete-by-moving-to-trash 't)
 (setq inhibit-startup-screen t)
 
@@ -9,15 +11,20 @@
 (line-number-mode)
 (column-number-mode)
 
+;; Default tab width 2
 (setq tab-width 2)
+
+;; Scrolling settings (primarily for Mac)
 (setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
 
+;; Parentheses highlighting and pairing
 (show-paren-mode)
-
 (electric-pair-mode)
 
 (setq default-major-mode 'text-mode)
 
+;;Custom backup directory
 (setq backup-directory-alist
       `(("." . ,(concat user-emacs-directory "backups"))))
 
@@ -27,6 +34,8 @@
 
 (windmove-default-keybindings)
 
+
+;; Bootstrap use-package
 (setq package-enable-at-startup nil)
 (require 'package)
 (add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
@@ -38,11 +47,13 @@
 (setq use-package-always-ensure t
       use-package-verbose t)
 
+;; Packages
 (use-package dracula-theme
   :demand
   :config
   (load-theme 'dracula t))
 
+;; Cursor settings
 (setq-default cursor-type 'bar
               visible-bell 't
               ring-bell-function 'ignore)
@@ -57,7 +68,7 @@
  '(global-linum-mode t)
  '(package-selected-packages
 	 (quote
-		(dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -73,6 +84,8 @@
     (indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max))))
 
+
+;; Helm configuration
 (use-package helm
   :config
   (require 'helm-config)
@@ -104,7 +117,13 @@
   :config
   (editorconfig-mode 1))
 
-(use-package rainbow-mode)
+(use-package auto-complete
+	:config
+	(ac-config-default))
+
+(use-package rainbow-mode
+  :config
+  (rainbow-mode))
 
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
@@ -122,4 +141,6 @@
 (global-set-key (kbd "C-z") 'universal-argument)
 (global-linum-mode 1)
 
+
+;; Completed initialization
 (message "Initialized successfully.")
