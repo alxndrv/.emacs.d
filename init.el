@@ -12,7 +12,7 @@
 (column-number-mode)
 
 ;; Default tab width 2
-(setq tab-width 2)
+(setq-default tab-width 2)
 
 ;; Scrolling settings (primarily for Mac)
 (setq mouse-wheel-scroll-amount '(1))
@@ -53,6 +53,8 @@
   :config
   (load-theme 'dracula t))
 
+(use-package focus)
+
 ;; Cursor settings
 (setq-default cursor-type 'bar
               visible-bell 't
@@ -66,9 +68,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(global-linum-mode t)
+ '(nyan-mode t)
  '(package-selected-packages
 	 (quote
-		(auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -78,7 +81,7 @@
 
 (defun indent-buffer ()
   "Indents an entire buffer using the default intenting scheme."
-  (interactive)
+	(interactive)
   (save-excursion
     (delete-trailing-whitespace)
     (indent-region (point-min) (point-max) nil)
