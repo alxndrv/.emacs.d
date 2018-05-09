@@ -53,7 +53,19 @@
   :config
   (load-theme 'dracula t))
 
+(use-package magit)
+
 (use-package focus)
+
+(use-package undo-tree)
+
+(use-package restclient)
+
+(use-package highlight-symbol)
+
+(use-package dimmer
+	:config
+	(dimmer-mode))
 
 ;; Cursor settings
 (setq-default cursor-type 'bar
@@ -68,10 +80,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(global-linum-mode t)
- '(nyan-mode t)
+ '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
