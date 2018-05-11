@@ -55,7 +55,9 @@
   :config
   (load-theme 'dracula t))
 
-(use-package magit)
+(use-package magit
+	:config
+	(global-set-key (kbd "C-x g") 'magit-status))
 
 (use-package focus)
 
