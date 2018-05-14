@@ -11,7 +11,10 @@
 (line-number-mode)
 (column-number-mode)
 
-(set-face-attribute 'default nil :height 115 :family "Consolas")
+
+(unless (string-equal system-type "darwin")
+	(set-face-attribute 'default nil :height 115 :family "Consolas")   
+)
 
 ;; Default tab width 2
 (setq-default tab-width 2)
