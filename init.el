@@ -11,10 +11,9 @@
 (line-number-mode)
 (column-number-mode)
 
-
 (unless (string-equal system-type "darwin")
-	(set-face-attribute 'default nil :height 115 :family "Consolas")   
-)
+  (set-face-attribute 'default nil :height 115 :family "Consolas")
+  )
 
 ;; Default tab width 2
 (setq-default tab-width 2)
@@ -27,7 +26,7 @@
 (show-paren-mode)
 (electric-pair-mode)
 
-(setq default-major-mode 'text-mode)
+(setq major-mode 'text-mode)
 
 ;;Custom backup directory
 (setq backup-directory-alist
@@ -59,8 +58,8 @@
   (load-theme 'dracula t))
 
 (use-package magit
-	:config
-	(global-set-key (kbd "C-x g") 'magit-status))
+  :config
+  (global-set-key (kbd "C-x g") 'magit-status))
 
 (use-package focus)
 
@@ -71,8 +70,8 @@
 (use-package highlight-symbol)
 
 (use-package dimmer
-	:config
-	(dimmer-mode))
+  :config
+  (dimmer-mode))
 
 (use-package sx
   :config
@@ -106,7 +105,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(telephone-line telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -115,13 +114,19 @@
  )
 
 (defun indent-buffer ()
-  "Indents an entire buffer using the default intenting scheme."
-	(interactive)
+  "Indent an entire buffer using the default intenting scheme."
+  (interactive)
   (save-excursion
     (delete-trailing-whitespace)
     (indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max))))
 
+
+(use-package android-mode)
+
+(use-package projectile
+  :config
+  (projectile-mode))
 
 ;; Helm configuration
 (use-package helm
@@ -156,8 +161,12 @@
   (editorconfig-mode 1))
 
 (use-package auto-complete
-	:config
-	(ac-config-default))
+  :config
+  (ac-config-default))
+
+(use-package flycheck
+	:ensure t
+	:init (global-flycheck-mode))
 
 (use-package rainbow-mode
   :config
