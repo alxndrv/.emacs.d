@@ -105,7 +105,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -177,10 +177,18 @@
 
 (use-package csharp-mode)
 
+(use-package dumb-jump
+	:config
+	(dumb-jump-mode))
+
 (use-package which-key
   :config
   (setq which-key-idle-delay 0.5)
   (which-key-mode))
+
+(use-package beacon
+	:config
+	(beacon-mode 1))
 
 (use-package nyan-mode
   :config
