@@ -105,7 +105,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
+		(helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -123,10 +123,6 @@
 
 
 (use-package android-mode)
-
-(use-package projectile
-  :config
-  (projectile-mode))
 
 ;; Helm configuration
 (use-package helm
@@ -156,13 +152,22 @@
               ("C-j" . helm-next-line)
               ([escape] . helm-keyboard-quit)))
 
+(use-package projectile
+  :config
+  (projectile-mode))
+
+(use-package helm-projectile
+	:config
+	(helm-projectile-on))
+
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
 
 (use-package auto-complete
   :config
-  (ac-config-default))
+  (ac-config-default)
+	(setq ac-auto-show-menu 0.4))
 
 (use-package flycheck
 	:ensure t
