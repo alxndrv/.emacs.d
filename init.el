@@ -52,10 +52,15 @@
       use-package-verbose t)
 
 ;; Packages
-(use-package dracula-theme
-  :demand
-  :config
-  (load-theme 'dracula t))
+
+;; (use-package dracula-theme
+;;   :demand
+;;   :config
+;;   (load-theme 'dracula t))
+
+(use-package doom-themes
+	:config
+	(load-theme 'doom-one t))
 
 (use-package magit
   :config
@@ -100,12 +105,13 @@
  '(custom-safe-themes
 	 (quote
 		("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(dimmer-mode t nil (dimmer))
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+		(doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
 	 (quote
 		(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build"))))
