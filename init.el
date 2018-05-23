@@ -15,6 +15,8 @@
   (set-face-attribute 'default nil :height 115 :family "Consolas")
   )
 
+(setq ns-use-srgb-colorspace nil)
+
 ;; Default tab width 2
 (setq-default tab-width 2)
 
@@ -111,10 +113,11 @@
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+		(powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
 	 (quote
-		(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build"))))
+		(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+ '(rich-minority-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -196,6 +199,10 @@
 (use-package dumb-jump
 	:config
 	(dumb-jump-mode))
+
+(use-package powerline
+	:config
+	(powerline-center-theme))
 
 (use-package which-key
   :config
