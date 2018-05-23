@@ -111,7 +111,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
 	 (quote
-		(doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+		(delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
 	 (quote
 		(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build"))))
@@ -186,6 +186,8 @@
   :config
   (rainbow-mode))
 
+(use-package org)
+
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
 
@@ -203,6 +205,17 @@
 (use-package beacon
 	:config
 	(beacon-mode 1))
+
+(use-package delight
+	:config
+	(delight 'flycheck-mode " \u2714" 'flycheck)
+	(delight 'auto-complete-mode " \u2630" 'auto-complete)
+	(delight 'helm-mode " \u2388" 'helm)
+	(delight 'editorconfig-mode nil 'editorconfig)
+	(delight 'which-key-mode nil 'which-key)
+	(delight 'beacon-mode nil 'beacon)
+	(delight 'rainbow-mode nil 'rainbow-mode)
+	(delight 'auto-revert-mode nil 'autorevert))
 
 (use-package nyan-mode
   :config
