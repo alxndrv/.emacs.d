@@ -106,7 +106,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
 	 (quote
-		("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+		("3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dimmer-mode t nil (dimmer))
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
@@ -202,7 +202,13 @@
 
 (use-package powerline
 	:config
-	(powerline-center-theme))
+	(powerline-center-theme)
+	(setq powerline-color1 "grey22")
+	(setq powerline-color2 "grey40")
+	(set-face-attribute 'mode-line nil
+											:foreground "Black"
+											:background "DarkOrange"
+											:box nil))
 
 (use-package which-key
   :config
