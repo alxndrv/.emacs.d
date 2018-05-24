@@ -205,6 +205,7 @@
 	(powerline-center-theme)
 	(setq powerline-color1 "grey22")
 	(setq powerline-color2 "grey40")
+	(remove-hook 'focus-out-hook 'powerline-unset-selected-window)
 	(set-face-attribute 'mode-line nil
 											:foreground "Black"
 											:background "DarkOrange"
