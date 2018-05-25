@@ -3,6 +3,8 @@
 (setq delete-by-moving-to-trash 't)
 (setq inhibit-startup-screen t)
 
+(setq-local accentcolor "#53d3ef")
+
 (global-hl-line-mode t)
 
 (tool-bar-mode -1)
@@ -208,8 +210,13 @@
 	(remove-hook 'focus-out-hook 'powerline-unset-selected-window)
 	(set-face-attribute 'mode-line nil
 											:foreground "Black"
-											:background "DarkOrange"
-											:box nil))
+											:background accentcolor
+											:box accentcolor)
+	(set-face-attribute 'mode-line-inactive nil
+											:box accentcolor))
+
+(set-face-background 'vertical-border accentcolor)
+(set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 (use-package which-key
   :config
