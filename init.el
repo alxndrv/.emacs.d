@@ -3,7 +3,7 @@
 (setq delete-by-moving-to-trash 't)
 (setq inhibit-startup-screen t)
 
-(setq-local accentcolor "#53d3ef")
+(setq-local accentcolor "#ffd05b")
 
 (global-hl-line-mode t)
 
@@ -19,8 +19,8 @@
 
 (setq ns-use-srgb-colorspace nil)
 
-;; Default tab width 2
-(setq-default tab-width 2)
+;; Default tab width 4
+(setq-default tab-width 4)
 
 ;; Scrolling settings (primarily for Mac)
 (setq mouse-wheel-scroll-amount '(1))
@@ -34,7 +34,10 @@
 
 ;;Custom backup directory
 (setq backup-directory-alist
-      `(("." . ,(concat user-emacs-directory "backups"))))
+      `((".*" . ,(concat user-emacs-directory "backups"))))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 (ido-mode t)
 
@@ -63,8 +66,8 @@
 ;;   (load-theme 'dracula t))
 
 (use-package doom-themes
-	:config
-	(load-theme 'doom-one t))
+  :config
+  (load-theme 'doom-one t))
 
 (use-package magit
   :config
@@ -81,6 +84,8 @@
 (use-package dimmer
   :config
   (dimmer-mode))
+
+(use-package md4rd)
 
 (use-package sx
   :config
@@ -107,18 +112,19 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-	 (quote
-		("3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+   (quote
+    ("3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dimmer-mode t nil (dimmer))
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
+ '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
  '(nyan-mode nil)
  '(package-selected-packages
-	 (quote
-		(powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+   (quote
+    (avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
-	 (quote
-		(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+   (quote
+    (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
  '(rich-minority-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -135,8 +141,13 @@
     (indent-region (point-min) (point-max) nil)
     (untabify (point-min) (point-max))))
 
+(use-package calfw)
+
+(use-package multi-term)
 
 (use-package android-mode)
+
+(use-package elogcat)
 
 ;; Helm configuration
 (use-package helm
@@ -171,8 +182,10 @@
   (projectile-mode))
 
 (use-package helm-projectile
-	:config
-	(helm-projectile-on))
+  :config
+  (helm-projectile-on))
+
+(use-package helm-ag)
 
 (use-package editorconfig
   :config
@@ -181,11 +194,13 @@
 (use-package auto-complete
   :config
   (ac-config-default)
-	(setq ac-auto-show-menu 0.4))
+  (setq ac-auto-show-menu 0.4))
 
 (use-package flycheck
-	:ensure t
-	:init (global-flycheck-mode))
+  :ensure t
+  :init (global-flycheck-mode))
+
+(use-package flycheck-popup-tip)
 
 (use-package rainbow-mode
   :config
@@ -196,24 +211,30 @@
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
 
+(use-package json-mode)
+
 (use-package csharp-mode)
 
+(use-package yaml-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
+
 (use-package dumb-jump
-	:config
-	(dumb-jump-mode))
+  :config
+  (dumb-jump-mode))
 
 (use-package powerline
-	:config
-	(powerline-center-theme)
-	(setq powerline-color1 "grey22")
-	(setq powerline-color2 "grey40")
-	(remove-hook 'focus-out-hook 'powerline-unset-selected-window)
-	(set-face-attribute 'mode-line nil
-											:foreground "Black"
-											:background accentcolor
-											:box accentcolor)
-	(set-face-attribute 'mode-line-inactive nil
-											:box accentcolor))
+  :config
+  (powerline-center-theme)
+  (setq powerline-color1 "grey22")
+  (setq powerline-color2 "grey40")
+  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
+  (set-face-attribute 'mode-line nil
+                      :foreground "Black"
+                      :background accentcolor
+                      :box accentcolor)
+  (set-face-attribute 'mode-line-inactive nil
+                      :box accentcolor))
 
 (set-face-background 'vertical-border accentcolor)
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
@@ -224,19 +245,25 @@
   (which-key-mode))
 
 (use-package beacon
-	:config
-	(beacon-mode 1))
+  :config
+  (beacon-mode 1))
+
+(use-package multiple-cursors)
+
+(use-package avy
+  :config
+  (global-set-key (kbd "C-:") 'avy-goto-char))
 
 (use-package delight
-	:config
-	(delight 'flycheck-mode " \u2714" 'flycheck)
-	(delight 'auto-complete-mode " \u2630" 'auto-complete)
-	(delight 'helm-mode " \u2388" 'helm)
-	(delight 'editorconfig-mode nil 'editorconfig)
-	(delight 'which-key-mode nil 'which-key)
-	(delight 'beacon-mode nil 'beacon)
-	(delight 'rainbow-mode nil 'rainbow-mode)
-	(delight 'auto-revert-mode nil 'autorevert))
+  :config
+  (delight 'flycheck-mode " \u2714" 'flycheck)
+  (delight 'auto-complete-mode " \u2630" 'auto-complete)
+  (delight 'helm-mode " \u2388" 'helm)
+  (delight 'editorconfig-mode nil 'editorconfig)
+  (delight 'which-key-mode nil 'which-key)
+  (delight 'beacon-mode nil 'beacon)
+  (delight 'rainbow-mode nil 'rainbow-mode)
+  (delight 'auto-revert-mode nil 'autorevert))
 
 (use-package nyan-mode
   :config
