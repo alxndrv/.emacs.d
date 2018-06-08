@@ -69,17 +69,30 @@
   :config
   (load-theme 'doom-one t))
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+	(exec-path-from-shell-initialize)))
+
 (use-package magit
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 
 (use-package focus)
 
+(use-package perspective
+  :config
+  (persp-mode))
+
 (use-package undo-tree)
 
 (use-package restclient)
 
 (use-package highlight-symbol)
+
+(use-package highlight-parentheses
+  :config
+  (global-highlight-parentheses-mode))
 
 (use-package dimmer
   :config
@@ -113,7 +126,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+	("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dimmer-mode t nil (dimmer))
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
@@ -121,10 +134,11 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-    (avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
-    (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+ '(restart-emacs-restore-frames t)
  '(rich-minority-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -219,6 +233,10 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
 
+(use-package dockerfile-mode
+  :config
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+
 (use-package dumb-jump
   :config
   (dumb-jump-mode))
@@ -263,11 +281,14 @@
   (delight 'which-key-mode nil 'which-key)
   (delight 'beacon-mode nil 'beacon)
   (delight 'rainbow-mode nil 'rainbow-mode)
-  (delight 'auto-revert-mode nil 'autorevert))
+  (delight 'auto-revert-mode nil 'autorevert)
+  (delight 'highlight-parentheses-mode nil 'highlight-parentheses))
 
 (use-package nyan-mode
   :config
   (setq nyan-wavy-trail 't))
+
+(use-package restart-emacs)
 
 (global-unset-key "\C-z")
 (global-set-key (kbd "C-z") 'universal-argument)
