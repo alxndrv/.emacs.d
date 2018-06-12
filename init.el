@@ -266,7 +266,9 @@
   :config
   (beacon-mode 1))
 
-(use-package multiple-cursors)
+(use-package multiple-cursors
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
 
 (use-package avy
   :config
