@@ -34,10 +34,12 @@
 
 ;;Custom backup directory
 (setq backup-directory-alist
-      `((".*" . ,(concat user-emacs-directory "backups"))))
+      `(("." . ,(concat user-emacs-directory "backups"))))
 
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+
+(setq create-lockfiles nil)
 
 (ido-mode t)
 
@@ -68,6 +70,11 @@
 (use-package doom-themes
   :config
   (load-theme 'doom-one t))
+
+;; (use-package moe-theme
+;;   :demand
+;;   :config
+;;   (moe-dark))
 
 (use-package exec-path-from-shell
   :config
@@ -134,7 +141,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-	(perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -206,9 +213,12 @@
   (editorconfig-mode 1))
 
 (use-package auto-complete
+  :ensure t
   :config
   (ac-config-default)
-  (setq ac-auto-show-menu 0.4))
+  (setq ac-auto-show-menu 0.4)
+  (add-to-list 'ac-modes 'rjsx-mode)
+  (global-auto-complete-mode t))
 
 (use-package flycheck
   :ensure t
@@ -228,6 +238,10 @@
 (use-package json-mode)
 
 (use-package csharp-mode)
+
+(use-package swift-mode)
+
+(use-package php-mode)
 
 (use-package yaml-mode
   :config
