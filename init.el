@@ -141,7 +141,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-	(moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -218,6 +218,7 @@
   (ac-config-default)
   (setq ac-auto-show-menu 0.4)
   (add-to-list 'ac-modes 'rjsx-mode)
+  (add-to-list 'ac-modes 'kotlin-mode)
   (global-auto-complete-mode t))
 
 (use-package flycheck
@@ -232,12 +233,16 @@
 
 (use-package org)
 
-(use-package rjsx-mode)
-(add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode))
+(use-package rjsx-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
+
 
 (use-package json-mode)
 
 (use-package csharp-mode)
+
+(use-package kotlin-mode)
 
 (use-package swift-mode)
 
