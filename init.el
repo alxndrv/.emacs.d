@@ -141,7 +141,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-	(kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(yasnippet-snippets yasnippet expand-region kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -207,6 +207,14 @@
   (helm-projectile-on))
 
 (use-package helm-ag)
+
+(use-package expand-region)
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets)
 
 (use-package editorconfig
   :config
