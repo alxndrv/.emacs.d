@@ -67,9 +67,10 @@
 ;;   :config
 ;;   (load-theme 'dracula t))
 
-(use-package doom-themes
+(use-package solarized-theme
   :config
-  (load-theme 'doom-one t))
+  (load-theme 'solarized-dark t)
+  (setq x-underline-at-descent-line t))
 
 ;; (use-package moe-theme
 ;;   :demand
@@ -87,9 +88,9 @@
 
 (use-package focus)
 
-(use-package perspective
+(use-package elscreen
   :config
-  (persp-mode))
+  (elscreen-start))
 
 (use-package undo-tree)
 
@@ -133,7 +134,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-	("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+	("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dimmer-mode t nil (dimmer))
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
@@ -141,7 +142,7 @@
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-	(yasnippet-snippets yasnippet expand-region kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(elscreen dashboard symon yasnippet-snippets yasnippet expand-region kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -271,18 +272,18 @@
 (use-package powerline
   :config
   (powerline-center-theme)
-  (setq powerline-color1 "grey22")
-  (setq powerline-color2 "grey40")
-  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
-  (set-face-attribute 'mode-line nil
-                      :foreground "Black"
-                      :background accentcolor
-                      :box accentcolor)
-  (set-face-attribute 'mode-line-inactive nil
-                      :box accentcolor))
+  ;(setq powerline-color1 "grey22")
+  ;(setq powerline-color2 "grey40")
+  (remove-hook 'focus-out-hook 'powerline-unset-selected-window))
+  ;(set-face-attribute 'mode-line nil
+  ;                    :foreground "Black"
+  ;                    :background accentcolor
+  ;                    :box accentcolor)
+  ;(set-face-attribute 'mode-line-inactive nil
+  ;                    :box accentcolor))
 
-(set-face-background 'vertical-border accentcolor)
-(set-face-foreground 'vertical-border (face-background 'vertical-border))
+;(set-face-background 'vertical-border accentcolor)
+;(set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 (use-package which-key
   :config
@@ -295,7 +296,9 @@
 
 (use-package multiple-cursors
   :config
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines))
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
 
 (use-package avy
   :config
@@ -313,14 +316,30 @@
   (delight 'auto-revert-mode nil 'autorevert)
   (delight 'highlight-parentheses-mode nil 'highlight-parentheses))
 
+(use-package symon
+  :config
+  (symon-mode))
+
 (use-package nyan-mode
   :config
   (setq nyan-wavy-trail 't))
 
 (use-package restart-emacs)
 
-(global-unset-key "\C-z")
-(global-set-key (kbd "C-z") 'universal-argument)
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome back!")
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          (registers . 5)))
+)
+
+;(global-unset-key "\C-z")
+;(global-set-key (kbd "C-z") 'universal-argument)
 (global-linum-mode 1)
 
 
