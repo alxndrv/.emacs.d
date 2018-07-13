@@ -3,7 +3,7 @@
 (setq delete-by-moving-to-trash 't)
 (setq inhibit-startup-screen t)
 
-(setq-local accentcolor "#ffd05b")
+;(setq-local accentcolor "#ffd05b")
 
 (global-hl-line-mode t)
 
@@ -68,9 +68,17 @@
 ;;   (load-theme 'dracula t))
 
 (use-package solarized-theme
+  :demand
   :config
+  (setq x-underline-at-descent-line t)
   (load-theme 'solarized-dark t)
-  (setq x-underline-at-descent-line t))
+  (custom-set-faces
+   '(mode-line ((t
+				 (:underline nil :overline nil :box
+							 (:line-width 1 :color "#fdf6e3")
+							 :foreground "#fdf6e3" :background "#657b83")))))
+
+  )
 
 ;; (use-package moe-theme
 ;;   :demand
@@ -272,15 +280,17 @@
 (use-package powerline
   :config
   (powerline-center-theme)
-  ;(setq powerline-color1 "grey22")
-  ;(setq powerline-color2 "grey40")
-  (remove-hook 'focus-out-hook 'powerline-unset-selected-window))
-  ;(set-face-attribute 'mode-line nil
-  ;                    :foreground "Black"
-  ;                    :background accentcolor
-  ;                    :box accentcolor)
-  ;(set-face-attribute 'mode-line-inactive nil
-  ;                    :box accentcolor))
+  (setq powerline-color1 "#073642")
+  (setq powerline-color2 "#002b36")
+  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
+  (set-face-attribute 'mode-line nil
+					  :inverse-video nil
+                      :foreground "#fdf6e3"
+                      :background "#2aa198"
+                      :box nil)
+  (set-face-attribute 'mode-line-inactive nil
+					  :inverse-video nil
+                      :box nil))
 
 ;(set-face-background 'vertical-border accentcolor)
 ;(set-face-foreground 'vertical-border (face-background 'vertical-border))
@@ -314,11 +324,8 @@
   (delight 'beacon-mode nil 'beacon)
   (delight 'rainbow-mode nil 'rainbow-mode)
   (delight 'auto-revert-mode nil 'autorevert)
-  (delight 'highlight-parentheses-mode nil 'highlight-parentheses))
-
-(use-package symon
-  :config
-  (symon-mode))
+  (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+  (delight 'eldoc-mode nil 'eldoc))
 
 (use-package nyan-mode
   :config
