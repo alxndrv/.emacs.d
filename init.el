@@ -94,6 +94,8 @@
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 
+(use-package git-messenger)
+
 (use-package focus)
 
 (use-package elscreen
@@ -144,24 +146,126 @@
    (quote
 	("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dimmer-mode t nil (dimmer))
+ '(git-messenger:show-detail t)
+ '(git-messenger:use-magit-popup t)
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
+ '(mode-line-format
+   (quote
+	("%e"
+	 (:eval
+	  (let*
+		  ((active
+			(powerline-selected-window-active))
+		   (mode-line-buffer-id
+			(if active
+				(quote mode-line-buffer-id)
+			  (quote mode-line-buffer-id-inactive)))
+		   (mode-line
+			(if active
+				(quote mode-line)
+			  (quote mode-line-inactive)))
+		   (face0
+			(if active
+				(quote powerline-active0)
+			  (quote powerline-inactive0)))
+		   (face1
+			(if active
+				(quote powerline-active1)
+			  (quote powerline-inactive1)))
+		   (face2
+			(if active
+				(quote powerline-active2)
+			  (quote powerline-inactive2)))
+		   (separator-left
+			(intern
+			 (format "powerline-%s-%s"
+					 (powerline-current-separator)
+					 (car powerline-default-separator-dir))))
+		   (separator-right
+			(intern
+			 (format "powerline-%s-%s"
+					 (powerline-current-separator)
+					 (cdr powerline-default-separator-dir))))
+		   (lhs
+			(list
+			 (powerline-raw "%*" face0
+							(quote l))
+			 (powerline-buffer-size face0
+									(quote l))
+			 (powerline-buffer-id
+			  (\`
+			   (mode-line-buffer-id
+				(\, face0)))
+			  (quote l))
+			 (powerline-raw " ")
+			 (funcall separator-left face0 face1)
+			 (powerline-narrow face1
+							   (quote l))
+			 (powerline-vc face1)))
+		   (rhs
+			(list
+			 (powerline-raw global-mode-string face1
+							(quote r))
+			 (powerline-raw "%4l" face1
+							(quote r))
+			 (powerline-raw ":" face1)
+			 (powerline-raw "%3c" face1
+							(quote r))
+			 (funcall separator-right face1 face0)
+			 (powerline-raw " ")
+			 (powerline-raw "%6p" face0
+							(quote r))
+			 (powerline-hud face2 face1)
+			 (powerline-fill face0 0)))
+		   (center
+			(list
+			 (powerline-raw " " face1)
+			 (funcall separator-left face1 face2)
+			 (when
+				 (and
+				  (boundp
+				   (quote erc-track-minor-mode))
+				  erc-track-minor-mode)
+			   (powerline-raw erc-modified-channels-object face2
+							  (quote l)))
+			 (powerline-major-mode face2
+								   (quote l))
+			 (powerline-process face2)
+			 (powerline-raw " :" face2)
+			 (powerline-minor-modes face2
+									(quote l))
+			 (powerline-raw " " face2)
+			 (funcall separator-right face2 face1))))
+		(concat
+		 (powerline-render lhs)
+		 (powerline-fill-center face1
+								(/
+								 (powerline-width center)
+								 2.0))
+		 (powerline-render center)
+		 (powerline-fill face1
+						 (powerline-width rhs))
+		 (powerline-render rhs)))))))
+ '(mode-line-percent-position nil)
  '(nyan-mode nil)
  '(package-selected-packages
    (quote
-	(elscreen dashboard symon yasnippet-snippets yasnippet expand-region kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(git-messenger highlight-indentation anzu elscreen dashboard symon yasnippet-snippets yasnippet expand-region kotlin-mode moe-theme php-mode swift-mode perspective exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term calfw smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode telephone-line-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode nyan-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+ '(powerline-display-buffer-size nil)
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
  '(restart-emacs-restore-frames t)
- '(rich-minority-mode nil))
+ '(rich-minority-mode nil)
+ '(size-indication-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(mode-line ((t (:underline nil :overline nil :box (:line-width 1 :color "#fdf6e3") :foreground "#fdf6e3" :background "#657b83")))))
 
 (defun indent-buffer ()
   "Indent an entire buffer using the default intenting scheme."
@@ -216,6 +320,10 @@
   (helm-projectile-on))
 
 (use-package helm-ag)
+
+(use-package anzu
+  :config
+  (global-anzu-mode +1))
 
 (use-package expand-region)
 
@@ -284,12 +392,10 @@
   (setq powerline-color2 "#002b36")
   (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
   (set-face-attribute 'mode-line nil
-					  :inverse-video nil
                       :foreground "#fdf6e3"
                       :background "#2aa198"
                       :box nil)
   (set-face-attribute 'mode-line-inactive nil
-					  :inverse-video nil
                       :box nil))
 
 ;(set-face-background 'vertical-border accentcolor)
@@ -325,7 +431,8 @@
   (delight 'rainbow-mode nil 'rainbow-mode)
   (delight 'auto-revert-mode nil 'autorevert)
   (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-  (delight 'eldoc-mode nil 'eldoc))
+  (delight 'eldoc-mode nil 'eldoc)
+  (delight 'anzu-mode nil 'anzu))
 
 (use-package nyan-mode
   :config
