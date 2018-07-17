@@ -1,4 +1,27 @@
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+	("b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(git-messenger:show-detail t)
+ '(git-messenger:use-magit-popup t)
+ '(global-linum-mode t)
+ '(global-magit-file-mode nil)
+ '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
+ '(package-selected-packages
+   (quote
+	(smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+ '(projectile-globally-ignored-directories
+   (quote
+	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+ '(restart-emacs-restore-frames t)
+ '(size-indication-mode nil)
+ )
+
 ;;; Basic settings
 (setq delete-by-moving-to-trash 't)
 (setq inhibit-startup-screen t)
@@ -136,30 +159,6 @@
 
 (set-cursor-color "#00ff00")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-	("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
- '(dimmer-mode t nil (dimmer))
- '(git-messenger:show-detail t)
- '(git-messenger:use-magit-popup t)
- '(global-linum-mode t)
- '(global-magit-file-mode nil)
- '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
- '(package-selected-packages
-   (quote
-	(git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config powerline delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
- '(projectile-globally-ignored-directories
-   (quote
-	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
- '(restart-emacs-restore-frames t)
- '(rich-minority-mode nil)
- '(size-indication-mode nil))
-
 (defun indent-buffer ()
   "Indent an entire buffer using the default intenting scheme."
   (interactive)
@@ -277,21 +276,18 @@
   :config
   (dumb-jump-mode))
 
-(use-package powerline
-  :config
-  (powerline-center-theme)
-  (setq powerline-color1 "#073642")
-  (setq powerline-color2 "#002b36")
-  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
-  (set-face-attribute 'mode-line nil
-                      :foreground "#fdf6e3"
-                      :background "#2aa198"
-                      :box nil)
-  (set-face-attribute 'mode-line-inactive nil
-                      :box nil))
+(use-package smart-mode-line)
 
-;(set-face-background 'vertical-border accentcolor)
-;(set-face-foreground 'vertical-border (face-background 'vertical-border))
+(use-package smart-mode-line-powerline-theme
+  :ensure t
+  :after smart-mode-line
+  :config
+  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
+  (setq sml/shorten-directory 't
+		sml/shorten-modes 't)
+  (sml/setup)
+  (sml/apply-theme 'respectful)
+  )
 
 (use-package which-key
   :config
@@ -345,9 +341,3 @@
 
 ;; Completed initialization
 (message "Initialized successfully.")
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mode-line ((t (:underline nil :overline nil :box (:line-width 1 :color "#fdf6e3") :foreground "#fdf6e3" :background "#657b83")))))
