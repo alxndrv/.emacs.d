@@ -14,13 +14,12 @@
  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
  '(package-selected-packages
    (quote
-	(smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
  '(restart-emacs-restore-frames t)
- '(size-indication-mode nil)
- )
+ '(size-indication-mode nil))
 
 ;;; Basic settings
 (setq delete-by-moving-to-trash 't)
@@ -36,6 +35,9 @@
 (line-number-mode)
 (column-number-mode)
 
+;; Increase GC trigger threshhold
+(setq gc-cons-threshold 50000000)
+
 (unless (string-equal system-type "darwin")
   (set-face-attribute 'default nil :height 115 :family "Consolas")
   )
@@ -50,6 +52,7 @@
 (setq mouse-wheel-progressive-speed nil)
 
 ;; Parentheses highlighting and pairing
+(setq show-paren-delay 0)
 (show-paren-mode)
 (electric-pair-mode)
 
@@ -67,8 +70,11 @@
 (ido-mode t)
 
 (winner-mode t)
-
 (windmove-default-keybindings)
+
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time)
 
 
 ;; Bootstrap use-package
@@ -119,6 +125,8 @@
 (use-package git-messenger)
 
 (use-package focus)
+
+(use-package all-the-icons)
 
 (use-package elscreen
   :config
@@ -209,6 +217,11 @@
   :config
   (helm-projectile-on))
 
+(use-package neotree
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (global-set-key [f8] 'neotree-toggle))
+
 (use-package helm-ag)
 
 (use-package anzu
@@ -217,11 +230,12 @@
 
 (use-package expand-region)
 
+(use-package yasnippet-snippets)
+
 (use-package yasnippet
+  :after yasnippet-snippets
   :config
   (yas-global-mode 1))
-
-(use-package yasnippet-snippets)
 
 (use-package editorconfig
   :config
@@ -276,15 +290,11 @@
   :config
   (dumb-jump-mode))
 
-(use-package smart-mode-line)
-
-(use-package smart-mode-line-powerline-theme
-  :ensure t
-  :after smart-mode-line
-  :config
-  (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
+(use-package smart-mode-line
+  :init
   (setq sml/shorten-directory 't
 		sml/shorten-modes 't)
+  :config
   (sml/setup)
   (sml/apply-theme 'respectful)
   )
@@ -307,6 +317,10 @@
 (use-package avy
   :config
   (global-set-key (kbd "C-:") 'avy-goto-char))
+
+(use-package ace-window
+  :config
+  (global-set-key (kbd "M-o") 'ace-window))
 
 (use-package delight
   :config
@@ -341,3 +355,9 @@
 
 ;; Completed initialization
 (message "Initialized successfully.")
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
