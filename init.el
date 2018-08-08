@@ -14,7 +14,7 @@
  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
  '(package-selected-packages
    (quote
-	(ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree magit focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -147,6 +147,8 @@
   (dimmer-mode))
 
 (use-package md4rd)
+
+(use-package calfw)
 
 (use-package sx
   :config
