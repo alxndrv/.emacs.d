@@ -213,7 +213,8 @@
 
 (use-package projectile
   :config
-  (projectile-mode))
+  (projectile-mode)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package helm-projectile
   :config
