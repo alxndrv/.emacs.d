@@ -14,7 +14,7 @@
  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
  '(package-selected-packages
    (quote
-	(magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes flymd multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	(flymd markdown-mode+ latex-preview-pane auto-complete-auctex auctex magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line git-messenger anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
 	(".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
@@ -38,11 +38,16 @@
 ;; Increase GC trigger threshhold
 (setq gc-cons-threshold 50000000)
 
+(set-default-font "Menlo 12")
+
 (unless (string-equal system-type "darwin")
   (set-face-attribute 'default nil :height 115 :family "Consolas")
   )
 
 (setq ns-use-srgb-colorspace nil)
+
+(setq mac-option-modifier 'meta)
+(setq mac-command-modifier 'super)
 
 ;; Default tab width 4
 (setq-default tab-width 4)
@@ -57,6 +62,7 @@
 (electric-pair-mode)
 
 (setq major-mode 'text-mode)
+(setq ediff-split-window-function (quote split-window-horizontally))
 
 ;;Custom backup directory
 (setq backup-directory-alist
@@ -222,7 +228,7 @@
 
 (use-package neotree
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (setq neo-theme 'arrows)
   (global-set-key [f8] 'neotree-toggle))
 
 (use-package helm-ag)
@@ -266,6 +272,27 @@
   (rainbow-mode))
 
 (use-package org)
+
+(use-package markdown-mode+)
+(use-package flymd)
+
+; Flymd compatibility fix, ie. we force it to use Firefox
+(defun flymd-browser-function-custom (url)
+  (let ((process-environment (browse-url-process-environment)))
+	(apply 'start-process
+		   (concat "firefox " url)
+		   nil
+		   "/usr/bin/open"
+		   (list "-a" "firefox" url))))
+
+(setq flymd-browser-open-function 'flymd-browser-function-custom)
+
+
+(use-package auctex)
+
+(use-package auto-complete-auctex)
+
+(use-package latex-preview-pane)
 
 (use-package rjsx-mode
   :config
