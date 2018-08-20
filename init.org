@@ -1,0 +1,422 @@
+* Init
+** Custom variables
+   #+BEGIN_SRC emacs-lisp
+	 (custom-set-variables
+	  ;; custom-set-variables was added by Custom.
+	  ;; If you edit it by hand, you could mess it up, so be careful.
+	  ;; Your init file should contain only one such instance.
+	  ;; If there is more than one, they won't work right.
+	  '(custom-safe-themes
+		(quote
+		 ("b9e9ba5aeedcc5ba8be99f1cc9301f6679912910ff92fdf7980929c2fc83ab4d" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "9d9fda57c476672acd8c6efeb9dc801abea906634575ad2c7688d055878e69d6" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "ecba61c2239fbef776a72b65295b88e5534e458dfe3e6d7d9f9cb353448a569e" "3d5720f488f2ed54dd4e40e9252da2912110948366a16aef503f3e9e7dfe4915" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+	  '(git-messenger:show-detail t)
+	  '(git-messenger:use-magit-popup t)
+	  '(global-linum-mode t)
+	  '(global-magit-file-mode nil)
+	  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
+	  '(package-selected-packages
+		(quote
+		 (flycheck-kotlin swiper-helm git-messenger groovy-mode flymd markdown-mode+ latex-preview-pane auto-complete-auctex auctex magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+	  '(projectile-globally-ignored-directories
+		(quote
+		 (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))
+	  '(restart-emacs-restore-frames t)
+	  '(size-indication-mode nil))
+
+	 (custom-set-faces
+	  ;; custom-set-faces was added by Custom.
+	  ;; If you edit it by hand, you could mess it up, so be careful.
+	  ;; Your init file should contain only one such instance.
+	  ;; If there is more than one, they won't work right.
+	  )
+
+   #+END_SRC
+** Basic settings
+   #+BEGIN_SRC emacs-lisp
+	 (setq delete-by-moving-to-trash 't)
+	 (setq inhibit-startup-screen t)
+
+	 (global-hl-line-mode t)
+	 (global-linum-mode 1)
+
+	 (tool-bar-mode -1)
+	 (scroll-bar-mode -1)
+
+	 (line-number-mode)
+	 (column-number-mode)
+
+	 ;; Increase GC trigger threshhold
+	 (setq gc-cons-threshold 50000000)
+
+	 (set-default-font "Menlo 12")
+
+	 ;; Default tab width 4
+	 (setq-default tab-width 4)
+	 (setq-default indent-tabs-mode nil)
+
+	 ;; Scrolling settings (primarily for Mac)
+	 (setq mouse-wheel-scroll-amount '(1))
+	 (setq mouse-wheel-progressive-speed nil)
+
+	 ;; Parentheses highlighting and pairing
+	 (setq show-paren-delay 0)
+	 (show-paren-mode)
+	 (electric-pair-mode)
+
+	 (setq display-time-24hr-format t)
+	 (setq display-time-day-and-date t)
+	 (display-time)
+
+	 (winner-mode t)
+	 (windmove-default-keybindings)
+
+	 (ido-mode t)
+
+	 (setq major-mode 'text-mode)
+	 (setq ediff-split-window-function (quote split-window-horizontally))
+
+	 ;;Custom backup directory
+	 (setq backup-directory-alist
+		   `(("." . ,(concat user-emacs-directory "backups"))))
+
+	 (setq auto-save-file-name-transforms
+		   `((".*" ,temporary-file-directory t)))
+
+	 (setq create-lockfiles nil)
+
+   #+END_SRC
+** System specific settings
+   #+BEGIN_SRC emacs-lisp
+	 (unless (string-equal system-type "darwin")
+	   (set-face-attribute 'default nil :height 115 :family "Consolas")
+	   )
+
+	 (setq ns-use-srgb-colorspace nil)
+
+	 (setq mac-option-modifier 'meta)
+	 (setq mac-command-modifier 'super)
+
+
+   #+END_SRC
+** Bootstrap use-package
+   #+BEGIN_SRC emacs-lisp
+	 ;; Bootstrap use-package
+	 (setq package-enable-at-startup nil)
+	 (require 'package)
+	 (add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
+	 (package-initialize)
+	 (unless (package-installed-p 'use-package)
+	   (package-refresh-contents)
+	   (package-install 'use-package))
+	 (require 'use-package)
+	 (setq use-package-always-ensure t
+		   use-package-verbose t)
+
+   #+END_SRC
+** Packages
+*** Visual
+	#+BEGIN_SRC emacs-lisp
+	  (use-package solarized-theme
+		:demand
+		:config
+		(setq x-underline-at-descent-line t)
+		(load-theme 'solarized-dark t)
+		;; (custom-set-faces
+		;;  '(mode-line ((t
+		;; 				 (:underline nil :overline nil :box
+		;; 							 (:line-width 1 :color "#fdf6e3")
+		;; 							 :foreground "#fdf6e3" :background "#657b83")))))
+		)
+
+	  ;; Cursor settings
+	  (setq-default cursor-type 'bar
+					visible-bell 't
+					ring-bell-function 'ignore)
+
+	  (use-package delight
+		:config
+		(delight 'flycheck-mode " \u2714" 'flycheck)
+		(delight 'auto-complete-mode " \u2630" 'auto-complete)
+		(delight 'helm-mode " \u2388" 'helm)
+		(delight 'editorconfig-mode nil 'editorconfig)
+		(delight 'which-key-mode nil 'which-key)
+		(delight 'beacon-mode nil 'beacon)
+		(delight 'rainbow-mode nil 'rainbow-mode)
+		(delight 'auto-revert-mode nil 'autorevert)
+		(delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+		(delight 'eldoc-mode nil 'eldoc)
+		(delight 'anzu-mode nil 'anzu))
+
+	  (use-package smart-mode-line
+		:init
+		(setq sml/shorten-directory 't
+			  sml/shorten-modes 't)
+		:config
+		(sml/setup)
+		(sml/apply-theme 'respectful)
+		)
+
+	  (use-package highlight-symbol)
+
+	  (use-package highlight-parentheses
+		:config
+		(global-highlight-parentheses-mode))
+
+	  (use-package dimmer
+		:config
+		(dimmer-mode))
+
+	  (use-package beacon
+		:config
+		(beacon-mode 1))
+
+	  (use-package focus)
+
+	  (use-package all-the-icons)
+
+	#+END_SRC
+*** Utilities
+	#+BEGIN_SRC emacs-lisp
+	  ;; Helm configuration
+	  (use-package helm
+		:config
+		(require 'helm-config)
+		(setq helm-mode-fuzzy-match t
+			  helm-completion-in-region-fuzzy-match t)
+		(setq helm-ff-skip-boring-files t
+			  helm-ff-file-name-history-use-recentf t)
+		(setq helm-boring-file-regexp-list
+			  '("\\.git$" "^.$" "^..$"))
+		;; swap C-z and TAB in helm buffers
+		;; stolen from spacemacs
+		(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+		(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+		(define-key helm-map (kbd "C-z") 'helm-select-action)
+		(helm-mode)
+		:bind ("M-x" . helm-M-x)
+		:bind ("C-x C-f" . helm-find-files)
+		:bind ("C-x b" . helm-buffers-list)
+		:bind ("C-c G" . helm-google-suggest)
+		:bind ("C-c g" . helm-grep-do-git-grep)
+		:bind (:map helm-map
+					("C-j" . helm-next-line)
+					("C-k" . helm-previous-line)
+					("C-h" . helm-next-source)
+					("C-j" . helm-next-line)
+					([escape] . helm-keyboard-quit)))
+
+	  (use-package helm-ag)
+
+	  (use-package which-key
+		:config
+		(setq which-key-idle-delay 0.5)
+		(which-key-mode))
+
+	  (use-package exec-path-from-shell
+		:config
+		(when (memq window-system '(mac ns x))
+		  (exec-path-from-shell-initialize)))
+
+	  (use-package magit
+		:config
+		(global-set-key (kbd "C-x g") 'magit-status))
+
+	  (use-package git-messenger)
+
+	  (use-package undo-tree)
+
+	#+END_SRC
+*** Navigation
+	#+BEGIN_SRC emacs-lisp
+	  (use-package projectile
+		:config
+		(projectile-mode)
+		(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+	  (use-package helm-projectile
+		:config
+		(helm-projectile-on))
+
+	  (use-package neotree
+		:config
+		(setq neo-theme 'arrows)
+		(global-set-key [f8] 'neotree-toggle))
+
+	  (use-package ace-window
+		:config
+		(global-set-key (kbd "M-o") 'ace-window))
+
+	  (use-package elscreen
+		:config
+		(elscreen-start))
+
+	#+END_SRC
+*** Editing
+	#+BEGIN_SRC emacs-lisp
+	  (use-package multiple-cursors
+		:config
+		(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+		(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+		(global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
+
+	  (use-package avy
+		:config
+		(global-set-key (kbd "C-:") 'avy-goto-char))
+
+
+	  (use-package swiper-helm
+		:bind ("C-s" . swiper-helm))
+
+	  (use-package anzu
+		:config
+		(global-anzu-mode +1))
+
+	#+END_SRC
+*** Programming
+**** Language support
+	 #+BEGIN_SRC emacs-lisp
+	   (use-package rjsx-mode
+		 :config
+		 (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
+
+	   (use-package json-mode)
+
+	   (use-package csharp-mode)
+
+	   (use-package kotlin-mode)
+
+	   (use-package android-mode)
+
+	   (use-package groovy-mode)
+
+	   (use-package swift-mode)
+
+	   (use-package php-mode)
+
+	   (use-package yaml-mode
+		 :config
+		 (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
+
+	   (use-package dockerfile-mode
+		 :config
+		 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+
+	 #+END_SRC
+**** Development utilities
+	 #+BEGIN_SRC emacs-lisp
+	   (use-package dumb-jump
+		 :config
+		 (dumb-jump-mode))
+
+	   (use-package flycheck
+		 :ensure t
+		 :init (global-flycheck-mode))
+
+	   (use-package flycheck-popup-tip
+		 :config
+		 (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
+
+	   (use-package flycheck-kotlin
+		 :requires flycheck
+		 :config
+		 (flycheck-kotlin-setup))
+
+	   (use-package elogcat)
+
+	   (use-package yasnippet-snippets)
+
+	   (use-package yasnippet
+		 :after yasnippet-snippets
+		 :config
+		 (yas-global-mode 1))
+
+	   (use-package restclient)
+
+	   (use-package multi-term)
+
+	   (use-package expand-region)
+
+	   (use-package editorconfig
+		 :config
+		 (editorconfig-mode 1))
+
+	   (use-package auto-complete
+		 :ensure t
+		 :config
+		 (ac-config-default)
+		 (setq ac-auto-show-menu 0.4)
+		 (add-to-list 'ac-modes 'rjsx-mode)
+		 (add-to-list 'ac-modes 'kotlin-mode)
+		 (global-auto-complete-mode t))
+
+	   (use-package rainbow-mode
+		 :config
+		 (rainbow-mode))
+
+	 #+END_SRC
+*** Documenting
+	#+BEGIN_SRC emacs-lisp
+
+	  (use-package org)
+
+	  (use-package markdown-mode+)
+	  (use-package flymd)
+
+	  (use-package auctex)
+
+	  (use-package auto-complete-auctex)
+
+	  (use-package latex-preview-pane)
+
+
+	#+END_SRC
+*** Misc.
+	#+BEGIN_SRC emacs-lisp
+	  (use-package md4rd)
+
+	  (use-package calfw)
+
+	  (use-package sx
+		:config
+		(bind-keys :prefix "C-c s"
+				   :prefix-map my-sx-map
+				   :prefix-docstring "Global keymap for SX."
+				   ("q" . sx-tab-all-questions)
+				   ("i" . sx-inbox)
+				   ("o" . sx-open-link)
+				   ("u" . sx-tab-unanswered-my-tags)
+				   ("a" . sx-ask)
+				   ("s" . sx-search)))
+
+
+	  (defun indent-buffer ()
+		"Indent an entire buffer using the default intenting scheme."
+		(interactive)
+		(save-excursion
+		  (delete-trailing-whitespace)
+		  (indent-region (point-min) (point-max) nil)
+		  (untabify (point-min) (point-max))))
+
+											  ; Flymd compatibility fix, ie. we force it to use Firefox
+	  (defun flymd-browser-function-custom (url)
+		(let ((process-environment (browse-url-process-environment)))
+		  (apply 'start-process
+				 (concat "firefox " url)
+				 nil
+				 "/usr/bin/open"
+				 (list "-a" "firefox" url))))
+
+	  (setq flymd-browser-open-function 'flymd-browser-function-custom)
+
+	  (use-package dashboard
+		:config
+		(dashboard-setup-startup-hook)
+		(setq dashboard-banner-logo-title "Welcome back!")
+		(setq dashboard-startup-banner 'logo)
+		(setq dashboard-items '((recents  . 5)
+								(bookmarks . 5)
+								(projects . 5)
+								(agenda . 5)
+								(registers . 5)))
+		)
+	#+END_SRC
