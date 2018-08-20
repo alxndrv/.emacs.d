@@ -96,7 +96,6 @@
 	 (setq mac-option-modifier 'meta)
 	 (setq mac-command-modifier 'super)
 
-
    #+END_SRC
 ** Bootstrap use-package
    #+BEGIN_SRC emacs-lisp
@@ -356,8 +355,6 @@
 	 #+END_SRC
 *** Documenting
 	#+BEGIN_SRC emacs-lisp
-
-	  (use-package org)
 
 	  (use-package markdown-mode+)
 	  (use-package flymd)
