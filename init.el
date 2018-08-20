@@ -51,6 +51,7 @@
 
 ;; Default tab width 4
 (setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
 
 ;; Scrolling settings (primarily for Mac)
 (setq mouse-wheel-scroll-amount '(1))
