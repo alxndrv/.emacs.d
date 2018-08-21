@@ -276,54 +276,54 @@
 	 #+END_SRC
 **** Development utilities
 	 #+BEGIN_SRC emacs-lisp
-	   (use-package dumb-jump
-		 :config
-		 (dumb-jump-mode))
+       (use-package dumb-jump
+         :config
+         (dumb-jump-mode))
 
-	   (use-package flycheck
-		 :ensure t
-		 :init (global-flycheck-mode))
+       (use-package flycheck
+         :ensure t
+         :init (global-flycheck-mode))
 
-	   (use-package flycheck-popup-tip
-		 :config
-		 (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
+       (use-package flycheck-popup-tip
+         :config
+         (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
 
-	   (use-package flycheck-kotlin
-		 :requires flycheck
-		 :config
-		 (flycheck-kotlin-setup))
+       (use-package flycheck-kotlin
+         :requires flycheck
+         :config
+         (flycheck-kotlin-setup))
 
-	   (use-package elogcat)
+       (use-package elogcat)
 
-	   (use-package yasnippet-snippets)
+       (use-package yasnippet-snippets)
 
-	   (use-package yasnippet
-		 :after yasnippet-snippets
-		 :config
-		 (yas-global-mode 1))
+       (use-package yasnippet
+         :after yasnippet-snippets
+         :config
+         (yas-global-mode 1))
 
-	   (use-package restclient)
+       (use-package restclient)
 
-	   (use-package multi-term)
+       (use-package multi-term)
 
-	   (use-package expand-region)
+       (use-package expand-region)
 
-	   (use-package editorconfig
-		 :config
-		 (editorconfig-mode 1))
+       (use-package editorconfig
+         :config
+         (editorconfig-mode 1))
 
-	   (use-package auto-complete
-		 :ensure t
-		 :config
-		 (ac-config-default)
-		 (setq ac-auto-show-menu 0.4)
-		 (add-to-list 'ac-modes 'rjsx-mode)
-		 (add-to-list 'ac-modes 'kotlin-mode)
-		 (global-auto-complete-mode t))
+       (use-package auto-complete
+         :ensure t
+         :config
+         (ac-config-default)
+         (setq ac-auto-show-menu 0.4)
+         (add-to-list 'ac-modes 'rjsx-mode)
+         (add-to-list 'ac-modes 'kotlin-mode)
+         (global-auto-complete-mode t))
 
-	   (use-package rainbow-mode
-		 :config
-		 (rainbow-mode))
+       (use-package rainbow-mode
+         :config
+         (rainbow-mode))
 
 	 #+END_SRC
 *** Documenting
@@ -333,6 +333,8 @@
       (use-package org-bullets
         :config
         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+      (use-package ox-twbs)
 
       (use-package markdown-mode+)
       (use-package flymd)
