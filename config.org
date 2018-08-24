@@ -6,56 +6,59 @@
    #+END_SRC
 ** Basic settings
    #+BEGIN_SRC emacs-lisp
-	 (setq delete-by-moving-to-trash 't)
-	 (setq inhibit-startup-screen t)
+     (setq delete-by-moving-to-trash 't)
+     (setq inhibit-startup-screen t)
 
-	 (global-hl-line-mode t)
-	 (global-linum-mode 1)
+     (global-hl-line-mode t)
+     (global-linum-mode 1)
 
-	 (tool-bar-mode -1)
-	 (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (scroll-bar-mode -1)
 
-	 (line-number-mode)
-	 (column-number-mode)
+     (line-number-mode)
+     (column-number-mode)
 
-	 ;; Increase GC trigger threshhold
-	 (setq gc-cons-threshold 50000000)
+     ;; Increase GC trigger threshhold
+     (setq gc-cons-threshold 50000000)
 
-	 (set-default-font "Menlo 12")
+     (when (member "DejaVu Sans Mono" (font-family-list))
+       (set-default-font "DejaVu Sans Mono"))
 
-	 ;; Default tab width 4
-	 (setq-default tab-width 4)
-	 (setq-default indent-tabs-mode nil)
+     ;;(set-default-font "Menlo 12")
 
-	 ;; Scrolling settings (primarily for Mac)
-	 (setq mouse-wheel-scroll-amount '(1))
-	 (setq mouse-wheel-progressive-speed nil)
+     ;; Default tab width 4
+     (setq-default tab-width 4)
+     (setq-default indent-tabs-mode nil)
 
-	 ;; Parentheses highlighting and pairing
-	 (setq show-paren-delay 0)
-	 (show-paren-mode)
-	 (electric-pair-mode)
+     ;; Scrolling settings (primarily for Mac)
+     (setq mouse-wheel-scroll-amount '(1))
+     (setq mouse-wheel-progressive-speed nil)
 
-	 (setq display-time-24hr-format t)
-	 (setq display-time-day-and-date t)
-	 (display-time)
+     ;; Parentheses highlighting and pairing
+     (setq show-paren-delay 0)
+     (show-paren-mode)
+     (electric-pair-mode)
 
-	 (winner-mode t)
-	 (windmove-default-keybindings)
+     (setq display-time-24hr-format t)
+     (setq display-time-day-and-date t)
+     (display-time)
 
-	 (ido-mode t)
+     (winner-mode t)
+     (windmove-default-keybindings)
 
-	 (setq major-mode 'text-mode)
-	 (setq ediff-split-window-function (quote split-window-horizontally))
+     (ido-mode t)
 
-	 ;;Custom backup directory
-	 (setq backup-directory-alist
-		   `(("." . ,(concat user-emacs-directory "backups"))))
+     (setq major-mode 'text-mode)
+     (setq ediff-split-window-function (quote split-window-horizontally))
 
-	 (setq auto-save-file-name-transforms
-		   `((".*" ,temporary-file-directory t)))
+     ;;Custom backup directory
+     (setq backup-directory-alist
+           `(("." . ,(concat user-emacs-directory "backups"))))
 
-	 (setq create-lockfiles nil)
+     (setq auto-save-file-name-transforms
+           `((".*" ,temporary-file-directory t)))
+
+     (setq create-lockfiles nil)
 
    #+END_SRC
 ** System specific settings
@@ -252,7 +255,14 @@
         (modalka-define-kbd "U" "C-u") ; universal modifier (if I ever even use that)
         (modalka-define-kbd "x s" "C-x C-s") ; save current buffer
 
-        (define-key modalka-mode-map (kbd "q") #'er/expand-region) ; We create a new bind since I dont have one normally
+        (modalka-define-kbd "z n" "C-z n") ; Elscreen next screen
+        (modalka-define-kbd "z p" "C-z p") ; Elscreen prev screen
+        (modalka-define-kbd "z c" "C-z z") ; Elscreen create screen
+        (modalka-define-kbd "z k" "C-z k") ; Elscreen kill screen
+        (modalka-define-kbd "x f" "C-x C-f") ; Open file
+        (modalka-define-kbd "o" "M-o") ; ace-window
+
+        (define-key modalka-mode-map (kbd ".") #'er/expand-region) ; We create a new bind since I dont have one normally
 
         ; Numeric arguments
         (modalka-define-kbd "0" "C-0")
