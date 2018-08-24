@@ -225,23 +225,70 @@
 	#+END_SRC
 *** Editing
 	#+BEGIN_SRC emacs-lisp
-	  (use-package multiple-cursors
-		:config
-		(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-		(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-		(global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
 
-	  (use-package avy
-		:config
-		(global-set-key (kbd "C-:") 'avy-goto-char))
+      (use-package modalka
+        :config
+        (modalka-define-kbd "W" "M-w") ; copy
+        (modalka-define-kbd "w" "C-w") ; cut (kill)
+        (modalka-define-kbd "Y" "M-y") ; paste
+        (modalka-define-kbd "a" "C-a") ; line start
+        (modalka-define-kbd "e" "C-e") ; line end
+        (modalka-define-kbd "k" "C-k") ; kill to end of line
+        (modalka-define-kbd "SPC" "C-SPC") ; mark
+        (modalka-define-kbd ":" "C-:") ; avy-jump
+        (modalka-define-kbd "n" "C-n") ; next line
+        (modalka-define-kbd "p" "C-p") ; previous line
+        (modalka-define-kbd "j" "C-j") ; insert newline
+        (modalka-define-kbd "V" "M-v") ; page-up
+        (modalka-define-kbd "v" "C-v") ; page-down
+        (modalka-define-kbd "g" "C-g") ; quit
+        (modalka-define-kbd "b" "C-b") ; back
+        (modalka-define-kbd "f" "C-f") ; forward
+        (modalka-define-kbd "d" "C-d") ; delete
+        (modalka-define-kbd "/" "C-/") ; undo
+        (modalka-define-kbd ">" "C->") ; mc/mark-next-like-this
+        (modalka-define-kbd "<" "C-<") ; mc/mark-previous-like-this
+        (modalka-define-kbd "s" "C-s") ; search (swiper)
+        (modalka-define-kbd "U" "C-u") ; universal modifier (if I ever even use that)
+        (modalka-define-kbd "x s" "C-x C-s") ; save current buffer
+
+        (define-key modalka-mode-map (kbd "q") #'er/expand-region) ; We create a new bind since I dont have one normally
+
+        ; Numeric arguments
+        (modalka-define-kbd "0" "C-0")
+        (modalka-define-kbd "1" "C-1")
+        (modalka-define-kbd "2" "C-2")
+        (modalka-define-kbd "3" "C-3")
+        (modalka-define-kbd "4" "C-4")
+        (modalka-define-kbd "5" "C-5")
+        (modalka-define-kbd "6" "C-6")
+        (modalka-define-kbd "7" "C-7")
+        (modalka-define-kbd "8" "C-8")
+        (modalka-define-kbd "9" "C-9")
+
+        (setq modalka-cursor-type 'box)
+
+        (global-set-key (kbd "§") #'modalka-mode)
+        )
 
 
-	  (use-package swiper-helm
-		:bind ("C-s" . swiper-helm))
+      (use-package multiple-cursors
+        :config
+        (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+        (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+        (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
 
-	  (use-package anzu
-		:config
-		(global-anzu-mode +1))
+      (use-package avy
+        :config
+        (global-set-key (kbd "C-:") 'avy-goto-char))
+
+
+      (use-package swiper-helm
+        :bind ("C-s" . swiper-helm))
+
+      (use-package anzu
+        :config
+        (global-anzu-mode +1))
 
 	#+END_SRC
 *** Programming
@@ -329,7 +376,10 @@
 *** Documenting
 	#+BEGIN_SRC emacs-lisp
 
-      (use-package org)
+      (use-package org
+        :config
+        (setq org-log-done 'time))
+
       (use-package org-bullets
         :config
         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
