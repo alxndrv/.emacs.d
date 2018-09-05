@@ -1,153 +1,148 @@
-* Init
-** Custom file
-   #+BEGIN_SRC emacs-lisp
-     (setq custom-file "~/.emacs.d/custom.el")
-     (load custom-file)
-   #+END_SRC
-** Basic settings
-   #+BEGIN_SRC emacs-lisp
-     (setq delete-by-moving-to-trash 't)
-     (setq inhibit-startup-screen t)
+* Custom file
+  #+BEGIN_SRC emacs-lisp
+    (setq custom-file "~/.emacs.d/custom.el")
+    (load custom-file)
+  #+END_SRC
+* Basic settings
+  #+BEGIN_SRC emacs-lisp
+    (setq delete-by-moving-to-trash 't)
+    (setq inhibit-startup-screen t)
 
-     (global-hl-line-mode t)
-     (global-linum-mode 1)
+    (global-hl-line-mode t)
+    (global-linum-mode 1)
 
-     (tool-bar-mode -1)
-     (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
 
-     (line-number-mode)
-     (column-number-mode)
+    (line-number-mode)
+    (column-number-mode)
 
-     ;; Increase GC trigger threshhold
-     (setq gc-cons-threshold 50000000)
+    ;; Increase GC trigger threshhold
+    (setq gc-cons-threshold 50000000)
 
-     (when (member "DejaVu Sans Mono" (font-family-list))
-       (set-default-font "DejaVu Sans Mono"))
+    (when (member "DejaVu Sans Mono" (font-family-list))
+      (set-default-font "DejaVu Sans Mono"))
 
-     ;;(set-default-font "Menlo 12")
+    ;;(set-default-font "Menlo 12")
 
-     ;; Default tab width 4
-     (setq-default tab-width 4)
-     (setq-default indent-tabs-mode nil)
+    ;; Default tab width 4
+    (setq-default tab-width 4)
+    (setq-default indent-tabs-mode nil)
 
-     ;; Scrolling settings (primarily for Mac)
-     (setq mouse-wheel-scroll-amount '(1))
-     (setq mouse-wheel-progressive-speed nil)
+    ;; Scrolling settings (primarily for Mac)
+    (setq mouse-wheel-scroll-amount '(1))
+    (setq mouse-wheel-progressive-speed nil)
 
-     ;; Parentheses highlighting and pairing
-     (setq show-paren-delay 0)
-     (show-paren-mode)
-     (electric-pair-mode)
+    ;; Parentheses highlighting and pairing
+    (setq show-paren-delay 0)
+    (show-paren-mode)
+    (electric-pair-mode)
 
-     (setq display-time-24hr-format t)
-     (setq display-time-day-and-date t)
-     (display-time)
+    (setq display-time-24hr-format t)
+    (setq display-time-day-and-date t)
+    (display-time)
 
-     (winner-mode t)
-     (windmove-default-keybindings)
+    (winner-mode t)
+    (windmove-default-keybindings)
 
-     (ido-mode t)
+    (ido-mode t)
 
-     (setq major-mode 'text-mode)
-     (setq ediff-split-window-function (quote split-window-horizontally))
+    (setq major-mode 'text-mode)
+    (setq ediff-split-window-function (quote split-window-horizontally))
 
-     ;;Custom backup directory
-     (setq backup-directory-alist
-           `(("." . ,(concat user-emacs-directory "backups"))))
+    ;;Custom backup directory
+    (setq backup-directory-alist
+          `(("." . ,(concat user-emacs-directory "backups"))))
 
-     (setq auto-save-file-name-transforms
-           `((".*" ,temporary-file-directory t)))
+    (setq auto-save-file-name-transforms
+          `((".*" ,temporary-file-directory t)))
 
-     (setq create-lockfiles nil)
+    (setq create-lockfiles nil)
 
-   #+END_SRC
-** System specific settings
-   #+BEGIN_SRC emacs-lisp
-	 (unless (string-equal system-type "darwin")
-	   (set-face-attribute 'default nil :height 115 :family "Consolas")
-	   )
+  #+END_SRC
+* System specific settings
+  #+BEGIN_SRC emacs-lisp
+	(unless (string-equal system-type "darwin")
+	  (set-face-attribute 'default nil :height 115 :family "Consolas")
+	  )
 
-	 (setq ns-use-srgb-colorspace nil)
+	(setq ns-use-srgb-colorspace nil)
 
-	 (setq mac-option-modifier 'meta)
-	 (setq mac-command-modifier 'super)
+	(setq mac-option-modifier 'meta)
+	(setq mac-command-modifier 'super)
 
-   #+END_SRC
-** Bootstrap use-package
-   #+BEGIN_SRC emacs-lisp
-	 ;; Bootstrap use-package
-	 (setq package-enable-at-startup nil)
-	 (require 'package)
-	 (add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
-	 (package-initialize)
-	 (unless (package-installed-p 'use-package)
-	   (package-refresh-contents)
-	   (package-install 'use-package))
-	 (require 'use-package)
-	 (setq use-package-always-ensure t
-		   use-package-verbose t)
+  #+END_SRC
+* Bootstrap use-package
+  #+BEGIN_SRC emacs-lisp
+	;; Bootstrap use-package
+	(setq package-enable-at-startup nil)
+	(require 'package)
+	(add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
+	(package-initialize)
+	(unless (package-installed-p 'use-package)
+	  (package-refresh-contents)
+	  (package-install 'use-package))
+	(require 'use-package)
+	(setq use-package-always-ensure t
+		  use-package-verbose t)
 
-   #+END_SRC
-** Packages
+  #+END_SRC
+* Packages
 *** Visual
 	#+BEGIN_SRC emacs-lisp
-	  (use-package solarized-theme
-		:demand
-		:config
-		(setq x-underline-at-descent-line t)
-		(load-theme 'solarized-dark t)
-		;; (custom-set-faces
-		;;  '(mode-line ((t
-		;; 				 (:underline nil :overline nil :box
-		;; 							 (:line-width 1 :color "#fdf6e3")
-		;; 							 :foreground "#fdf6e3" :background "#657b83")))))
-		)
 
-	  ;; Cursor settings
-	  (setq-default cursor-type 'bar
-					visible-bell 't
-					ring-bell-function 'ignore)
+      (use-package solarized-theme
+        :demand
+        :config
+        (setq x-underline-at-descent-line t)
+        (load-theme 'solarized-dark t)
+        )
 
-	  (use-package delight
-		:config
-		(delight 'flycheck-mode " \u2714" 'flycheck)
-		(delight 'auto-complete-mode " \u2630" 'auto-complete)
-		(delight 'helm-mode " \u2388" 'helm)
-		(delight 'editorconfig-mode nil 'editorconfig)
-		(delight 'which-key-mode nil 'which-key)
-		(delight 'beacon-mode nil 'beacon)
-		(delight 'rainbow-mode nil 'rainbow-mode)
-		(delight 'auto-revert-mode nil 'autorevert)
-		(delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-		(delight 'eldoc-mode nil 'eldoc)
-		(delight 'anzu-mode nil 'anzu))
+      ;; Cursor settings
+      (setq-default cursor-type 'bar
+                    visible-bell 't
+                    ring-bell-function 'ignore)
 
-	  (use-package smart-mode-line
-		:init
-		(setq sml/shorten-directory 't
-			  sml/shorten-modes 't)
-		:config
-		(sml/setup)
-		(sml/apply-theme 'respectful)
-		)
+      (use-package delight
+        :config
+        (delight 'flycheck-mode " \u2714" 'flycheck)
+        (delight 'auto-complete-mode " \u2630" 'auto-complete)
+        (delight 'helm-mode " \u2388" 'helm)
+        (delight 'editorconfig-mode nil 'editorconfig)
+        (delight 'which-key-mode nil 'which-key)
+        (delight 'beacon-mode nil 'beacon)
+        (delight 'rainbow-mode nil 'rainbow-mode)
+        (delight 'auto-revert-mode nil 'autorevert)
+        (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+        (delight 'eldoc-mode nil 'eldoc)
+        (delight 'anzu-mode nil 'anzu))
 
-	  (use-package highlight-symbol)
+      (use-package smart-mode-line
+        :init
+        (setq sml/shorten-directory 't
+              sml/shorten-modes 't)
+        :config
+        (sml/setup)
+        (sml/apply-theme 'respectful)
+        )
 
-	  (use-package highlight-parentheses
-		:config
-		(global-highlight-parentheses-mode))
+      (use-package highlight-symbol)
 
-	  (use-package dimmer
-		:config
-		(dimmer-mode))
+      (use-package highlight-parentheses
+        :config
+        (global-highlight-parentheses-mode))
 
-	  (use-package beacon
-		:config
-		(beacon-mode 1))
+      (use-package dimmer
+        :config
+        (dimmer-mode))
 
-	  (use-package focus)
+      (use-package beacon
+        :config
+        (beacon-mode 1))
 
-	  (use-package all-the-icons)
+      (use-package focus)
+
+      (use-package all-the-icons)
 
 	#+END_SRC
 *** Utilities
