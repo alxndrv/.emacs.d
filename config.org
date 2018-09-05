@@ -1,3 +1,7 @@
+#+TITLE: Emacs configuration
+#+AUTHOR: Andrey Aleksandrov
+
+
 * Custom file
   #+BEGIN_SRC emacs-lisp
     (setq custom-file "~/.emacs.d/custom.el")
@@ -88,367 +92,368 @@
 
   #+END_SRC
 * Packages
-*** Visual
+** Visual
+   #+BEGIN_SRC emacs-lisp
+
+     (use-package solarized-theme
+       :demand
+       :config
+       (setq x-underline-at-descent-line t)
+       (load-theme 'solarized-dark t)
+       )
+
+     ;; Cursor settings
+     (setq-default cursor-type 'bar
+                   visible-bell 't
+                   ring-bell-function 'ignore)
+
+     (use-package delight
+       :config
+       (delight 'flycheck-mode " \u2714" 'flycheck)
+       (delight 'auto-complete-mode " \u2630" 'auto-complete)
+       (delight 'helm-mode " \u2388" 'helm)
+       (delight 'editorconfig-mode nil 'editorconfig)
+       (delight 'which-key-mode nil 'which-key)
+       (delight 'beacon-mode nil 'beacon)
+       (delight 'rainbow-mode nil 'rainbow-mode)
+       (delight 'auto-revert-mode nil 'autorevert)
+       (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+       (delight 'eldoc-mode nil 'eldoc)
+       (delight 'anzu-mode nil 'anzu))
+
+     (use-package smart-mode-line
+       :init
+       (setq sml/shorten-directory 't
+             sml/shorten-modes 't)
+       :config
+       (sml/setup)
+       (sml/apply-theme 'respectful)
+       )
+
+     (use-package highlight-symbol)
+
+     (use-package highlight-parentheses
+       :config
+       (global-highlight-parentheses-mode))
+
+     (use-package dimmer
+       :config
+       (dimmer-mode))
+
+     (use-package beacon
+       :config
+       (beacon-mode 1))
+
+     (use-package focus)
+
+     (use-package all-the-icons)
+
+   #+END_SRC
+** Utilities
+   #+BEGIN_SRC emacs-lisp
+	 ;; Helm configuration
+	 (use-package helm
+	   :config
+	   (require 'helm-config)
+	   (setq helm-mode-fuzzy-match t
+			 helm-completion-in-region-fuzzy-match t)
+	   (setq helm-ff-skip-boring-files t
+			 helm-ff-file-name-history-use-recentf t)
+	   (setq helm-boring-file-regexp-list
+			 '("\\.git$" "^.$" "^..$"))
+	   ;; swap C-z and TAB in helm buffers
+	   ;; stolen from spacemacs
+	   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+	   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+	   (define-key helm-map (kbd "C-z") 'helm-select-action)
+	   (helm-mode)
+	   :bind ("M-x" . helm-M-x)
+	   :bind ("C-x C-f" . helm-find-files)
+	   :bind ("C-x b" . helm-buffers-list)
+	   :bind ("C-c G" . helm-google-suggest)
+	   :bind ("C-c g" . helm-grep-do-git-grep)
+	   :bind (:map helm-map
+				   ("C-j" . helm-next-line)
+				   ("C-k" . helm-previous-line)
+				   ("C-h" . helm-next-source)
+				   ("C-j" . helm-next-line)
+				   ([escape] . helm-keyboard-quit)))
+
+	 (use-package helm-ag)
+
+	 (use-package which-key
+	   :config
+	   (setq which-key-idle-delay 0.5)
+	   (which-key-mode))
+
+	 (use-package exec-path-from-shell
+	   :config
+	   (when (memq window-system '(mac ns x))
+		 (exec-path-from-shell-initialize)))
+
+	 (use-package magit
+	   :config
+	   (global-set-key (kbd "C-x g") 'magit-status))
+
+	 (use-package git-messenger)
+
+	 (use-package undo-tree)
+
+   #+END_SRC
+** Navigation
+   #+BEGIN_SRC emacs-lisp
+	 (use-package projectile
+	   :config
+	   (projectile-mode)
+	   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+	 (use-package helm-projectile
+	   :config
+	   (helm-projectile-on))
+
+	 (use-package neotree
+	   :config
+	   (setq neo-theme 'arrows)
+	   (global-set-key [f8] 'neotree-toggle))
+
+	 (use-package ace-window
+	   :config
+	   (global-set-key (kbd "M-o") 'ace-window))
+
+	 (use-package elscreen
+	   :config
+	   (elscreen-start))
+
+   #+END_SRC
+** Editing
+   #+BEGIN_SRC emacs-lisp
+
+     (use-package modalka
+       :config
+       (modalka-define-kbd "W" "M-w") ; copy
+       (modalka-define-kbd "w" "C-w") ; cut (kill)
+       (modalka-define-kbd "Y" "M-y") ; paste
+       (modalka-define-kbd "a" "C-a") ; line start
+       (modalka-define-kbd "e" "C-e") ; line end
+       (modalka-define-kbd "k" "C-k") ; kill to end of line
+       (modalka-define-kbd "SPC" "C-SPC") ; mark
+       (modalka-define-kbd ":" "C-:") ; avy-jump
+       (modalka-define-kbd "n" "C-n") ; next line
+       (modalka-define-kbd "p" "C-p") ; previous line
+       (modalka-define-kbd "j" "C-j") ; insert newline
+       (modalka-define-kbd "V" "M-v") ; page-up
+       (modalka-define-kbd "v" "C-v") ; page-down
+       (modalka-define-kbd "g" "C-g") ; quit
+       (modalka-define-kbd "b" "C-b") ; back
+       (modalka-define-kbd "f" "C-f") ; forward
+       (modalka-define-kbd "d" "C-d") ; delete
+       (modalka-define-kbd "/" "C-/") ; undo
+       (modalka-define-kbd ">" "C->") ; mc/mark-next-like-this
+       (modalka-define-kbd "<" "C-<") ; mc/mark-previous-like-this
+       (modalka-define-kbd "s" "C-s") ; search (swiper)
+       (modalka-define-kbd "U" "C-u") ; universal modifier (if I ever even use that)
+       (modalka-define-kbd "x s" "C-x C-s") ; save current buffer
+
+       (modalka-define-kbd "z n" "C-z n") ; Elscreen next screen
+       (modalka-define-kbd "z p" "C-z p") ; Elscreen prev screen
+       (modalka-define-kbd "z c" "C-z z") ; Elscreen create screen
+       (modalka-define-kbd "z k" "C-z k") ; Elscreen kill screen
+       (modalka-define-kbd "x f" "C-x C-f") ; Open file
+       (modalka-define-kbd "o" "M-o") ; ace-window
+
+       (define-key modalka-mode-map (kbd ".") #'er/expand-region) ; We create a new bind since I dont have one normally
+
+       ; Numeric arguments
+       (modalka-define-kbd "0" "C-0")
+       (modalka-define-kbd "1" "C-1")
+       (modalka-define-kbd "2" "C-2")
+       (modalka-define-kbd "3" "C-3")
+       (modalka-define-kbd "4" "C-4")
+       (modalka-define-kbd "5" "C-5")
+       (modalka-define-kbd "6" "C-6")
+       (modalka-define-kbd "7" "C-7")
+       (modalka-define-kbd "8" "C-8")
+       (modalka-define-kbd "9" "C-9")
+
+       (setq modalka-cursor-type 'box)
+
+       (global-set-key (kbd "§") #'modalka-mode)
+       )
+
+
+     (use-package multiple-cursors
+       :config
+       (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+       (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+       (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
+
+     (use-package avy
+       :config
+       (global-set-key (kbd "C-:") 'avy-goto-char))
+
+
+     (use-package swiper-helm
+       :bind ("C-s" . swiper-helm))
+
+     (use-package anzu
+       :config
+       (global-anzu-mode +1))
+
+   #+END_SRC
+** Programming
+*** Language support
 	#+BEGIN_SRC emacs-lisp
+	  (use-package rjsx-mode
+		:config
+		(add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-      (use-package solarized-theme
-        :demand
-        :config
-        (setq x-underline-at-descent-line t)
-        (load-theme 'solarized-dark t)
-        )
+	  (use-package json-mode)
 
-      ;; Cursor settings
-      (setq-default cursor-type 'bar
-                    visible-bell 't
-                    ring-bell-function 'ignore)
+	  (use-package csharp-mode)
 
-      (use-package delight
-        :config
-        (delight 'flycheck-mode " \u2714" 'flycheck)
-        (delight 'auto-complete-mode " \u2630" 'auto-complete)
-        (delight 'helm-mode " \u2388" 'helm)
-        (delight 'editorconfig-mode nil 'editorconfig)
-        (delight 'which-key-mode nil 'which-key)
-        (delight 'beacon-mode nil 'beacon)
-        (delight 'rainbow-mode nil 'rainbow-mode)
-        (delight 'auto-revert-mode nil 'autorevert)
-        (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-        (delight 'eldoc-mode nil 'eldoc)
-        (delight 'anzu-mode nil 'anzu))
+	  (use-package kotlin-mode)
 
-      (use-package smart-mode-line
-        :init
-        (setq sml/shorten-directory 't
-              sml/shorten-modes 't)
-        :config
-        (sml/setup)
-        (sml/apply-theme 'respectful)
-        )
+	  (use-package android-mode)
 
-      (use-package highlight-symbol)
+	  (use-package groovy-mode)
 
-      (use-package highlight-parentheses
-        :config
-        (global-highlight-parentheses-mode))
+	  (use-package swift-mode)
 
-      (use-package dimmer
-        :config
-        (dimmer-mode))
+	  (use-package php-mode)
 
-      (use-package beacon
-        :config
-        (beacon-mode 1))
+	  (use-package yaml-mode
+		:config
+		(add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
 
-      (use-package focus)
-
-      (use-package all-the-icons)
+	  (use-package dockerfile-mode
+		:config
+		(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
 	#+END_SRC
-*** Utilities
+*** Development utilities
 	#+BEGIN_SRC emacs-lisp
-	  ;; Helm configuration
-	  (use-package helm
-		:config
-		(require 'helm-config)
-		(setq helm-mode-fuzzy-match t
-			  helm-completion-in-region-fuzzy-match t)
-		(setq helm-ff-skip-boring-files t
-			  helm-ff-file-name-history-use-recentf t)
-		(setq helm-boring-file-regexp-list
-			  '("\\.git$" "^.$" "^..$"))
-		;; swap C-z and TAB in helm buffers
-		;; stolen from spacemacs
-		(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-		(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-		(define-key helm-map (kbd "C-z") 'helm-select-action)
-		(helm-mode)
-		:bind ("M-x" . helm-M-x)
-		:bind ("C-x C-f" . helm-find-files)
-		:bind ("C-x b" . helm-buffers-list)
-		:bind ("C-c G" . helm-google-suggest)
-		:bind ("C-c g" . helm-grep-do-git-grep)
-		:bind (:map helm-map
-					("C-j" . helm-next-line)
-					("C-k" . helm-previous-line)
-					("C-h" . helm-next-source)
-					("C-j" . helm-next-line)
-					([escape] . helm-keyboard-quit)))
+      (use-package dumb-jump
+        :config
+        (dumb-jump-mode))
 
-	  (use-package helm-ag)
+      (use-package flycheck
+        :ensure t
+        :init (global-flycheck-mode))
 
-	  (use-package which-key
-		:config
-		(setq which-key-idle-delay 0.5)
-		(which-key-mode))
+      (use-package flycheck-popup-tip
+        :config
+        (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
 
-	  (use-package exec-path-from-shell
-		:config
-		(when (memq window-system '(mac ns x))
-		  (exec-path-from-shell-initialize)))
+      (use-package flycheck-kotlin
+        :requires flycheck
+        :config
+        (flycheck-kotlin-setup))
 
-	  (use-package magit
-		:config
-		(global-set-key (kbd "C-x g") 'magit-status))
+      (use-package elogcat)
 
-	  (use-package git-messenger)
+      (use-package yasnippet-snippets)
 
-	  (use-package undo-tree)
+      (use-package yasnippet
+        :after yasnippet-snippets
+        :config
+        (yas-global-mode 1))
+
+      (use-package restclient)
+
+      (use-package multi-term)
+
+      (use-package expand-region)
+
+      (use-package editorconfig
+        :config
+        (editorconfig-mode 1))
+
+      (use-package auto-complete
+        :ensure t
+        :config
+        (ac-config-default)
+        (setq ac-auto-show-menu 0.4)
+        (add-to-list 'ac-modes 'rjsx-mode)
+        (add-to-list 'ac-modes 'kotlin-mode)
+        (global-auto-complete-mode t))
+
+      (use-package rainbow-mode
+        :config
+        (rainbow-mode))
 
 	#+END_SRC
-*** Navigation
-	#+BEGIN_SRC emacs-lisp
-	  (use-package projectile
-		:config
-		(projectile-mode)
-		(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+** Documenting
+   #+BEGIN_SRC emacs-lisp
 
-	  (use-package helm-projectile
-		:config
-		(helm-projectile-on))
+     (use-package org
+       :config
+       (setq org-log-done 'time)
+       (setq org-ellipsis "⤵"))
 
-	  (use-package neotree
-		:config
-		(setq neo-theme 'arrows)
-		(global-set-key [f8] 'neotree-toggle))
+     (use-package org-bullets
+       :config
+       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-	  (use-package ace-window
-		:config
-		(global-set-key (kbd "M-o") 'ace-window))
+     (use-package ox-twbs)
 
-	  (use-package elscreen
-		:config
-		(elscreen-start))
+     (use-package markdown-mode+)
+     (use-package flymd)
 
-	#+END_SRC
-*** Editing
-	#+BEGIN_SRC emacs-lisp
+     (use-package auctex)
 
-      (use-package modalka
-        :config
-        (modalka-define-kbd "W" "M-w") ; copy
-        (modalka-define-kbd "w" "C-w") ; cut (kill)
-        (modalka-define-kbd "Y" "M-y") ; paste
-        (modalka-define-kbd "a" "C-a") ; line start
-        (modalka-define-kbd "e" "C-e") ; line end
-        (modalka-define-kbd "k" "C-k") ; kill to end of line
-        (modalka-define-kbd "SPC" "C-SPC") ; mark
-        (modalka-define-kbd ":" "C-:") ; avy-jump
-        (modalka-define-kbd "n" "C-n") ; next line
-        (modalka-define-kbd "p" "C-p") ; previous line
-        (modalka-define-kbd "j" "C-j") ; insert newline
-        (modalka-define-kbd "V" "M-v") ; page-up
-        (modalka-define-kbd "v" "C-v") ; page-down
-        (modalka-define-kbd "g" "C-g") ; quit
-        (modalka-define-kbd "b" "C-b") ; back
-        (modalka-define-kbd "f" "C-f") ; forward
-        (modalka-define-kbd "d" "C-d") ; delete
-        (modalka-define-kbd "/" "C-/") ; undo
-        (modalka-define-kbd ">" "C->") ; mc/mark-next-like-this
-        (modalka-define-kbd "<" "C-<") ; mc/mark-previous-like-this
-        (modalka-define-kbd "s" "C-s") ; search (swiper)
-        (modalka-define-kbd "U" "C-u") ; universal modifier (if I ever even use that)
-        (modalka-define-kbd "x s" "C-x C-s") ; save current buffer
+     (use-package auto-complete-auctex)
 
-        (modalka-define-kbd "z n" "C-z n") ; Elscreen next screen
-        (modalka-define-kbd "z p" "C-z p") ; Elscreen prev screen
-        (modalka-define-kbd "z c" "C-z z") ; Elscreen create screen
-        (modalka-define-kbd "z k" "C-z k") ; Elscreen kill screen
-        (modalka-define-kbd "x f" "C-x C-f") ; Open file
-        (modalka-define-kbd "o" "M-o") ; ace-window
-
-        (define-key modalka-mode-map (kbd ".") #'er/expand-region) ; We create a new bind since I dont have one normally
-
-        ; Numeric arguments
-        (modalka-define-kbd "0" "C-0")
-        (modalka-define-kbd "1" "C-1")
-        (modalka-define-kbd "2" "C-2")
-        (modalka-define-kbd "3" "C-3")
-        (modalka-define-kbd "4" "C-4")
-        (modalka-define-kbd "5" "C-5")
-        (modalka-define-kbd "6" "C-6")
-        (modalka-define-kbd "7" "C-7")
-        (modalka-define-kbd "8" "C-8")
-        (modalka-define-kbd "9" "C-9")
-
-        (setq modalka-cursor-type 'box)
-
-        (global-set-key (kbd "§") #'modalka-mode)
-        )
+     (use-package latex-preview-pane)
 
 
-      (use-package multiple-cursors
-        :config
-        (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-        (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-        (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
+   #+END_SRC
+** Misc.
+   #+BEGIN_SRC emacs-lisp
+	 (use-package md4rd)
 
-      (use-package avy
-        :config
-        (global-set-key (kbd "C-:") 'avy-goto-char))
+	 (use-package calfw)
 
-
-      (use-package swiper-helm
-        :bind ("C-s" . swiper-helm))
-
-      (use-package anzu
-        :config
-        (global-anzu-mode +1))
-
-	#+END_SRC
-*** Programming
-**** Language support
-	 #+BEGIN_SRC emacs-lisp
-	   (use-package rjsx-mode
-		 :config
-		 (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
-
-	   (use-package json-mode)
-
-	   (use-package csharp-mode)
-
-	   (use-package kotlin-mode)
-
-	   (use-package android-mode)
-
-	   (use-package groovy-mode)
-
-	   (use-package swift-mode)
-
-	   (use-package php-mode)
-
-	   (use-package yaml-mode
-		 :config
-		 (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
-
-	   (use-package dockerfile-mode
-		 :config
-		 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-
-	 #+END_SRC
-**** Development utilities
-	 #+BEGIN_SRC emacs-lisp
-       (use-package dumb-jump
-         :config
-         (dumb-jump-mode))
-
-       (use-package flycheck
-         :ensure t
-         :init (global-flycheck-mode))
-
-       (use-package flycheck-popup-tip
-         :config
-         (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
-
-       (use-package flycheck-kotlin
-         :requires flycheck
-         :config
-         (flycheck-kotlin-setup))
-
-       (use-package elogcat)
-
-       (use-package yasnippet-snippets)
-
-       (use-package yasnippet
-         :after yasnippet-snippets
-         :config
-         (yas-global-mode 1))
-
-       (use-package restclient)
-
-       (use-package multi-term)
-
-       (use-package expand-region)
-
-       (use-package editorconfig
-         :config
-         (editorconfig-mode 1))
-
-       (use-package auto-complete
-         :ensure t
-         :config
-         (ac-config-default)
-         (setq ac-auto-show-menu 0.4)
-         (add-to-list 'ac-modes 'rjsx-mode)
-         (add-to-list 'ac-modes 'kotlin-mode)
-         (global-auto-complete-mode t))
-
-       (use-package rainbow-mode
-         :config
-         (rainbow-mode))
-
-	 #+END_SRC
-*** Documenting
-	#+BEGIN_SRC emacs-lisp
-
-      (use-package org
-        :config
-        (setq org-log-done 'time))
-
-      (use-package org-bullets
-        :config
-        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
-      (use-package ox-twbs)
-
-      (use-package markdown-mode+)
-      (use-package flymd)
-
-      (use-package auctex)
-
-      (use-package auto-complete-auctex)
-
-      (use-package latex-preview-pane)
+	 (use-package sx
+	   :config
+	   (bind-keys :prefix "C-c s"
+				  :prefix-map my-sx-map
+				  :prefix-docstring "Global keymap for SX."
+				  ("q" . sx-tab-all-questions)
+				  ("i" . sx-inbox)
+				  ("o" . sx-open-link)
+				  ("u" . sx-tab-unanswered-my-tags)
+				  ("a" . sx-ask)
+				  ("s" . sx-search)))
 
 
-	#+END_SRC
-*** Misc.
-	#+BEGIN_SRC emacs-lisp
-	  (use-package md4rd)
+	 (defun indent-buffer ()
+	   "Indent an entire buffer using the default intenting scheme."
+	   (interactive)
+	   (save-excursion
+		 (delete-trailing-whitespace)
+		 (indent-region (point-min) (point-max) nil)
+		 (untabify (point-min) (point-max))))
 
-	  (use-package calfw)
+											 ; Flymd compatibility fix, ie. we force it to use Firefox
+	 (defun flymd-browser-function-custom (url)
+	   (let ((process-environment (browse-url-process-environment)))
+		 (apply 'start-process
+				(concat "firefox " url)
+				nil
+				"/usr/bin/open"
+				(list "-a" "firefox" url))))
 
-	  (use-package sx
-		:config
-		(bind-keys :prefix "C-c s"
-				   :prefix-map my-sx-map
-				   :prefix-docstring "Global keymap for SX."
-				   ("q" . sx-tab-all-questions)
-				   ("i" . sx-inbox)
-				   ("o" . sx-open-link)
-				   ("u" . sx-tab-unanswered-my-tags)
-				   ("a" . sx-ask)
-				   ("s" . sx-search)))
+	 (setq flymd-browser-open-function 'flymd-browser-function-custom)
 
-
-	  (defun indent-buffer ()
-		"Indent an entire buffer using the default intenting scheme."
-		(interactive)
-		(save-excursion
-		  (delete-trailing-whitespace)
-		  (indent-region (point-min) (point-max) nil)
-		  (untabify (point-min) (point-max))))
-
-											  ; Flymd compatibility fix, ie. we force it to use Firefox
-	  (defun flymd-browser-function-custom (url)
-		(let ((process-environment (browse-url-process-environment)))
-		  (apply 'start-process
-				 (concat "firefox " url)
-				 nil
-				 "/usr/bin/open"
-				 (list "-a" "firefox" url))))
-
-	  (setq flymd-browser-open-function 'flymd-browser-function-custom)
-
-	  (use-package dashboard
-		:config
-		(dashboard-setup-startup-hook)
-		(setq dashboard-banner-logo-title "Welcome back!")
-		(setq dashboard-startup-banner 'logo)
-		(setq dashboard-items '((recents  . 5)
-								(bookmarks . 5)
-								(projects . 5)
-								(agenda . 5)
-								(registers . 5)))
-		)
-	#+END_SRC
+	 (use-package dashboard
+	   :config
+	   (dashboard-setup-startup-hook)
+	   (setq dashboard-banner-logo-title "Welcome back!")
+	   (setq dashboard-startup-banner 'logo)
+	   (setq dashboard-items '((recents  . 5)
+							   (bookmarks . 5)
+							   (projects . 5)
+							   (agenda . 5)
+							   (registers . 5)))
+	   )
+   #+END_SRC
