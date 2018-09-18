@@ -389,6 +389,8 @@
 ** Documenting
    #+BEGIN_SRC emacs-lisp
 
+     (use-package htmlize)
+
      (use-package org
        :config
        (setq org-log-done 'time)
