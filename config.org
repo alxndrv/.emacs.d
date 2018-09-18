@@ -14,6 +14,7 @@
 
     (global-hl-line-mode t)
     (global-linum-mode 1)
+    (global-subword-mode 1)
 
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
@@ -243,6 +244,7 @@
        (modalka-define-kbd "j" "C-j") ; insert newline
        (modalka-define-kbd "V" "M-v") ; page-up
        (modalka-define-kbd "v" "C-v") ; page-down
+       (modalka-define-kbd "l" "C-l") ; center screen on current line
        (modalka-define-kbd "g" "C-g") ; quit
        (modalka-define-kbd "b" "C-b") ; back
        (modalka-define-kbd "f" "C-f") ; forward
@@ -298,6 +300,8 @@
      (use-package anzu
        :config
        (global-anzu-mode +1))
+
+     (c-set-offset 'case-label '+)
 
    #+END_SRC
 ** Programming
