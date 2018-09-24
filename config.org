@@ -1,15 +1,17 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Andrey Aleksandrov
-#+OPTIONS: num:nil toc:nil
+#+OPTIONS: num:nil toc:nil html-postamble:nil
 
 * Custom file
+  Store all Custom settings in a separate file so it doesn't write into init.el
   #+BEGIN_SRC emacs-lisp
     (setq custom-file "~/.emacs.d/custom.el")
     (load custom-file)
   #+END_SRC
 * Basic settings
+  Turn off useless GUI buttons, highlight current line, show line and column numbers.
+  I also don't need the default startup screen
   #+BEGIN_SRC emacs-lisp
-    (setq delete-by-moving-to-trash 't)
     (setq inhibit-startup-screen t)
 
     (global-hl-line-mode t)
@@ -20,49 +22,67 @@
 
     (line-number-mode)
     (column-number-mode)
+  #+END_SRC
 
-    ;; Increase GC trigger threshhold
-    (setq gc-cons-threshold 50000000)
-
-    (when (member "DejaVu Sans Mono" (font-family-list))
-      (set-default-font "DejaVu Sans Mono"))
-
-    ;;(set-default-font "Menlo 12")
-
-    ;; Default tab width 4
-    (setq-default tab-width 4)
-    (setq-default indent-tabs-mode nil)
-
-    ;; Scrolling settings (primarily for Mac)
-    (setq mouse-wheel-scroll-amount '(1))
-    (setq mouse-wheel-progressive-speed nil)
-
-    ;; Parentheses highlighting and pairing
-    (setq show-paren-delay 0)
-    (show-paren-mode)
-    (electric-pair-mode)
-
+  Display time in the modeline
+  #+BEGIN_SRC emacs-lisp
     (setq display-time-24hr-format t)
     (setq display-time-day-and-date t)
     (display-time)
+  #+END_SRC
 
-    (winner-mode t)
-    (windmove-default-keybindings)
-
-    (ido-mode t)
-
-    (setq major-mode 'text-mode)
-    (setq ediff-split-window-function (quote split-window-horizontally))
-
-    ;;Custom backup directory
+  Save backups in one directory, also dont create lockfiles since they're annoying
+  #+BEGIN_SRC emacs-lisp
+    (setq delete-by-moving-to-trash 't)
     (setq backup-directory-alist
-          `(("." . ,(concat user-emacs-directory "backups"))))
+    `(("." . ,(concat user-emacs-directory "backups"))))
 
     (setq auto-save-file-name-transforms
-          `((".*" ,temporary-file-directory t)))
+    `((".*" ,temporary-file-directory t)))
 
     (setq create-lockfiles nil)
+  #+END_SRC
 
+  Increase Emacs' threshhold for garbage collection. In theory this makes Emacs faster.
+  #+BEGIN_SRC emacs-lisp
+    (setq gc-cons-threshold 50000000)
+  #+END_SRC
+
+  Set the font, if it is available
+  #+BEGIN_SRC emacs-lisp
+    (when (member "DejaVu Sans Mono" (font-family-list))
+      (set-default-font "DejaVu Sans Mono"))
+  #+END_SRC
+
+  Set the default tab width to 4. And use spaces
+  #+BEGIN_SRC emacs-lisp
+    (setq-default tab-width 4)
+    (setq-default indent-tabs-mode nil)
+  #+END_SRC
+  
+  Show matching parentheses, automatically insert closing brackets.
+  #+BEGIN_SRC emacs-lisp
+    (setq show-paren-delay 0)
+    (show-paren-mode)
+    (electric-pair-mode)
+  #+END_SRC
+
+  Enable ido-mode, also winner mode for window configurations.
+  Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
+  #+BEGIN_SRC emacs-lisp
+    (winner-mode t)
+    (windmove-default-keybindings)
+    (ido-mode t)
+  #+END_SRC
+
+  Some settings to make scrolling work properly on Mac OS.
+  Set default major mode and tell ediff to split windows horizontally.
+  #+BEGIN_SRC emacs-lisp
+    (setq mouse-wheel-scroll-amount '(1))
+    (setq mouse-wheel-progressive-speed nil)
+ 
+    (setq major-mode 'text-mode)
+    (setq ediff-split-window-function (quote split-window-horizontally))
   #+END_SRC
 * System specific settings
   #+BEGIN_SRC emacs-lisp
@@ -74,7 +94,6 @@
 
 	(setq mac-option-modifier 'meta)
 	(setq mac-command-modifier 'super)
-
   #+END_SRC
 * Bootstrap use-package
   #+BEGIN_SRC emacs-lisp
@@ -376,11 +395,11 @@
 	#+END_SRC
 ** Documenting
    #+BEGIN_SRC emacs-lisp
-
      (use-package htmlize)
 
      (use-package org
        :config
+       (setq org-export-html-postamble nil)
        (add-to-list 'org-structure-template-alist
                     '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
        (setq org-log-done 'time)
@@ -400,8 +419,6 @@
      (use-package auto-complete-auctex)
 
      (use-package latex-preview-pane)
-
-
    #+END_SRC
 ** Misc.
    #+BEGIN_SRC emacs-lisp
