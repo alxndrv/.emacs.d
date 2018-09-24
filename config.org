@@ -1,6 +1,6 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Andrey Aleksandrov
-
+#+OPTIONS: num:nil toc:nil
 
 * Custom file
   #+BEGIN_SRC emacs-lisp
@@ -14,7 +14,6 @@
 
     (global-hl-line-mode t)
     (global-linum-mode 1)
-    (global-subword-mode 1)
 
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
@@ -94,8 +93,8 @@
   #+END_SRC
 * Packages
 ** Evil-mode
+   Use evil-mode
    #+BEGIN_SRC emacs-lisp
-
 
      (use-package evil-surround)
 
@@ -113,22 +112,34 @@
        )
 
    #+END_SRC
-** Visual
-   #+BEGIN_SRC emacs-lisp
 
-     (use-package solarized-theme
+   Return to normal mode with "jj" instead of Esc
+   Imagine having the Escape key on a touch bar...
+   #+BEGIN_SRC emacs-lisp
+     (use-package key-chord
+       :config
+       (setq key-chord-two-keys-delay 0.3)
+       (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+       (key-chord-mode 1)
+       )
+   #+END_SRC
+** Visual
+   Packages and settings providing visual customization to Emacs
+   
+   Currently I use the "solarized-dark" theme.
+   #+BEGIN_SRC emacs-lisp
+      (use-package solarized-theme
        :demand
        :config
        (setq x-underline-at-descent-line t)
        (load-theme 'solarized-dark t)
        )
+   #+END_SRC
 
-     ;; Cursor settings
-     (setq-default cursor-type 'bar
-                   visible-bell 't
-                   ring-bell-function 'ignore)
-
-     (use-package delight
+   Delight is a package which allows to change the way specific minor modes show up in the modeline.
+   I use it to hide certain redundant minor mode indicators, and shorten others.
+   #+BEGIN_SRC emacs-lisp
+      (use-package delight
        :config
        (delight 'flycheck-mode " \u2714" 'flycheck)
        (delight 'auto-complete-mode " \u2630" 'auto-complete)
@@ -141,7 +152,10 @@
        (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
        (delight 'eldoc-mode nil 'eldoc)
        (delight 'anzu-mode nil 'anzu))
-
+   #+END_SRC
+   
+   "smart-mode-line" makes the modeline, well... smarter
+   #+BEGIN_SRC emacs-lisp
      (use-package smart-mode-line
        :init
        (setq sml/shorten-directory 't
@@ -150,7 +164,12 @@
        (sml/setup)
        (sml/apply-theme 'respectful)
        )
+   #+END_SRC
 
+   Various packages used to highlight things.
+   Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
+   Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
+   #+BEGIN_SRC emacs-lisp
      (use-package highlight-symbol)
 
      (use-package highlight-parentheses
@@ -222,6 +241,8 @@
 
    #+END_SRC
 ** Navigation
+   These packages provide various ways to navigate between buffers, windows and frames.
+   Basically, these are used to change what's on my screen at any given time.
    #+BEGIN_SRC emacs-lisp
 	 (use-package projectile
 	   :config
@@ -243,6 +264,7 @@
 
 	 (use-package elscreen
 	   :config
+       (setq elscreen-prefix-key "\C-Q")
 	   (elscreen-start))
 
    #+END_SRC
@@ -271,6 +293,7 @@
    #+END_SRC
 ** Programming
 *** Language support
+    Various packages providing modes for specific programming (and markup) languages 
 	#+BEGIN_SRC emacs-lisp
 	  (use-package rjsx-mode
 		:config
@@ -358,6 +381,8 @@
 
      (use-package org
        :config
+       (add-to-list 'org-structure-template-alist
+                    '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
        (setq org-log-done 'time)
        (setq org-ellipsis "⤵"))
 
