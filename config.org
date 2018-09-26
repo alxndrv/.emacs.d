@@ -2,6 +2,7 @@
 #+AUTHOR: Andrey Aleksandrov
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
+
 * Custom file
   Store all Custom settings in a separate file so it doesn't write into init.el
   #+BEGIN_SRC emacs-lisp
@@ -132,13 +133,13 @@
 
    #+END_SRC
 
-   Return to normal mode with "jj" instead of Esc
+   Return to normal mode with "hj" or "jh" instead of Esc
    Imagine having the Escape key on a touch bar...
    #+BEGIN_SRC emacs-lisp
      (use-package key-chord
        :config
-       (setq key-chord-two-keys-delay 0.3)
-       (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+       (setq key-chord-two-keys-delay 0.1)
+       (key-chord-define evil-insert-state-map "hj" 'evil-normal-state)
        (key-chord-mode 1)
        )
    #+END_SRC
@@ -314,32 +315,44 @@
 *** Language support
     Various packages providing modes for specific programming (and markup) languages 
 	#+BEGIN_SRC emacs-lisp
-	  (use-package rjsx-mode
-		:config
-		(add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
+      (use-package rjsx-mode
+        :config
+        (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-	  (use-package json-mode)
+      (use-package json-mode)
 
-	  (use-package csharp-mode)
+      (use-package csharp-mode)
 
-	  (use-package kotlin-mode)
+      (use-package kotlin-mode)
 
-	  (use-package android-mode)
+      (use-package android-mode)
 
-	  (use-package groovy-mode)
+      (use-package groovy-mode)
 
-	  (use-package swift-mode)
+      (use-package swift-mode)
 
-	  (use-package php-mode)
+      (use-package php-mode)
 
-	  (use-package yaml-mode
-		:config
-		(add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
+      (use-package yaml-mode
+        :config
+        (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
 
-	  (use-package dockerfile-mode
-		:config
-		(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+      (use-package dockerfile-mode
+        :config
+        (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
+      (use-package meghanada
+        :config
+        (add-hook 'java-mode-hook
+                  (lambda ()
+                    (meghanada-mode t)
+                    (flycheck-mode +1)
+                    ))
+        (cond
+         ((eq system-type 'windows-nt)
+          (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME"))))
+         )
+        )
 	#+END_SRC
 *** Development utilities
 	#+BEGIN_SRC emacs-lisp
@@ -451,10 +464,10 @@
 	 (defun flymd-browser-function-custom (url)
 	   (let ((process-environment (browse-url-process-environment)))
 		 (apply 'start-process
-				(concat "firefox " url)
-				nil
-				"/usr/bin/open"
-				(list "-a" "firefox" url))))
+			    (concat "firefox " url)
+			    nil
+			    "/usr/bin/open"
+			    (list "-a" "firefox" url))))
 
 	 (setq flymd-browser-open-function 'flymd-browser-function-custom)
 
