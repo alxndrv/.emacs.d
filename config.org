@@ -207,7 +207,11 @@
      (use-package focus)
 
      (use-package all-the-icons)
+   #+END_SRC
 
+   I want my Compilation buffers to follow the compiler output
+   #+BEGIN_SRC emacs-lisp
+     (setq compilation-scroll-output t)
    #+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
