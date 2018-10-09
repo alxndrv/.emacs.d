@@ -20,6 +20,7 @@
 
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
+    (menu-bar-mode -1)
 
     (line-number-mode)
     (column-number-mode)
@@ -291,6 +292,47 @@
        (setq elscreen-prefix-key "\C-Q")
 	   (elscreen-start))
 
+   #+END_SRC
+** Key bindings (general.el)
+   General.el for easily remapping keybindings
+   #+BEGIN_SRC emacs-lisp
+     (use-package general
+       :demand
+       :config
+       (general-define-key
+        :states '(normal visual insert emacs)
+        :prefix "SPC"
+        :non-normal-prefix "M-SPC"
+        :keymaps 'override
+        "SPC" '(helm-M-x :which-key "Extended command")
+
+        ;; File actions
+        "f" '(:ignore t :which-key "Files")
+        "ff" '(helm-find-files :which-key "Find file")
+        "fp" '(helm-projectile-find-file :which-key "File file in project")
+        "fs" '(save-buffer :which-key "Save buffer")
+        "fS" '(save-some-buffers :which-key "Save all buffers")
+
+        ;; Projectile actions
+        "p" '(:ignore t :which-key "Projectile")
+        "pf" '(helm-projectile-find-file :which-key "Find file in project")
+        "pss" '(projectile-ag :which-key "Search in project (ag)")
+        "psg" '(projectile-grep :which-key "Search in project (grep)")
+
+        ;; Search actions
+        "s" '(:ignore t :which-key "Search")
+        "ss" '(swiper-helm :which-key "Swiper (helm)")
+
+        ;; Git actions
+        "g" '(:ignore t :which-key "Git")
+        "gs" '(magit-status :which-key "Magit status")
+        "gb" '(magit-blame :which-key "Magit blame")
+
+        ;; Buffer actions
+        "b" '(:ignore t :which-key "Buffers")
+        "bb" '(helm-buffers-list :which-key "Buffer list (helm)")
+        "bk" '(kill-buffer :which-key "Kill buffer")
+        ))
    #+END_SRC
 ** Editing
    #+BEGIN_SRC emacs-lisp
