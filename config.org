@@ -21,6 +21,7 @@
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
     (menu-bar-mode -1)
+    (setq ring-bell-function 'ignore)
 
     (line-number-mode)
     (column-number-mode)
@@ -332,6 +333,11 @@
         "b" '(:ignore t :which-key "Buffers")
         "bb" '(helm-buffers-list :which-key "Buffer list (helm)")
         "bk" '(kill-buffer :which-key "Kill buffer")
+
+        ;; Android-mode actions
+        "a" '(:ignore t :which-key "Android (gradle)")
+        "ai" '(android-gradle-installDebug :which-key "installDebug")
+        "ac" '(android-gradle-clean :which-key "clean")
         ))
    #+END_SRC
 ** Editing
