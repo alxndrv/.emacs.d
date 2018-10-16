@@ -157,23 +157,23 @@
        (load-theme 'solarized-dark t)
        )
    #+END_SRC
-
+   
    Delight is a package which allows to change the way specific minor modes show up in the modeline.
    I use it to hide certain redundant minor mode indicators, and shorten others.
    #+BEGIN_SRC emacs-lisp
-      (use-package delight
-       :config
-       (delight 'flycheck-mode " \u2714" 'flycheck)
-       (delight 'auto-complete-mode " \u2630" 'auto-complete)
-       (delight 'helm-mode " \u2388" 'helm)
-       (delight 'editorconfig-mode nil 'editorconfig)
-       (delight 'which-key-mode nil 'which-key)
-       (delight 'beacon-mode nil 'beacon)
-       (delight 'rainbow-mode nil 'rainbow-mode)
-       (delight 'auto-revert-mode nil 'autorevert)
-       (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-       (delight 'eldoc-mode nil 'eldoc)
-       (delight 'anzu-mode nil 'anzu))
+     (use-package delight
+      :config
+      (delight 'flycheck-mode " \u2714" 'flycheck)
+      (delight 'company-mode " \u2630" 'company)
+      (delight 'helm-mode " \u2388" 'helm)
+      (delight 'editorconfig-mode nil 'editorconfig)
+      (delight 'which-key-mode nil 'which-key)
+      (delight 'beacon-mode nil 'beacon)
+      (delight 'rainbow-mode nil 'rainbow-mode)
+      (delight 'auto-revert-mode nil 'autorevert)
+      (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+      (delight 'eldoc-mode nil 'eldoc)
+      (delight 'anzu-mode nil 'anzu))
    #+END_SRC
    
    "smart-mode-line" makes the modeline, well... smarter
@@ -344,6 +344,8 @@
         "w" '(:ignore t :which-key "Windows")
         "wo" '(ace-window :which-key "Ace window")
         "wk" '(delete-window :which-key "Close window")
+        "wr" '(split-window-right :which-key "Split window right")
+        "wd" '(split-window-below :which-key "Split window down")
 
         ;; Toggles
         "t" '(:ignore t :which-key "Toggles")
@@ -388,7 +390,7 @@
        )
 
      (use-package lsp-ui
-       :after lps-mode)
+       :after lsp-mode)
 
      (use-package lsp-javascript-typescript
        :after (lsp-mode lsp-ui)
@@ -398,9 +400,11 @@
        )
 
      (use-package lsp-java
+       :ensure t
        :after (lsp-mode lsp-ui)
+       :requires (lsp-ui-flycheck lsp-ui-sideline)
        :config
-       (add-hook 'java-mode-hook #'lsp-java-enable))
+       (add-hook 'java-mode-hook 'lsp-java-enable))
 
      (add-hook 'kotlin-mode-hook #'lsp-kotlin-mode-enable)
      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
@@ -437,11 +441,11 @@
 
       (use-package meghanada
         :config
-        (add-hook 'java-mode-hook
-                  (lambda ()
-                    (meghanada-mode t)
-                    (flycheck-mode +1)
-                    ))
+        ;; (add-hook 'java-mode-hook
+        ;;           (lambda ()
+        ;;             (meghanada-mode t)
+        ;;             (flycheck-mode +1)
+        ;;             ))
         (cond
          ((eq system-type 'windows-nt)
           (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME"))))
@@ -486,14 +490,23 @@
         :config
         (editorconfig-mode 1))
 
-      (use-package auto-complete
-        :ensure t
+      (use-package company
         :config
-        (ac-config-default)
-        (setq ac-auto-show-menu 0.4)
-        (add-to-list 'ac-modes 'rjsx-mode)
-        (add-to-list 'ac-modes 'kotlin-mode)
-        (global-auto-complete-mode t))
+        (add-hook 'after-init-hook 'global-company-mode))
+
+      (use-package company-lsp
+        :after company
+        :config
+        (push 'company-lsp company-backends))
+
+      ;; (use-package auto-complete
+      ;;   :ensure t
+      ;;   :config
+      ;;   (ac-config-default)
+      ;;   (setq ac-auto-show-menu 0.4)
+      ;;   (add-to-list 'ac-modes 'rjsx-mode)
+      ;;   (add-to-list 'ac-modes 'kotlin-mode)
+      ;;   (global-auto-complete-mode t))
 
       (use-package rainbow-mode
         :config
@@ -510,7 +523,9 @@
        (add-to-list 'org-structure-template-alist
                     '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
        (setq org-log-done 'time)
-       (setq org-ellipsis "⤵"))
+       (setq org-ellipsis "⤵")
+       (setq org-src-window-setup 'current-window)
+       )
 
      (use-package org-bullets
        :config
