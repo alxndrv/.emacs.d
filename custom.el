@@ -10,10 +10,11 @@
  '(git-messenger:use-magit-popup t)
  '(global-linum-mode t)
  '(global-magit-file-mode nil)
+ '(global-whitespace-mode nil)
  '(md4rd-subs-active (quote (emacs runescape lisp+Common_Lisp prolog)))
  '(package-selected-packages
    (quote
-    (lsp-ui lsp-mode general meghanada key-chord evil evil-surround htmlize molokai-theme material-theme spacemacs-theme modalka ox-twbs org-bullets flycheck-kotlin swiper-helm git-messenger groovy-mode flymd markdown-mode+ latex-preview-pane auto-complete-auctex auctex magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
+    (lsp-javascript-typescript lsp-ui lsp-mode general meghanada key-chord evil evil-surround htmlize molokai-theme material-theme spacemacs-theme modalka ox-twbs org-bullets flycheck-kotlin swiper-helm git-messenger groovy-mode flymd markdown-mode+ latex-preview-pane auto-complete-auctex auctex magit calfw ace-window all-the-icons neotree neo-tree smart-mode-line-powerline-theme smart-mode-line anzu elscreen dashboard yasnippet-snippets yasnippet expand-region kotlin-mode php-mode swift-mode exec-path-from-shell highlight-parentheses dockerfile-mode restart-emacs avy helm-ag yaml-mode json-mode flycheck-popup-tip elogcat md4rd logcat-mode multi-term smartparens-config delight doom-themes multiple-cursors helm-projectile dumb-jump beacon flycheck projectile android-mode sx csharp-mode dimmer highlight-symbol restclient undo-tree focus auto-complete dracula-theme darcula-theme rjsx-mode which-key solarized-theme rainbow-mode editorconfig helm use-package)))
  '(projectile-globally-ignored-directories
    (quote
     (".idea" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" "build")))

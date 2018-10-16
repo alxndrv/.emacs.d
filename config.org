@@ -375,6 +375,7 @@
 
    #+END_SRC
 ** LSP 
+   Language Server Protocol support for various languages.
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
        :config
@@ -382,12 +383,19 @@
         lsp-kotlin-mode
         "kotlin"
         (lambda () (projectile-project-root))
-
-        '("/home/andrey/Tools/KotlinLanguageServer/build/install/kotlin-language-server/bin/kotlin-language-server"))
+        ;; Requires: https://github.com/fwcd/KotlinLanguageServer
+        '("~/Tools/KotlinLanguageServer/build/install/kotlin-language-server/bin/kotlin-language-server"))
        )
 
      (use-package lsp-ui
        :after lps-mode)
+
+     (use-package lsp-javascript-typescript
+       :after (lsp-mode lsp-ui)
+       :config
+       ;; Requires: `npm i -g javascript-typescript-langserver`
+       (add-hook 'rjsx-mode-hook #'lsp-javascript-typescript-enable)
+       )
 
      (add-hook 'kotlin-mode-hook #'lsp-kotlin-mode-enable)
      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
@@ -507,8 +515,6 @@
 
      (use-package markdown-mode+)
      (use-package flymd)
-
-     (use-package auctex)
 
      (use-package auto-complete-auctex)
 
