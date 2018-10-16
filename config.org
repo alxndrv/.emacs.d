@@ -374,6 +374,24 @@
      (c-set-offset 'case-label '+)
 
    #+END_SRC
+** LSP 
+   #+BEGIN_SRC emacs-lisp
+     (use-package lsp-mode
+       :config
+       (lsp-define-stdio-client
+        lsp-kotlin-mode
+        "kotlin"
+        (lambda () (projectile-project-root))
+
+        '("/home/andrey/Tools/KotlinLanguageServer/build/install/kotlin-language-server/bin/kotlin-language-server"))
+       )
+
+     (use-package lsp-ui
+       :after lps-mode)
+
+     (add-hook 'kotlin-mode-hook #'lsp-kotlin-mode-enable)
+     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+   #+END_SRC
 ** Programming
 *** Language support
     Various packages providing modes for specific programming (and markup) languages 
