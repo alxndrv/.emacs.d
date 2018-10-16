@@ -397,6 +397,11 @@
        (add-hook 'rjsx-mode-hook #'lsp-javascript-typescript-enable)
        )
 
+     (use-package lsp-java
+       :after (lsp-mode lsp-ui)
+       :config
+       (add-hook 'java-mode-hook #'lsp-java-enable))
+
      (add-hook 'kotlin-mode-hook #'lsp-kotlin-mode-enable)
      (add-hook 'lsp-mode-hook 'lsp-ui-mode)
    #+END_SRC
@@ -515,8 +520,6 @@
 
      (use-package markdown-mode+)
      (use-package flymd)
-
-     (use-package auto-complete-auctex)
 
      (use-package latex-preview-pane)
    #+END_SRC
