@@ -338,6 +338,17 @@
         "a" '(:ignore t :which-key "Android (gradle)")
         "ai" '(android-gradle-installDebug :which-key "installDebug")
         "ac" '(android-gradle-clean :which-key "clean")
+        "ar" '(android-gradle-assembleRelease :which-key "assembleRelease")
+
+        ;; Window actions
+        "w" '(:ignore t :which-key "Windows")
+        "wo" '(ace-window :which-key "Ace window")
+        "wk" '(delete-window :which-key "Close window")
+
+        ;; Toggles
+        "t" '(:ignore t :which-key "Toggles")
+        "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
+
         ))
    #+END_SRC
 ** Editing
