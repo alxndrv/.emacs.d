@@ -111,13 +111,11 @@
 	(require 'use-package)
 	(setq use-package-always-ensure t
 		  use-package-verbose t)
-
   #+END_SRC
 * Packages
 ** Evil-mode
    Use evil-mode
    #+BEGIN_SRC emacs-lisp
-
      (use-package evil-surround)
 
      (use-package evil
@@ -132,16 +130,15 @@
        (global-evil-surround-mode 1)
        (evil-mode)
        )
-
    #+END_SRC
 
-   Return to normal mode with "hj" or "jh" instead of Esc
+   Return to normal mode with "kj" or "jk" instead of Esc
    Imagine having the Escape key on a touch bar...
    #+BEGIN_SRC emacs-lisp
      (use-package key-chord
        :config
        (setq key-chord-two-keys-delay 0.1)
-       (key-chord-define evil-insert-state-map "hj" 'evil-normal-state)
+       (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
        (key-chord-mode 1)
        )
    #+END_SRC
@@ -264,7 +261,6 @@
 	 (use-package git-messenger)
 
 	 (use-package undo-tree)
-
    #+END_SRC
 ** Navigation
    These packages provide various ways to navigate between buffers, windows and frames.
@@ -347,10 +343,15 @@
         "wr" '(split-window-right :which-key "Split window right")
         "wd" '(split-window-below :which-key "Split window down")
 
-        ;; Toggles
-        "t" '(:ignore t :which-key "Toggles")
+        ;; Toggles and other adjustments
+        "t" '(:ignore t :which-key "Settings")
         "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
+        "tf" '(text-scale-adjust :which-key "Adjust text size")
 
+        ;; Elscreen
+        "q" '(:ignore t :which-key "Elscreen")
+        "qn" '(elscreen-next :which-key "Next screen")
+        "qp" '(elscreen-previous :which-key "Prev. screen")
         ))
    #+END_SRC
 ** Editing
@@ -374,7 +375,6 @@
        (global-anzu-mode +1))
 
      (c-set-offset 'case-label '+)
-
    #+END_SRC
 ** LSP 
    Language Server Protocol support for various languages.
@@ -511,7 +511,6 @@
       (use-package rainbow-mode
         :config
         (rainbow-mode))
-
 	#+END_SRC
 ** Documenting
    #+BEGIN_SRC emacs-lisp
@@ -540,51 +539,51 @@
    #+END_SRC
 ** Misc.
    #+BEGIN_SRC emacs-lisp
-	 (use-package md4rd)
+     (use-package md4rd)
 
-	 (use-package calfw)
+     (use-package calfw)
 
-	 (use-package sx
-	   :config
-	   (bind-keys :prefix "C-c s"
-				  :prefix-map my-sx-map
-				  :prefix-docstring "Global keymap for SX."
-				  ("q" . sx-tab-all-questions)
-				  ("i" . sx-inbox)
-				  ("o" . sx-open-link)
-				  ("u" . sx-tab-unanswered-my-tags)
-				  ("a" . sx-ask)
-				  ("s" . sx-search)))
+     (use-package sx
+       :config
+       (bind-keys :prefix "C-c s"
+                  :prefix-map my-sx-map
+                  :prefix-docstring "Global keymap for SX."
+                  ("q" . sx-tab-all-questions)
+                  ("i" . sx-inbox)
+                  ("o" . sx-open-link)
+                  ("u" . sx-tab-unanswered-my-tags)
+                  ("a" . sx-ask)
+                  ("s" . sx-search)))
 
 
-	 (defun indent-buffer ()
-	   "Indent an entire buffer using the default intenting scheme."
-	   (interactive)
-	   (save-excursion
-		 (delete-trailing-whitespace)
-		 (indent-region (point-min) (point-max) nil)
-		 (untabify (point-min) (point-max))))
+     (defun indent-buffer ()
+       "Indent an entire buffer using the default intenting scheme."
+       (interactive)
+       (save-excursion
+         (delete-trailing-whitespace)
+         (indent-region (point-min) (point-max) nil)
+         (untabify (point-min) (point-max))))
 
-											 ; Flymd compatibility fix, ie. we force it to use Firefox
-	 (defun flymd-browser-function-custom (url)
-	   (let ((process-environment (browse-url-process-environment)))
-		 (apply 'start-process
-			    (concat "firefox " url)
-			    nil
-			    "/usr/bin/open"
-			    (list "-a" "firefox" url))))
+                                             ; Flymd compatibility fix, ie. we force it to use Firefox
+     (defun flymd-browser-function-custom (url)
+       (let ((process-environment (browse-url-process-environment)))
+         (apply 'start-process
+                (concat "firefox " url)
+                nil
+                "/usr/bin/open"
+                (list "-a" "firefox" url))))
 
-	 (setq flymd-browser-open-function 'flymd-browser-function-custom)
+     (setq flymd-browser-open-function 'flymd-browser-function-custom)
 
-	 (use-package dashboard
-	   :config
-	   (dashboard-setup-startup-hook)
-	   (setq dashboard-banner-logo-title "Welcome back!")
-	   (setq dashboard-startup-banner 'logo)
-	   (setq dashboard-items '((recents  . 5)
-							   (bookmarks . 5)
-							   (projects . 5)
-							   (agenda . 5)
-							   (registers . 5)))
-	   )
+     (use-package dashboard
+       :config
+       (dashboard-setup-startup-hook)
+       (setq dashboard-banner-logo-title "Welcome back!")
+       (setq dashboard-startup-banner 'logo)
+       (setq dashboard-items '((recents  . 5)
+                               (bookmarks . 5)
+                               (projects . 5)
+                               (agenda . 5)
+                               (registers . 5)))
+       )
    #+END_SRC
