@@ -352,6 +352,7 @@
         "q" '(:ignore t :which-key "Elscreen")
         "qn" '(elscreen-next :which-key "Next screen")
         "qp" '(elscreen-previous :which-key "Prev. screen")
+        "qc" '(elscreen-create :which-key "New screen")
         ))
    #+END_SRC
 ** Editing
