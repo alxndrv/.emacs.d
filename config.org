@@ -170,7 +170,8 @@
       (delight 'auto-revert-mode nil 'autorevert)
       (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
       (delight 'eldoc-mode nil 'eldoc)
-      (delight 'anzu-mode nil 'anzu))
+      (delight 'anzu-mode nil 'anzu)
+      (delight 'undo-tree-mode nil 'undo-tree))
    #+END_SRC
    
    "smart-mode-line" makes the modeline, well... smarter
@@ -312,6 +313,7 @@
 
         ;; Projectile actions
         "p" '(:ignore t :which-key "Projectile")
+        "pp" '(projectile-switch-project :which-key "Switch project")
         "pf" '(helm-projectile-find-file :which-key "Find file in project")
         "pss" '(projectile-ag :which-key "Search in project (ag)")
         "psg" '(projectile-grep :which-key "Search in project (grep)")
@@ -335,6 +337,7 @@
         "ai" '(android-gradle-installDebug :which-key "installDebug")
         "ac" '(android-gradle-clean :which-key "clean")
         "ar" '(android-gradle-assembleRelease :which-key "assembleRelease")
+        "ad" '(android-gradle-assembleDebug :which-key "assembleDebug")
 
         ;; Window actions
         "w" '(:ignore t :which-key "Windows")
@@ -353,16 +356,20 @@
         "qn" '(elscreen-next :which-key "Next screen")
         "qp" '(elscreen-previous :which-key "Prev. screen")
         "qc" '(elscreen-create :which-key "New screen")
+        "qk" '(elscreen-kill :which-key "Kill screen")
         ))
    #+END_SRC
 ** Editing
    #+BEGIN_SRC emacs-lisp
-
      (use-package multiple-cursors
        :config
        (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
        (global-set-key (kbd "C->") 'mc/mark-next-like-this)
        (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
+
+     (use-package evil-nerd-commenter
+       :config
+       (evilnc-default-hotkeys))
 
      (use-package avy
        :config
