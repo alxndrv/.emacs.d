@@ -209,6 +209,12 @@
      (use-package all-the-icons)
    #+END_SRC
 
+   Minor mode for highlighting indentation levels.
+   #+BEGIN_SRC emacs-lisp
+     (use-package highlight-indent-guides
+       :config
+       (setq highlight-indent-guides-method 'character))
+   #+END_SRC
    I want my Compilation buffers to follow the compiler output
    #+BEGIN_SRC emacs-lisp
      (setq compilation-scroll-output t)
@@ -350,6 +356,7 @@
         "t" '(:ignore t :which-key "Settings")
         "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
         "tf" '(text-scale-adjust :which-key "Adjust text size")
+        "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
 
         ;; Elscreen
         "q" '(:ignore t :which-key "Elscreen")
