@@ -125,13 +125,12 @@
 
      (use-package evil
        :after evil-surround
-       :config
+       :init
        (setq evil-want-abbrev-expand-on-insert-exit nil)
-
-       (add-to-list 'evil-emacs-state-modes 'magit-mode)
-       (add-to-list 'evil-emacs-state-modes 'magit-mode)
+       (setq evil-want-C-i-jump nil)
        (add-to-list 'evil-emacs-state-modes 'magit-mode)
 
+       :config
        (global-evil-surround-mode 1)
        (evil-mode)
        )
