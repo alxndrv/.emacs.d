@@ -337,6 +337,7 @@
         "b" '(:ignore t :which-key "Buffers")
         "bb" '(helm-buffers-list :which-key "Buffer list (helm)")
         "bk" '(kill-buffer :which-key "Kill buffer")
+        "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
         ;; Android-mode actions
         "a" '(:ignore t :which-key "Android (gradle)")
@@ -357,6 +358,7 @@
         "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
         "tf" '(text-scale-adjust :which-key "Adjust text size")
         "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
+        "tF" '(focus-mode :which-key "Focus mode")
 
         ;; Elscreen
         "q" '(:ignore t :which-key "Elscreen")
