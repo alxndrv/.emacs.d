@@ -63,6 +63,11 @@
     (setq-default indent-tabs-mode nil)
   #+END_SRC
   
+  Comment style
+  #+BEGIN_SRC emacs-lisp
+    (setq comment-style 'extra-line)
+  #+END_SRC
+
   Show matching parentheses, automatically insert closing brackets.
   #+BEGIN_SRC emacs-lisp
     (setq show-paren-delay 0)
