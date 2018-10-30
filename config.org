@@ -2,227 +2,224 @@
 #+AUTHOR: Andrey Aleksandrov
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
+* Basic settings 
+** Custom file
+   Store all Custom settings in a separate file so it doesn't write into init.el
+   #+BEGIN_SRC emacs-lisp
+     (setq custom-file "~/.emacs.d/custom.el")
+     (load custom-file)
+   #+END_SRC
+** Adjust default GUI
+   Turn off useless GUI buttons, highlight current line, show line and column numbers.
+   I also don't need the default startup screen
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-startup-screen t)
 
-* Custom file
-  Store all Custom settings in a separate file so it doesn't write into init.el
-  #+BEGIN_SRC emacs-lisp
-    (setq custom-file "~/.emacs.d/custom.el")
-    (load custom-file)
-  #+END_SRC
-* Basic settings
-  Turn off useless GUI buttons, highlight current line, show line and column numbers.
-  I also don't need the default startup screen
-  #+BEGIN_SRC emacs-lisp
-    (setq inhibit-startup-screen t)
+     (global-hl-line-mode t)
+     (global-linum-mode 1)
 
-    (global-hl-line-mode t)
-    (global-linum-mode 1)
+     (tool-bar-mode -1)
+     (scroll-bar-mode -1)
+     (menu-bar-mode -1)
+     (setq ring-bell-function 'ignore)
 
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
-    (menu-bar-mode -1)
-    (setq ring-bell-function 'ignore)
+     (line-number-mode)
+     (column-number-mode)
+   #+END_SRC
+** Display time in modeline 
+   #+BEGIN_SRC emacs-lisp
+     (setq display-time-24hr-format t)
+     (setq display-time-day-and-date t)
+     (display-time)
+   #+END_SRC
+** Backup directory and settings
+   Save backups in one directory, also dont create lockfiles since they're annoying
+   #+BEGIN_SRC emacs-lisp
+     (setq delete-by-moving-to-trash 't)
+     (setq backup-directory-alist
+     `(("." . ,(concat user-emacs-directory "backups"))))
 
-    (line-number-mode)
-    (column-number-mode)
-  #+END_SRC
+     (setq auto-save-file-name-transforms
+     `((".*" ,temporary-file-directory t)))
 
-  Display time in the modeline
-  #+BEGIN_SRC emacs-lisp
-    (setq display-time-24hr-format t)
-    (setq display-time-day-and-date t)
-    (display-time)
-  #+END_SRC
+     (setq create-lockfiles nil)
+   #+END_SRC
+** GC threshhold
+   Increase Emacs' threshhold for garbage collection. In theory this makes Emacs faster.
+   #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold 50000000)
+   #+END_SRC
+** Font
+   Set the font, if it is available
+   #+BEGIN_SRC emacs-lisp
+     (when (member "DejaVu Sans Mono" (font-family-list))
+       (set-default-font "DejaVu Sans Mono"))
+   #+END_SRC
+** Tab width
+   Set the default tab width to 4. And use spaces
+   #+BEGIN_SRC emacs-lisp
+     (setq-default tab-width 4)
+     (setq-default indent-tabs-mode nil)
+   #+END_SRC
+** Code comments
+   #+BEGIN_SRC emacs-lisp
+     (setq comment-style 'extra-line)
+   #+END_SRC
+** Parentheses
+   Show matching parentheses, automatically insert closing brackets.
+   #+BEGIN_SRC emacs-lisp
+     (setq show-paren-delay 0)
+     (show-paren-mode)
+     (electric-pair-mode)
+   #+END_SRC
+** IDO
+   Enable ido-mode, also winner mode for window configurations.
+   Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
+   #+BEGIN_SRC emacs-lisp
+     (winner-mode t)
+     (windmove-default-keybindings)
+     (ido-mode t)
+   #+END_SRC
+** Ediff
+   Tell ediff to split windows horizontally.
+   #+BEGIN_SRC emacs-lisp
+     (setq ediff-split-window-function (quote split-window-horizontally))
+   #+END_SRC
+** System specific settings
+   #+BEGIN_SRC emacs-lisp
+     (unless (string-equal system-type "darwin")
+       (set-face-attribute 'default nil :height 115 :family "Consolas")
+       )
 
-  Save backups in one directory, also dont create lockfiles since they're annoying
-  #+BEGIN_SRC emacs-lisp
-    (setq delete-by-moving-to-trash 't)
-    (setq backup-directory-alist
-    `(("." . ,(concat user-emacs-directory "backups"))))
+     (setq ns-use-srgb-colorspace nil)
 
-    (setq auto-save-file-name-transforms
-    `((".*" ,temporary-file-directory t)))
+     (setq mac-option-modifier 'meta)
+     (setq mac-command-modifier 'super)
 
-    (setq create-lockfiles nil)
-  #+END_SRC
-
-  Increase Emacs' threshhold for garbage collection. In theory this makes Emacs faster.
-  #+BEGIN_SRC emacs-lisp
-    (setq gc-cons-threshold 50000000)
-  #+END_SRC
-
-  Set the font, if it is available
-  #+BEGIN_SRC emacs-lisp
-    (when (member "DejaVu Sans Mono" (font-family-list))
-      (set-default-font "DejaVu Sans Mono"))
-  #+END_SRC
-
-  Set the default tab width to 4. And use spaces
-  #+BEGIN_SRC emacs-lisp
-    (setq-default tab-width 4)
-    (setq-default indent-tabs-mode nil)
-  #+END_SRC
-  
-  Comment style
-  #+BEGIN_SRC emacs-lisp
-    (setq comment-style 'extra-line)
-  #+END_SRC
-
-  Show matching parentheses, automatically insert closing brackets.
-  #+BEGIN_SRC emacs-lisp
-    (setq show-paren-delay 0)
-    (show-paren-mode)
-    (electric-pair-mode)
-  #+END_SRC
-
-  Enable ido-mode, also winner mode for window configurations.
-  Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
-  #+BEGIN_SRC emacs-lisp
-    (winner-mode t)
-    (windmove-default-keybindings)
-    (ido-mode t)
-  #+END_SRC
-
-  Some settings to make scrolling work properly on Mac OS.
-  Set default major mode and tell ediff to split windows horizontally.
-  #+BEGIN_SRC emacs-lisp
-    (setq mouse-wheel-scroll-amount '(1))
-    (setq mouse-wheel-progressive-speed nil)
- 
-    (setq major-mode 'text-mode)
-    (setq ediff-split-window-function (quote split-window-horizontally))
-  #+END_SRC
-* System specific settings
-  #+BEGIN_SRC emacs-lisp
-	(unless (string-equal system-type "darwin")
-	  (set-face-attribute 'default nil :height 115 :family "Consolas")
-	  )
-
-	(setq ns-use-srgb-colorspace nil)
-
-	(setq mac-option-modifier 'meta)
-	(setq mac-command-modifier 'super)
-  #+END_SRC
-* Bootstrap use-package
-  #+BEGIN_SRC emacs-lisp
-	;; Bootstrap use-package
-	(setq package-enable-at-startup nil)
-	(require 'package)
-	(add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
-	(package-initialize)
-	(unless (package-installed-p 'use-package)
-	  (package-refresh-contents)
-	  (package-install 'use-package))
-	(require 'use-package)
-	(setq use-package-always-ensure t
-		  use-package-verbose t)
-  #+END_SRC
+     (setq mouse-wheel-scroll-amount '(1))
+     (setq mouse-wheel-progressive-speed nil)
+   #+END_SRC
+** Bootstrap use-package
+   #+BEGIN_SRC emacs-lisp
+	 ;; Bootstrap use-package
+	 (setq package-enable-at-startup nil)
+	 (require 'package)
+	 (add-to-list 'package-archives  '("melpa" . "http://melpa.org/packages/"))
+	 (package-initialize)
+	 (unless (package-installed-p 'use-package)
+	   (package-refresh-contents)
+	   (package-install 'use-package))
+	 (require 'use-package)
+	 (setq use-package-always-ensure t
+		   use-package-verbose t)
+   #+END_SRC
 * Packages
 ** Evil-mode
-   Use evil-mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package evil-surround)
+*** Use evil-mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil-surround)
 
-     (use-package evil
-       :after evil-surround
-       :init
-       (setq evil-want-abbrev-expand-on-insert-exit nil)
-       (setq evil-want-C-i-jump nil)
-       (add-to-list 'evil-emacs-state-modes 'magit-mode)
+      (use-package evil
+        :after evil-surround
+        :init
+        (setq evil-want-abbrev-expand-on-insert-exit nil)
+        (setq evil-want-C-i-jump nil)
+        (add-to-list 'evil-emacs-state-modes 'magit-mode)
 
-       :config
-       (global-evil-surround-mode 1)
-       (evil-mode)
-       )
-   #+END_SRC
-
-   Return to normal mode with "kj" or "jk" instead of Esc
-   Imagine having the Escape key on a touch bar...
-   #+BEGIN_SRC emacs-lisp
-     (use-package key-chord
-       :config
-       (setq key-chord-two-keys-delay 0.1)
-       (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-       (key-chord-mode 1)
-       )
-   #+END_SRC
+        :config
+        (global-evil-surround-mode 1)
+        (evil-mode)
+        )
+    #+END_SRC
+*** Keychords
+    Return to normal mode with "kj" or "jk" instead of Esc
+    Imagine having the Escape key on a touch bar...
+    #+BEGIN_SRC emacs-lisp
+      (use-package key-chord
+        :config
+        (setq key-chord-two-keys-delay 0.1)
+        (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+        (key-chord-mode 1)
+        )
+    #+END_SRC
 ** Visual
    Packages and settings providing visual customization to Emacs
-   
-   Currently I use the "solarized-dark" theme.
-   #+BEGIN_SRC emacs-lisp
-      (use-package solarized-theme
-       :demand
+***  Theme
+    Currently I use the "solarized-dark" theme.
+    #+BEGIN_SRC emacs-lisp
+       (use-package solarized-theme
+        :demand
+        :config
+        (setq x-underline-at-descent-line t)
+        (load-theme 'solarized-dark t)
+        )
+    #+END_SRC
+***  Minor mode lighters
+    Delight is a package which allows to change the way specific minor modes show up in the modeline.
+    I use it to hide certain redundant minor mode indicators, and shorten others.
+    #+BEGIN_SRC emacs-lisp
+      (use-package delight
        :config
-       (setq x-underline-at-descent-line t)
-       (load-theme 'solarized-dark t)
-       )
-   #+END_SRC
-   
-   Delight is a package which allows to change the way specific minor modes show up in the modeline.
-   I use it to hide certain redundant minor mode indicators, and shorten others.
-   #+BEGIN_SRC emacs-lisp
-     (use-package delight
-      :config
-      (delight 'flycheck-mode " \u2714" 'flycheck)
-      (delight 'company-mode " \u2630" 'company)
-      (delight 'helm-mode " \u2388" 'helm)
-      (delight 'editorconfig-mode nil 'editorconfig)
-      (delight 'which-key-mode nil 'which-key)
-      (delight 'beacon-mode nil 'beacon)
-      (delight 'rainbow-mode nil 'rainbow-mode)
-      (delight 'auto-revert-mode nil 'autorevert)
-      (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-      (delight 'eldoc-mode nil 'eldoc)
-      (delight 'anzu-mode nil 'anzu)
-      (delight 'undo-tree-mode nil 'undo-tree))
-   #+END_SRC
-   
-   "smart-mode-line" makes the modeline, well... smarter
-   #+BEGIN_SRC emacs-lisp
-     (use-package smart-mode-line
-       :init
-       (setq sml/shorten-directory 't
-             sml/shorten-modes 't)
-       :config
-       (sml/setup)
-       (sml/apply-theme 'respectful)
-       )
-   #+END_SRC
+       (delight 'flycheck-mode " \u2714" 'flycheck)
+       (delight 'company-mode " \u2630" 'company)
+       (delight 'helm-mode " \u2388" 'helm)
+       (delight 'editorconfig-mode nil 'editorconfig)
+       (delight 'which-key-mode nil 'which-key)
+       (delight 'beacon-mode nil 'beacon)
+       (delight 'rainbow-mode nil 'rainbow-mode)
+       (delight 'auto-revert-mode nil 'autorevert)
+       (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
+       (delight 'eldoc-mode nil 'eldoc)
+       (delight 'anzu-mode nil 'anzu)
+       (delight 'undo-tree-mode nil 'undo-tree))
+    #+END_SRC
+*** Modeline
+    "smart-mode-line" makes the modeline, well... smarter
+    #+BEGIN_SRC emacs-lisp
+      (use-package smart-mode-line
+        :init
+        (setq sml/shorten-directory 't
+              sml/shorten-modes 't)
+        :config
+        (sml/setup)
+        (sml/apply-theme 'respectful)
+        )
+    #+END_SRC
+*** Highlighting
+    Various packages used to highlight things.
+    Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
+    Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
+    #+BEGIN_SRC emacs-lisp
+      (use-package highlight-symbol)
 
-   Various packages used to highlight things.
-   Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
-   Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
-   #+BEGIN_SRC emacs-lisp
-     (use-package highlight-symbol)
+      (use-package highlight-parentheses
+        :config
+        (global-highlight-parentheses-mode))
 
-     (use-package highlight-parentheses
-       :config
-       (global-highlight-parentheses-mode))
+      (use-package dimmer
+        :config
+        (dimmer-mode))
 
-     (use-package dimmer
-       :config
-       (dimmer-mode))
+      (use-package beacon
+        :config
+        (beacon-mode 1))
 
-     (use-package beacon
-       :config
-       (beacon-mode 1))
+      (use-package focus)
 
-     (use-package focus)
-
-     (use-package all-the-icons)
-   #+END_SRC
-
-   Minor mode for highlighting indentation levels.
-   #+BEGIN_SRC emacs-lisp
-     (use-package highlight-indent-guides
-       :config
-       (setq highlight-indent-guides-method 'character))
-   #+END_SRC
-   I want my Compilation buffers to follow the compiler output
-   #+BEGIN_SRC emacs-lisp
-     (setq compilation-scroll-output t)
-   #+END_SRC
+      (use-package all-the-icons)
+    #+END_SRC
+*** Indent guides
+    Minor mode for highlighting indentation levels.
+    #+BEGIN_SRC emacs-lisp
+      (use-package highlight-indent-guides
+        :config
+        (setq highlight-indent-guides-method 'character))
+    #+END_SRC
+*** Other
+    I want my Compilation buffers to follow the compiler output
+    #+BEGIN_SRC emacs-lisp
+      (setq compilation-scroll-output t)
+    #+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
 	 ;; Helm configuration
