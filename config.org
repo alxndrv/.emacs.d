@@ -124,7 +124,7 @@
         :init
         (setq evil-want-abbrev-expand-on-insert-exit nil)
         (setq evil-want-C-i-jump nil)
-        (add-to-list 'evil-emacs-state-modes 'magit-mode)
+        (add-to-list 'evil-emacs-state-modes 'magit-mode 'magit-blame-mode)
 
         :config
         (global-evil-surround-mode 1)
@@ -144,7 +144,7 @@
     #+END_SRC
 ** Visual
    Packages and settings providing visual customization to Emacs
-***  Theme
+*** Theme
     Currently I use the "solarized-dark" theme.
     #+BEGIN_SRC emacs-lisp
        (use-package solarized-theme
@@ -154,7 +154,7 @@
         (load-theme 'solarized-dark t)
         )
     #+END_SRC
-***  Minor mode lighters
+*** Minor mode lighters
     Delight is a package which allows to change the way specific minor modes show up in the modeline.
     I use it to hide certain redundant minor mode indicators, and shorten others.
     #+BEGIN_SRC emacs-lisp
@@ -394,7 +394,7 @@
 
      (c-set-offset 'case-label '+)
    #+END_SRC
-** LSP 
+** LSP
    Language Server Protocol support for various languages.
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
@@ -519,14 +519,8 @@
         :config
         (push 'company-lsp company-backends))
 
-      ;; (use-package auto-complete
-      ;;   :ensure t
-      ;;   :config
-      ;;   (ac-config-default)
-      ;;   (setq ac-auto-show-menu 0.4)
-      ;;   (add-to-list 'ac-modes 'rjsx-mode)
-      ;;   (add-to-list 'ac-modes 'kotlin-mode)
-      ;;   (global-auto-complete-mode t))
+      (use-package docker
+        :ensure t)
 
       (use-package rainbow-mode
         :config
