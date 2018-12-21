@@ -258,6 +258,7 @@
 	   (which-key-mode))
 
 	 (use-package exec-path-from-shell
+       :ensure t
 	   :config
 	   (when (memq window-system '(mac ns x))
 		 (exec-path-from-shell-initialize)))
@@ -398,36 +399,28 @@
    Language Server Protocol support for various languages.
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
+       :ensure t
        :config
-       (lsp-define-stdio-client
-        lsp-kotlin-mode
-        "kotlin"
-        (lambda () (projectile-project-root))
-        ;; Requires: https://github.com/fwcd/KotlinLanguageServer
-        '("~/Tools/KotlinLanguageServer/build/install/kotlin-language-server/bin/kotlin-language-server"))
+       (lsp-register-client
+        (make-lsp-client :new-connection (lsp-stdio-connection "~/Tools/KotlinLanguageServer/build/install/kotlin-language-server/bin/kotlin-language-server")
+                         :major-modes '(kotlin-mode)
+                         :server-id 'kotlinls))
+       (add-hook 'kotlin-mode-hook 'lsp)
+       (add-hook 'rjsx-mode-hook 'lsp)
        )
 
      (use-package lsp-ui
+       :ensure t
        :after lsp-mode
        :config
        (setq lsp-ui-sideline-delay 2))
 
-     (use-package lsp-javascript-typescript
-       :after (lsp-mode lsp-ui)
-       :config
-       ;; Requires: `npm i -g javascript-typescript-langserver`
-       (add-hook 'rjsx-mode-hook #'lsp-javascript-typescript-enable)
-       )
-
      (use-package lsp-java
        :ensure t
-       :after (lsp-mode lsp-ui)
-       :requires (lsp-ui-flycheck lsp-ui-sideline)
+       :after lsp
        :config
-       (add-hook 'java-mode-hook 'lsp-java-enable))
-
-     (add-hook 'kotlin-mode-hook #'lsp-kotlin-mode-enable)
-     (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+       (add-hook 'java-mode-hook 'lsp)
+       )
    #+END_SRC
 ** Programming
 *** Language support
