@@ -322,7 +322,8 @@
 
         ;; Dired actions
         "d" '(:ignore t :which-key "Dired")
-        "dd" '(dired-jump)
+        "dd" '(dired :which-key "Open dired")
+        "dj" '(dired-jump :which-key "Dired jump")
 
         ;; Projectile actions
         "p" '(:ignore t :which-key "Projectile")
