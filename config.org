@@ -222,54 +222,55 @@
     #+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
-	 ;; Helm configuration
-	 (use-package helm
-	   :config
-	   (require 'helm-config)
-	   (setq helm-mode-fuzzy-match t
-			 helm-completion-in-region-fuzzy-match t)
-	   (setq helm-ff-skip-boring-files t
-			 helm-ff-file-name-history-use-recentf t)
-	   (setq helm-boring-file-regexp-list
-			 '("\\.git$" "^.$" "^..$"))
-	   ;; swap C-z and TAB in helm buffers
-	   ;; stolen from spacemacs
-	   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-	   (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-	   (define-key helm-map (kbd "C-z") 'helm-select-action)
-	   (helm-mode)
-	   :bind ("M-x" . helm-M-x)
-	   :bind ("C-x C-f" . helm-find-files)
-	   :bind ("C-x b" . helm-buffers-list)
-	   :bind ("C-c G" . helm-google-suggest)
-	   :bind ("C-c g" . helm-grep-do-git-grep)
-	   :bind (:map helm-map
-				   ("C-j" . helm-next-line)
-				   ("C-k" . helm-previous-line)
-				   ("C-h" . helm-next-source)
-				   ("C-j" . helm-next-line)
-				   ([escape] . helm-keyboard-quit)))
+     ;; Helm configuration
+     (use-package helm
+       :ensure t 
+       :config
+       (require 'helm-config)
+       (setq helm-mode-fuzzy-match t
+             helm-completion-in-region-fuzzy-match t)
+       (setq helm-ff-skip-boring-files t
+             helm-ff-file-name-history-use-recentf t)
+       (setq helm-boring-file-regexp-list
+             '("\\.git$" "^.$" "^..$"))
+       ;; swap C-z and TAB in helm buffers
+       ;; stolen from spacemacs
+       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+       (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+       (define-key helm-map (kbd "C-z") 'helm-select-action)
+       (helm-mode)
+       :bind ("M-x" . helm-M-x)
+       :bind ("C-x C-f" . helm-find-files)
+       :bind ("C-x b" . helm-buffers-list)
+       :bind ("C-c G" . helm-google-suggest)
+       :bind ("C-c g" . helm-grep-do-git-grep)
+       :bind (:map helm-map
+                   ("C-j" . helm-next-line)
+                   ("C-k" . helm-previous-line)
+                   ("C-h" . helm-next-source)
+                   ("C-j" . helm-next-line)
+                   ([escape] . helm-keyboard-quit)))
 
-	 (use-package helm-ag)
+     (use-package helm-ag)
 
-	 (use-package which-key
-	   :config
-	   (setq which-key-idle-delay 0.5)
-	   (which-key-mode))
+     (use-package which-key
+       :config
+       (setq which-key-idle-delay 0.5)
+       (which-key-mode))
 
-	 (use-package exec-path-from-shell
+     (use-package exec-path-from-shell
        :ensure t
-	   :config
-	   (when (memq window-system '(mac ns x))
-		 (exec-path-from-shell-initialize)))
+       :config
+       (when (memq window-system '(mac ns x))
+         (exec-path-from-shell-initialize)))
 
-	 (use-package magit
-	   :config
-	   (global-set-key (kbd "C-x g") 'magit-status))
+     (use-package magit
+       :config
+       (global-set-key (kbd "C-x g") 'magit-status))
 
-	 (use-package git-messenger)
+     (use-package git-messenger)
 
-	 (use-package undo-tree)
+     (use-package undo-tree)
    #+END_SRC
 ** Navigation
    These packages provide various ways to navigate between buffers, windows and frames.
@@ -318,6 +319,10 @@
         "fp" '(helm-projectile-find-file :which-key "File file in project")
         "fs" '(save-buffer :which-key "Save buffer")
         "fS" '(save-some-buffers :which-key "Save all buffers")
+
+        ;; Dired actions
+        "d" '(:ignore t :which-key "Dired")
+        "dd" '(dired-jump)
 
         ;; Projectile actions
         "p" '(:ignore t :which-key "Projectile")
@@ -407,6 +412,7 @@
                          :server-id 'kotlinls))
        (add-hook 'kotlin-mode-hook 'lsp)
        (add-hook 'rjsx-mode-hook 'lsp)
+       (add-hook 'python-mode-hook 'lsp)
        )
 
      (use-package lsp-ui
