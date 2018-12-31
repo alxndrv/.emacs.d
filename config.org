@@ -215,6 +215,15 @@
         :config
         (setq highlight-indent-guides-method 'character))
     #+END_SRC
+*** Dired icons
+    Small package for displaying neat icons in Dired buffers.
+    #+BEGIN_SRC emacs-lisp
+      (use-package treemacs-icons-dired
+        :after treemacs dired
+        :ensure t
+        :config
+        (treemacs-icons-dired-mode))
+    #+END_SRC
 *** Other
     I want my Compilation buffers to follow the compiler output
     #+BEGIN_SRC emacs-lisp
