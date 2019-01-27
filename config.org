@@ -53,7 +53,10 @@
    Set the font, if it is available
    #+BEGIN_SRC emacs-lisp
      (when (member "DejaVu Sans Mono" (font-family-list))
-       (set-default-font "DejaVu Sans Mono"))
+       (message "Font exists on system")
+       (add-to-list 'default-frame-alist
+                  '(font . "DejaVu Sans Mono-10"))
+     )
    #+END_SRC
 ** Tab width
    Set the default tab width to 4. And use spaces
@@ -450,7 +453,13 @@
 
       (use-package json-mode)
 
-      (use-package csharp-mode)
+      (use-package omnisharp
+        :after company
+        :init
+        (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
+        :config
+        (add-hook 'csharp-mode-hook 'omnisharp-mode)
+        )
 
       (use-package kotlin-mode)
 
