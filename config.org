@@ -148,14 +148,14 @@
 ** Visual
    Packages and settings providing visual customization to Emacs
 *** Theme
-    Currently I use the "solarized-dark" theme.
+    Use "spacemacs-theme"
     #+BEGIN_SRC emacs-lisp
-       (use-package solarized-theme
-        :demand
-        :config
-        (setq x-underline-at-descent-line t)
-        (load-theme 'solarized-dark t)
-        )
+      (use-package spacemacs-theme
+       :demand
+       :defer t
+       :init
+       (load-theme 'spacemacs-dark t)
+       )
     #+END_SRC
 *** Minor mode lighters
     Delight is a package which allows to change the way specific minor modes show up in the modeline.
