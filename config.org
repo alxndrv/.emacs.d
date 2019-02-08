@@ -372,6 +372,7 @@
         "wk" '(delete-window :which-key "Close window")
         "wr" '(split-window-right :which-key "Split window right")
         "wd" '(split-window-below :which-key "Split window down")
+        "wb" '(balance-windows :which-key "Balance windows")
 
         ;; Toggles and other adjustments
         "t" '(:ignore t :which-key "Settings")
