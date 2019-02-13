@@ -123,13 +123,17 @@
       (use-package evil-surround)
 
       (use-package evil
+        :ensure t
         :after evil-surround
         :init
         (setq evil-want-abbrev-expand-on-insert-exit nil)
         (setq evil-want-C-i-jump nil)
-        (add-to-list 'evil-emacs-state-modes 'magit-mode 'magit-blame-mode)
+        (add-to-list 'evil-emacs-state-modes 'magit-mode)
+        (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
 
         :config
+        (define-key evil-motion-state-map (kbd "TAB") nil)
+
         (global-evil-surround-mode 1)
         (evil-mode)
         )
