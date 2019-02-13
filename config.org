@@ -55,8 +55,8 @@
      (when (member "DejaVu Sans Mono" (font-family-list))
        (message "Font exists on system")
        (add-to-list 'default-frame-alist
-                  '(font . "DejaVu Sans Mono-10"))
-     )
+                    '(font . "DejaVu Sans Mono-12"))
+       )
    #+END_SRC
 ** Tab width
    Set the default tab width to 4. And use spaces
