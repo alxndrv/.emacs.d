@@ -444,6 +444,7 @@
        :ensure t
        :after lsp
        :config
+       (setq lsp-java-save-action-organize-imports nil)
        (add-hook 'java-mode-hook 'lsp)
        )
    #+END_SRC
