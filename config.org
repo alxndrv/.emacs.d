@@ -464,7 +464,7 @@
       (use-package omnisharp
         :after company
         :init
-        (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
+        ;; (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
         :config
         (add-hook 'csharp-mode-hook 'omnisharp-mode)
         )
@@ -486,19 +486,6 @@
       (use-package dockerfile-mode
         :config
         (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-
-      (use-package meghanada
-        :config
-        ;; (add-hook 'java-mode-hook
-        ;;           (lambda ()
-        ;;             (meghanada-mode t)
-        ;;             (flycheck-mode +1)
-        ;;             ))
-        (cond
-         ((eq system-type 'windows-nt)
-          (setq meghanada-java-path (expand-file-name "bin/java.exe" (getenv "JAVA_HOME"))))
-         )
-        )
 	#+END_SRC
 *** Development utilities
 	#+BEGIN_SRC emacs-lisp
