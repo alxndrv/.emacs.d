@@ -226,6 +226,9 @@
 *** Dired icons
     Small package for displaying neat icons in Dired buffers.
     #+BEGIN_SRC emacs-lisp
+      (use-package dired
+      :ensure t)
+
       (use-package treemacs-icons-dired
         :after treemacs dired
         :ensure t
