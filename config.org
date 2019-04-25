@@ -400,12 +400,6 @@
    #+END_SRC
 ** Editing
    #+BEGIN_SRC emacs-lisp
-     (use-package multiple-cursors
-       :config
-       (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-       (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-       (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
-
      (use-package evil-nerd-commenter
        :config
        (evilnc-default-hotkeys))
