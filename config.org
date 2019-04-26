@@ -425,6 +425,7 @@
                          :server-id 'kotlinls))
        (add-hook 'kotlin-mode-hook 'lsp)
        (add-hook 'rjsx-mode-hook 'lsp)
+       (add-hook 'web-mode-hook 'lsp)
        (add-hook 'python-mode-hook 'lsp)
        )
 
@@ -450,7 +451,15 @@
         :config
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-      (use-package web-mode)
+      (use-package tide
+        :config
+        (add-hook 'typescript-mode-hook (lambda ()
+                                         (tide-setup)
+                                         (tide-hl-identifier-mode +1))))
+
+      (use-package web-mode
+        :config
+        (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
 
       (use-package json-mode)
 
