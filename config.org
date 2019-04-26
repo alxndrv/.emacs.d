@@ -568,6 +568,12 @@
    #+BEGIN_SRC emacs-lisp
      (use-package calfw)
 
+     (defun alx/reload-config ()
+         "Evaluate init.el file."
+         (interactive)
+         (load (expand-file-name (concat user-emacs-directory "init.el")))
+       )
+
      (defun indent-buffer ()
        "Indent an entire buffer using the default intenting scheme."
        (interactive)
