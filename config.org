@@ -467,7 +467,13 @@
         :config
         (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
 
-      (use-package json-mode)
+      (use-package json-mode
+        :config
+        (defun my-json-indent ()
+          "Set tab width to 2 when entering json-mode"
+          (setq js-indent-level 2))
+        (add-hook 'json-mode-hook 'my-json-indent)
+        )
 
       (use-package omnisharp
         :after company
