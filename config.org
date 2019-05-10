@@ -2,7 +2,7 @@
 #+AUTHOR: Andrey Aleksandrov
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
-* Basic settings 
+* Basic settings
 ** Custom file
    Store all Custom settings in a separate file so it doesn't write into init.el
    #+BEGIN_SRC emacs-lisp
@@ -26,7 +26,7 @@
      (line-number-mode)
      (column-number-mode)
    #+END_SRC
-** Display time in modeline 
+** Display time in modeline
    #+BEGIN_SRC emacs-lisp
      (setq display-time-24hr-format t)
      (setq display-time-day-and-date t)
