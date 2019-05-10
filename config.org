@@ -451,10 +451,16 @@
         :config
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
+      (use-package typescript-mode
+        :ensure t)
+
       (use-package tide
+        :ensure t
+        :after (typescript-mode company flycheck)
         :config
         (add-hook 'typescript-mode-hook (lambda ()
                                          (tide-setup)
+                                         (setq flycheck-check-syntax-automatically '(save mode-enabled))
                                          (tide-hl-identifier-mode +1))))
 
       (use-package web-mode
