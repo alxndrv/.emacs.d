@@ -433,7 +433,8 @@
        :ensure t
        :after lsp-mode
        :config
-       (setq lsp-ui-sideline-delay 2))
+       (setq lsp-ui-sideline-enable nil)
+       )
 
      (use-package lsp-java
        :ensure t
