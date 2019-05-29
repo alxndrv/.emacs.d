@@ -391,6 +391,12 @@
         "qp" '(elscreen-previous :which-key "Prev. screen")
         "qc" '(elscreen-create :which-key "New screen")
         "qk" '(elscreen-kill :which-key "Kill screen")
+
+        ;; Xref
+        "x" '(:ignore t :which-key "Xref")
+        "xd" '(xref-find-definitions :which-key "Find definitions")
+        "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
+        "xr" '(xref-find-references :which-key "Find references")
         ))
    #+END_SRC
 ** Editing
