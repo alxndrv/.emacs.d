@@ -291,28 +291,31 @@
    These packages provide various ways to navigate between buffers, windows and frames.
    Basically, these are used to change what's on my screen at any given time.
    #+BEGIN_SRC emacs-lisp
-	 (use-package projectile
-	   :config
-	   (projectile-mode)
-	   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+     (use-package projectile
+       :ensure t
+       :config
+       (projectile-mode)
+       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-	 (use-package helm-projectile
-	   :config
-	   (helm-projectile-on))
+     (use-package helm-projectile
+       :after projectile
+       :ensure t
+       :config
+       (helm-projectile-on))
 
-	 (use-package neotree
-	   :config
-	   (setq neo-theme 'arrows)
-	   (global-set-key [f8] 'neotree-toggle))
+     (use-package neotree
+       :config
+       (setq neo-theme 'arrows)
+       (global-set-key [f8] 'neotree-toggle))
 
-	 (use-package ace-window
-	   :config
-	   (global-set-key (kbd "M-o") 'ace-window))
+     (use-package ace-window
+       :config
+       (global-set-key (kbd "M-o") 'ace-window))
 
-	 (use-package elscreen
-	   :config
+     (use-package elscreen
+       :config
        (setq elscreen-prefix-key "\C-Q")
-	   (elscreen-start))
+       (elscreen-start))
 
    #+END_SRC
 ** Key bindings (general.el)
