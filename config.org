@@ -451,9 +451,6 @@
         :config
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-      (use-package typescript-mode
-        :ensure t)
-
       (use-package tide
         :ensure t
         :after (typescript-mode company flycheck)
