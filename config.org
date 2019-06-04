@@ -44,11 +44,6 @@
 
      (setq create-lockfiles nil)
    #+END_SRC
-** GC threshhold
-   Increase Emacs' threshhold for garbage collection. In theory this makes Emacs faster.
-   #+BEGIN_SRC emacs-lisp
-     ;; (setq gc-cons-threshold 50000000)
-   #+END_SRC
 ** Font
    Set the font, if it is available
    #+BEGIN_SRC emacs-lisp
@@ -302,11 +297,6 @@
        :ensure t
        :config
        (helm-projectile-on))
-
-     (use-package neotree
-       :config
-       (setq neo-theme 'arrows)
-       (global-set-key [f8] 'neotree-toggle))
 
      (use-package ace-window
        :config
