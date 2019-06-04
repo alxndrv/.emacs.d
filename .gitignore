@@ -5,3 +5,5 @@ network-security.data
 backups
 meghanada
 .cache/
+projectile.cache
+eclipse.jdt.ls/
