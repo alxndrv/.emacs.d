@@ -390,6 +390,11 @@
         "xd" '(xref-find-definitions :which-key "Find definitions")
         "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
         "xr" '(xref-find-references :which-key "Find references")
+
+        ;; Org
+        "o" '(:ignore t :which-key "Org")
+        "oc" '(org-capture :which-key "Org Capture")
+        "oa" '(org-agenda :which-key "Org Agenda")
         ))
    #+END_SRC
 ** Editing
@@ -551,7 +556,7 @@
         :config
         (rainbow-mode))
 	#+END_SRC
-** Documenting
+** Org-mode and other stuff
    #+BEGIN_SRC emacs-lisp
      (use-package htmlize)
 
@@ -563,6 +568,22 @@
        (setq org-log-done 'time)
        (setq org-ellipsis "⤵")
        (setq org-src-window-setup 'current-window)
+
+       (setq org-capture-templates
+             '(("w" "Work task"
+               entry
+               (file "~/Dropbox/Org/work.org")
+               "* TODO %? :work:\n")
+               ("n" "Note"
+                entry
+                (file "~/Dropbox/Org/index.org")
+                "* %?\n")
+               )
+             )
+
+       (setq org-directory "~/Dropbox/Org")
+       (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
+       (add-hook 'org-capture-mode-hook 'evil-insert-state)
        )
 
      (use-package org-bullets
