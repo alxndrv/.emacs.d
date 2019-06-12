@@ -30,6 +30,8 @@
    #+BEGIN_SRC emacs-lisp
      (setq display-time-24hr-format t)
      (setq display-time-day-and-date t)
+     (setq display-time-format "%H:%M %d.%m.%Y")
+     (setq display-time-load-average-threshold 100) ;; This makes the load always hidden
      (display-time)
    #+END_SRC
 ** Backup directory and settings
