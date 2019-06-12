@@ -16,7 +16,6 @@
      (setq inhibit-startup-screen t)
 
      (global-hl-line-mode t)
-     (global-linum-mode 1)
 
      (tool-bar-mode -1)
      (scroll-bar-mode -1)
@@ -179,16 +178,9 @@
        (delight 'abbrev-mode nil 'abbrev))
     #+END_SRC
 *** Modeline
-    "smart-mode-line" makes the modeline, well... smarter
+    Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
     #+BEGIN_SRC emacs-lisp
-      (use-package smart-mode-line
-        :init
-        (setq sml/shorten-directory 't
-              sml/shorten-modes 't)
-        :config
-        (sml/setup)
-        (sml/apply-theme 'respectful)
-        )
+      ;; TODO: Set up modeline properly
     #+END_SRC
 *** Highlighting
     Various packages used to highlight things.
