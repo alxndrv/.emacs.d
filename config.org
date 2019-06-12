@@ -432,6 +432,7 @@
        :ensure t
        :after lsp-mode
        :config
+       (setq lsp-ui-doc-delay 0.5)
        (setq lsp-ui-sideline-enable nil)
        )
 
