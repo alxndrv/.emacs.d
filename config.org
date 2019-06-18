@@ -25,6 +25,10 @@
      (line-number-mode)
      (column-number-mode)
    #+END_SRC
+** Y/N
+   #+BEGIN_SRC emacs-lisp
+     (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
 ** Display time in modeline
    #+BEGIN_SRC emacs-lisp
      (setq display-time-24hr-format t)
