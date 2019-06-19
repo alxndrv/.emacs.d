@@ -566,14 +566,18 @@
        (setq org-src-window-setup 'current-window)
 
        (setq org-capture-templates
-             '(("w" "Work task"
+             '(("w" "Work TODO"
                entry
-               (file "~/Dropbox/Org/work.org")
-               "* TODO %? :work:\n")
+               (file+headline "~/Dropbox/Org/work.org" "Todos")
+               "** TODO %? :work:\n")
                ("n" "Note"
                 entry
-                (file "~/Dropbox/Org/index.org")
-                "* %?\n")
+                (file+headline "~/Dropbox/Org/index.org" "Notes")
+                "** %?\n")
+                ("t" "Todo"
+                entry
+                (file+headline "~/Dropbox/Org/index.org" "Todos")
+                "** TODO %?\n")
                )
              )
 
