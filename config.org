@@ -537,6 +537,7 @@
         (editorconfig-mode 1))
 
       (use-package company
+        :bind ("<backtab>" . company-complete)
         :config
         (add-hook 'after-init-hook 'global-company-mode))
 
