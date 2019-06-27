@@ -389,6 +389,8 @@
         "o" '(:ignore t :which-key "Org")
         "oc" '(org-capture :which-key "Org Capture")
         "oa" '(org-agenda :which-key "Org Agenda")
+        "ol" '(org-store-link :which-key "Store link")
+        "oL" '(org-insert-link :which-key "Insert link")
         ))
    #+END_SRC
 ** Editing
