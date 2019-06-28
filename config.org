@@ -104,17 +104,17 @@
    #+END_SRC
 ** Bootstrap use-package
    #+BEGIN_SRC emacs-lisp
-	 ;; Bootstrap use-package
-	 (setq package-enable-at-startup nil)
-	 (require 'package)
-	 (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/"))
-	 (package-initialize)
-	 (unless (package-installed-p 'use-package)
-	   (package-refresh-contents)
-	   (package-install 'use-package))
-	 (require 'use-package)
-	 (setq use-package-always-ensure t
-		   use-package-verbose t)
+     ;; Bootstrap use-package
+     (setq package-enable-at-startup nil)
+     (require 'package)
+     (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/"))
+     (package-initialize)
+     (unless (package-installed-p 'use-package)
+       (package-refresh-contents)
+       (package-install 'use-package))
+     (require 'use-package)
+     (setq use-package-always-ensure t
+           use-package-verbose t)
    #+END_SRC
 * Packages
 ** Evil-mode
@@ -230,7 +230,7 @@
    #+BEGIN_SRC emacs-lisp
      ;; Helm configuration
      (use-package helm
-       :ensure t 
+       :ensure t
        :config
        (require 'helm-config)
        (setq helm-mode-fuzzy-match t
@@ -448,8 +448,8 @@
    #+END_SRC
 ** Programming
 *** Language support
-    Various packages providing modes for specific programming (and markup) languages 
-	#+BEGIN_SRC emacs-lisp
+    Various packages providing modes for specific programming (and markup) languages
+    #+BEGIN_SRC emacs-lisp
       (use-package rjsx-mode
         :config
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
@@ -503,9 +503,9 @@
       (use-package dockerfile-mode
         :config
         (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-	#+END_SRC
+    #+END_SRC
 *** Development utilities
-	#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
       (use-package dumb-jump
         :config
         (dumb-jump-mode))
@@ -554,7 +554,7 @@
       (use-package rainbow-mode
         :config
         (rainbow-mode))
-	#+END_SRC
+    #+END_SRC
 ** Org-mode and other stuff
    #+BEGIN_SRC emacs-lisp
      (use-package htmlize)
@@ -640,4 +640,12 @@
                                (agenda . 5)
                                (registers . 5)))
        )
+   #+END_SRC
+
+   I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
+   #+BEGIN_SRC emacs-lisp
+     (use-package keyfreq
+       :init
+       (keyfreq-mode 1)
+       (keyfreq-autosave-mode 1))
    #+END_SRC
