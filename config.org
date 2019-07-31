@@ -274,6 +274,11 @@
        :config
        (global-set-key (kbd "C-x g") 'magit-status))
 
+     (use-package magit-todos
+       :after magit
+       :config
+       (magit-todos-mode 1))
+
      (use-package undo-tree)
    #+END_SRC
 ** Navigation
@@ -371,6 +376,7 @@
         "tf" '(text-scale-adjust :which-key "Adjust text size")
         "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
         "tF" '(focus-mode :which-key "Focus mode")
+        "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
 
         ;; Elscreen
         "q" '(:ignore t :which-key "Elscreen")
