@@ -116,6 +116,11 @@
      (setq use-package-always-ensure t
            use-package-verbose t)
    #+END_SRC
+** EPG
+   Epa-file doesn't seem to work on Mac without this option
+   #+BEGIN_SRC emacs-lisp
+     (setq epa-pinentry-mode 'loopback)
+   #+END_SRC
 * Packages
 ** Evil-mode
 *** Use evil-mode
