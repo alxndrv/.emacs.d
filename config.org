@@ -174,7 +174,7 @@
        :config
        (delight 'flycheck-mode " \u2714" 'flycheck)
        (delight 'company-mode " \u2630" 'company)
-       (delight 'helm-mode " \u2388" 'helm)
+       (delight 'helm-mode nil 'helm)
        (delight 'editorconfig-mode nil 'editorconfig)
        (delight 'which-key-mode nil 'which-key)
        (delight 'beacon-mode nil 'beacon)
@@ -184,7 +184,9 @@
        (delight 'eldoc-mode nil 'eldoc)
        (delight 'anzu-mode nil 'anzu)
        (delight 'undo-tree-mode nil 'undo-tree)
-       (delight 'abbrev-mode nil 'abbrev))
+       (delight 'abbrev-mode nil 'abbrev)
+       (delight 'yas-minor-mode nil 'yasnippet)
+       )
     #+END_SRC
 *** Modeline
     Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
