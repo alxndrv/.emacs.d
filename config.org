@@ -191,7 +191,9 @@
 *** Modeline
     Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
     #+BEGIN_SRC emacs-lisp
-      ;; TODO: Set up modeline properly
+      (use-package powerline
+        :config
+        (powerline-center-evil-theme))
     #+END_SRC
 *** Highlighting
     Various packages used to highlight things.
