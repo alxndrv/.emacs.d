@@ -577,6 +577,14 @@
         :config
         (rainbow-mode))
     #+END_SRC
+** Elfeed
+   #+BEGIN_SRC emacs-lisp
+     (use-package elfeed)
+
+     (use-package elfeed-org
+       :after elfeed
+       )
+   #+END_SRC
 ** Org-mode and other stuff
    #+BEGIN_SRC emacs-lisp
      (use-package htmlize)
