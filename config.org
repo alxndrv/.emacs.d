@@ -401,6 +401,11 @@
         "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
         "xr" '(xref-find-references :which-key "Find references")
 
+        ;; LSP
+        "l" '(:ignore t :which-key "LSP")
+        "ls" '(helm-lsp-workspace-symbol :which-key "Find symbol")
+        "lS" '(helm-lsp-global-workspace-symbol :which-key "Find symbol (global)")
+
         ;; Org
         "o" '(:ignore t :which-key "Org")
         "oc" '(org-capture :which-key "Org Capture")
