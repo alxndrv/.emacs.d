@@ -583,7 +583,9 @@
 
      (use-package elfeed-org
        :after elfeed
-       )
+       :config
+       (setq rmh-elfeed-org-files (list "~/.emacs.d/config.org"))
+       (elfeed-org))
    #+END_SRC
 ** Org-mode and other stuff
    #+BEGIN_SRC emacs-lisp
@@ -679,3 +681,12 @@
        (keyfreq-mode 1)
        (keyfreq-autosave-mode 1))
    #+END_SRC
+
+
+* Feeds :elfeed:
+** Technology :tech:
+*** Emacs :emacs:
+*** React :react:
+**** [[http://reactjs.org/feed.xml][React Dev Blog]]
+** Casual :casual:
+*** [[https://www.hltv.org/rss/news][HLTV News]]
