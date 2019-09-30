@@ -407,6 +407,7 @@
         "l" '(:ignore t :which-key "LSP")
         "ls" '(helm-lsp-workspace-symbol :which-key "Find symbol")
         "lS" '(helm-lsp-global-workspace-symbol :which-key "Find symbol (global)")
+        "lc" '(lsp-execute-code-action :which-key "Code action")
 
         ;; Org
         "o" '(:ignore t :which-key "Org")
@@ -569,7 +570,7 @@
 
       (use-package company-lsp
         :after company
-        :config
+        :init
         (push 'company-lsp company-backends))
 
       (use-package docker
