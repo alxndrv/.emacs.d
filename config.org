@@ -133,6 +133,8 @@
         :init
         (setq evil-want-abbrev-expand-on-insert-exit nil)
         (setq evil-want-C-i-jump nil)
+        (setq evil-search-module 'evil-search)
+        (setq evil-ex-search-vim-style-regexp t)
         (add-to-list 'evil-emacs-state-modes 'magit-mode)
         (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
 
