@@ -449,7 +449,7 @@
        (add-hook 'web-mode-hook 'lsp)
        (add-hook 'python-mode-hook 'lsp)
        (add-hook 'tide-mode-hook 'lsp)
-       (setq lsp-clients-csharp-language-server-path (expand-file-name "~/.omnisharp/omnisharp/OmniSharp.exe"))
+       (setq lsp-clients-csharp-language-server-path (expand-file-name "~/Tools/omnisharp/omnisharp/OmniSharp.exe"))
        (add-hook 'csharp-mode-hook 'lsp)
        )
 
