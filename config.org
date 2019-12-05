@@ -137,6 +137,7 @@
         (setq evil-ex-search-vim-style-regexp t)
         (add-to-list 'evil-emacs-state-modes 'magit-mode)
         (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
+        (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
 
         :config
         (define-key evil-motion-state-map (kbd "TAB") nil)
