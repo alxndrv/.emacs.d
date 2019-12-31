@@ -424,10 +424,6 @@
        :config
        (evilnc-default-hotkeys))
 
-     (use-package avy
-       :config
-       (global-set-key (kbd "C-:") 'avy-goto-char))
-
      (use-package swiper-helm
        :bind ("C-s" . swiper-helm))
 
