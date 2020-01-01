@@ -62,6 +62,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package simple
        :ensure nil
+       :diminish visual-line-mode
        :config
        (line-number-mode +1)
        (column-number-mode +1)
@@ -233,37 +234,38 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
         )
     #+END_SRC
 ** Visual
-   Packages and settings providing visual customization to Emacs
+Packages and settings providing visual customization to Emacs
 *** Theme
-    Use "spacemacs-theme"
-    #+BEGIN_SRC emacs-lisp
-      (use-package spacemacs-theme
-       :demand
-       :defer t
-       :init (load-theme 'spacemacs-dark t))
-    #+END_SRC
+Use "spacemacs-theme"
+#+BEGIN_SRC emacs-lisp
+  (use-package spacemacs-theme
+   :demand
+   :defer t
+   :init (load-theme 'spacemacs-dark t))
+#+END_SRC
 *** Modeline
-    Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
-    #+BEGIN_SRC emacs-lisp
-      (use-package powerline
-        :config
-        (powerline-center-evil-theme))
-    #+END_SRC
+Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
+#+BEGIN_SRC emacs-lisp
+  (use-package powerline
+    :config
+    (powerline-center-evil-theme))
+#+END_SRC
 *** Highlighting
-    Various packages used to highlight things.
-    Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
-    Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
-    #+BEGIN_SRC emacs-lisp
-      (use-package dimmer
-        :config
-        (dimmer-mode))
+Various packages used to highlight things.
+Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
+Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
+#+BEGIN_SRC emacs-lisp
+  (use-package dimmer
+    :config
+    (dimmer-mode))
 
-      (use-package beacon
-        :config
-        (beacon-mode 1))
+  (use-package beacon
+    :diminish
+    :config
+    (beacon-mode 1))
 
-      (use-package all-the-icons)
-    #+END_SRC
+  (use-package all-the-icons)
+#+END_SRC
 *** Indent guides
     Minor mode for highlighting indentation levels.
     #+BEGIN_SRC emacs-lisp
@@ -520,6 +522,38 @@ Small package for displaying neat icons in Dired buffers.
        (setq lsp-java-save-action-organize-imports nil)
        )
    #+END_SRC
+** Autocomplete
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :bind ("<backtab>" . company-complete)
+    :diminish
+    :hook (prog-mode . company-mode)
+    )
+
+  (use-package company-lsp
+    :commands company-lsp
+    :init
+    (push 'company-lsp company-backends)
+    :config
+    (setq company-lsp-cache-candidates 'auto)
+    )
+#+END_SRC
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :diminish
+    :hook (prog-mode . flycheck-mode))
+
+  (use-package flycheck-popup-tip
+    :diminish
+    :config
+    (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
+
+  (use-package flycheck-kotlin
+    :after flycheck
+    :config
+    (flycheck-kotlin-setup))
+#+END_SRC
 ** Programming
 *** Language support
     Various packages providing modes for specific programming (and markup) languages
@@ -578,58 +612,32 @@ Small package for displaying neat icons in Dired buffers.
         (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
     #+END_SRC
 *** Development utilities
-    #+BEGIN_SRC emacs-lisp
-      (use-package dumb-jump
-        :diminish
-        :config
-        (dumb-jump-mode))
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump
+    :diminish
+    :config
+    (dumb-jump-mode))
 
-      (use-package flycheck
-        :diminish
-        :ensure
-        :init (global-flycheck-mode))
+  (use-package elogcat)
 
-      (use-package flycheck-popup-tip
-        :diminish
-        :config
-        (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
+  (use-package yasnippet-snippets
+    :diminish)
 
-      (use-package flycheck-kotlin
-        :requires flycheck
-        :config
-        (flycheck-kotlin-setup))
+  (use-package yasnippet
+    :diminish yas-minor-mode
+    :after yasnippet-snippets
+    :config
+    (yas-global-mode 1))
 
-      (use-package elogcat)
+  (use-package multi-term)
 
-      (use-package yasnippet-snippets
-        :diminish)
+  (use-package editorconfig
+    :diminish
+    :config
+    (editorconfig-mode 1))
 
-      (use-package yasnippet
-        :diminish
-        :after yasnippet-snippets
-        :config
-        (yas-global-mode 1))
-
-      (use-package multi-term)
-
-      (use-package editorconfig
-        :diminish 
-        :config
-        (editorconfig-mode 1))
-
-      (use-package company
-        :bind ("<backtab>" . company-complete)
-        :diminish
-        :config
-        (add-hook 'after-init-hook 'global-company-mode))
-
-      (use-package company-lsp
-        :after company
-        :init
-        (push 'company-lsp company-backends))
-
-      (use-package docker)
-    #+END_SRC
+  (use-package docker)
+ #+END_SRC
 ** Elfeed
    #+BEGIN_SRC emacs-lisp
      (use-package elfeed)
@@ -644,6 +652,7 @@ Small package for displaying neat icons in Dired buffers.
 *** Org-mode
     #+BEGIN_SRC emacs-lisp
       (use-package org
+        :diminish org-indent-mode
         :hook ((org-mode . visual-line-mode)
                (org-mode . org-indent-mode))
         :config
