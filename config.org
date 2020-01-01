@@ -11,8 +11,7 @@
       (defvar alx/indent-width 4)
 
       :config
-      (setq ring-bell-function 'ignore
-            default-directory "~/")
+      (setq ring-bell-function 'ignore)
 
       ;; Disable default toolbar and menubar
       (tool-bar-mode -1)
@@ -148,17 +147,17 @@
        :ensure nil
        :config (setq python-indent-offset alx/indent-width))
    #+END_SRC
-** Winner/windmove mode   Winner-mode for reverting window changes
-   Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
-   #+BEGIN_SRC emacs-lisp
-     (use-package winner
-       :ensure nil
-       :config (winner-mode t))
+** Winner-mode/windmove
+Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
+#+BEGIN_SRC emacs-lisp
+  (use-package winner
+    :ensure nil
+    :config (winner-mode t))
 
-     (use-package windmove
-       :ensure nil
-       :config (windmove-default-keybindings))
-   #+END_SRC
+  (use-package windmove
+    :ensure nil
+    :config (windmove-default-keybindings))
+#+END_SRC
 ** Ediff
    Tell ediff to split windows horizontally.
    #+BEGIN_SRC emacs-lisp
@@ -192,6 +191,7 @@
      (setq mac-option-modifier 'meta)
      (setq mac-command-modifier 'super)
    #+END_SRC
+
 
 * Packages
 ** Evil-mode
