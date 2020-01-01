@@ -3,39 +3,93 @@
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
 * Basic settings
+  Settings which are not package-specific
+** Emacs
+  #+BEGIN_SRC emacs-lisp
+    (use-package emacs
+      :preface
+      (defvar alx/indent-width 4)
+
+      :config
+      (setq ring-bell-function 'ignore
+            default-directory "~/")
+
+      ;; Disable default toolbar and menubar
+      (tool-bar-mode -1)
+      (menu-bar-mode -1)
+
+      ;; Highlight active line
+      (global-hl-line-mode t)
+
+      ;; Use Y/N instead of yes/no
+      (fset 'yes-or-no-p 'y-or-n-p)
+
+      ;; Comment style
+      (setq comment-style 'extra-line)
+
+      ;; Always use spaces
+      (setq-default indent-tabs-mode nil
+                    tab-width alx/indent-width)
+      )
+  #+END_SRC
 ** Custom file
    Store all Custom settings in a separate file so it doesn't write into init.el
    #+BEGIN_SRC emacs-lisp
-     (setq custom-file "~/.emacs.d/custom.el")
-     (load custom-file)
+     (use-package cus-edit
+       :ensure nil
+       :config
+       (setq custom-file "~/.emacs.d/custom.el")
+       )
    #+END_SRC
-** Adjust default GUI
-   Turn off useless GUI buttons, highlight current line, show line and column numbers.
-   I also don't need the default startup screen
+** Startup
+   Don't show default startup screen
    #+BEGIN_SRC emacs-lisp
-     (setq inhibit-startup-screen t)
-
-     (global-hl-line-mode t)
-
-     (tool-bar-mode -1)
-     (scroll-bar-mode -1)
-     (menu-bar-mode -1)
-     (setq ring-bell-function 'ignore)
-
-     (line-number-mode)
-     (column-number-mode)
+     (use-package "startup"
+       :ensure nil
+       :config (setq inhibit-startup-screen t))
    #+END_SRC
-** Y/N
+** Scrollbar
+   Disable scrollbar
    #+BEGIN_SRC emacs-lisp
-     (fset 'yes-or-no-p 'y-or-n-p)
+     (use-package scroll-bar
+       :ensure nil
+       :config (scroll-bar-mode -1))
+   #+END_SRC
+** Column/line numbers
+   Enable column/line numbers in modeline
+   #+BEGIN_SRC emacs-lisp
+     (use-package simple
+       :ensure nil
+       :config
+       (line-number-mode +1)
+       (column-number-mode +1)
+       )
+   #+END_SRC
+** Auto-revert
+   Auto-reverting files edited outside of Emacs
+   #+BEGIN_SRC emacs-lisp
+     (use-package autorevert
+       :ensure nil
+       :config
+       (global-auto-revert-mode +1)
+       (setq auto-revert-interval 2
+             auto-revert-check-vc-info t
+             global-auto-revert-non-file-buffers t
+             auto-revert-verbose nil)
+       )
    #+END_SRC
 ** Display time in modeline
    #+BEGIN_SRC emacs-lisp
-     (setq display-time-24hr-format t)
-     (setq display-time-day-and-date t)
-     (setq display-time-format "%H:%M %d.%m.%Y")
-     (setq display-time-load-average-threshold 100) ;; This makes the load always hidden
-     (display-time)
+     (use-package time
+       :ensure nil
+       :config
+       (setq display-time-24hr-format t
+             display-time-day-and-date t
+             display-time-format "%H:%M %d.%m.%Y"
+             display-time-load-average-threshold 100) ;; This makes the load always hidden
+
+       (display-time)
+       )
    #+END_SRC
 ** Backup directory and settings
    Save backups in one directory, also dont create lockfiles since they're annoying
@@ -49,102 +103,118 @@
 
      (setq create-lockfiles nil)
    #+END_SRC
-** Font
-   Set the font, if it is available
+** Frame
+   Frame settings
    #+BEGIN_SRC emacs-lisp
-     (when (member "DejaVu Sans Mono" (font-family-list))
-       (message "Font exists on system")
-       (add-to-list 'default-frame-alist
-                    '(font . "DejaVu Sans Mono-12"))
+     (use-package frame
+       :ensure nil
+       :config
+       (setq initial-frame-alist (quote ((fullscreen . maximized))))
+
+       (when (member "DejaVu Sans Mono" (font-family-list))
+         (message "Font exists on system")
+         (set-frame-font "DejaVu Sans Mono-10" t t)
+         )
        )
-   #+END_SRC
-** Tab width
-   Set the default tab width to 4. And use spaces
-   #+BEGIN_SRC emacs-lisp
-     (setq-default tab-width 4)
-     (setq-default indent-tabs-mode nil)
-   #+END_SRC
-** Code comments
-   #+BEGIN_SRC emacs-lisp
-     (setq comment-style 'extra-line)
    #+END_SRC
 ** Parentheses
    Show matching parentheses, automatically insert closing brackets.
    #+BEGIN_SRC emacs-lisp
-     (setq show-paren-delay 0)
-     (show-paren-mode)
-     (electric-pair-mode)
+     (use-package paren
+       :ensure nil
+       :init (setq show-paren-delay 0)
+       :config (show-paren-mode))
+
+     (use-package elec-pair
+       :ensure nil
+       :hook (prog-mode . electric-pair-mode))
    #+END_SRC
-** IDO
-   Enable ido-mode, also winner mode for window configurations.
+** Indentation
+   #+BEGIN_SRC emacs-lisp
+     (use-package cc-vars
+       :ensure nil
+       :config
+       (setq-default c-basic-offset alx/indent-width)
+       (setq c-default-style '((java-mode . "java")
+                               (awk-mode . "awk")
+                               (other . "k&r")))
+       )
+
+     (use-package js
+       :ensure nil
+       :config (setq js-indent-level alx/indent-width))
+
+     (use-package python
+       :ensure nil
+       :config (setq python-indent-offset alx/indent-width))
+   #+END_SRC
+** Winner/windmove mode   Winner-mode for reverting window changes
    Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
    #+BEGIN_SRC emacs-lisp
-     (winner-mode t)
-     (windmove-default-keybindings)
-     (ido-mode t)
+     (use-package winner
+       :ensure nil
+       :config (winner-mode t))
+
+     (use-package windmove
+       :ensure nil
+       :config (windmove-default-keybindings))
    #+END_SRC
 ** Ediff
    Tell ediff to split windows horizontally.
    #+BEGIN_SRC emacs-lisp
-     (setq ediff-split-window-function (quote split-window-horizontally))
-   #+END_SRC
-** System specific settings
-   #+BEGIN_SRC emacs-lisp
-     (unless (string-equal system-type "darwin")
-       (set-face-attribute 'default nil :height 115 :family "Consolas")
+     (use-package ediff
+       :ensure nil
+       :config
+       (setq ediff-split-window-function (quote split-window-horizontally))
        )
-
-     (setq ns-use-srgb-colorspace nil)
-
-     (setq mac-option-modifier 'meta)
-     (setq mac-command-modifier 'super)
-
-     (setq mouse-wheel-scroll-amount '(1))
-     (setq mouse-wheel-progressive-speed nil)
-   #+END_SRC
-** Bootstrap use-package
-   #+BEGIN_SRC emacs-lisp
-     ;; Bootstrap use-package
-     (setq package-enable-at-startup nil)
-     (require 'package)
-     (add-to-list 'package-archives  '("melpa" . "https://melpa.org/packages/"))
-     (package-initialize)
-     (unless (package-installed-p 'use-package)
-       (package-refresh-contents)
-       (package-install 'use-package))
-     (require 'use-package)
-     (setq use-package-always-ensure t
-           use-package-verbose t)
    #+END_SRC
 ** EPG
    Epa-file doesn't seem to work on Mac without this option
    #+BEGIN_SRC emacs-lisp
-     (setq epa-pinentry-mode 'loopback)
+     (use-package epa
+       :config
+       (setq epa-pinentry-mode 'loopback)
+       )
    #+END_SRC
+** Mouse wheel settings
+   #+BEGIN_SRC emacs-lisp
+     (use-package mwheel
+       :ensure nil
+       :config
+       (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+             mouse-wheel-progressive-speed nil))
+   #+END_SRC
+** Mac OS settings
+   Settings for the custom Mac OS build of Emacs.
+   #+BEGIN_SRC emacs-lisp
+     (setq ns-use-srgb-colorspace nil)
+
+     (setq mac-option-modifier 'meta)
+     (setq mac-command-modifier 'super)
+   #+END_SRC
+
 * Packages
 ** Evil-mode
 *** Use evil-mode
     #+BEGIN_SRC emacs-lisp
-      (use-package evil-surround)
-
       (use-package evil
-        :ensure t
-        :after evil-surround
         :init
-        (setq evil-want-abbrev-expand-on-insert-exit nil)
-        (setq evil-want-C-i-jump nil)
-        (setq evil-search-module 'evil-search)
-        (setq evil-ex-search-vim-style-regexp t)
+        (setq evil-want-abbrev-expand-on-insert-exit nil
+              evil-want-C-i-jump nil
+              evil-search-module 'evil-search
+              evil-ex-search-vim-style-regexp t)
         (add-to-list 'evil-emacs-state-modes 'magit-mode)
         (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
         (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
-
         :config
         (define-key evil-motion-state-map (kbd "TAB") nil)
 
-        (global-evil-surround-mode 1)
         (evil-mode)
         )
+
+      (use-package evil-surround
+        :after evil
+        :config (global-evil-surround-mode 1))
     #+END_SRC
 *** Keychords
     Return to normal mode with "kj" or "jk" instead of Esc
@@ -165,9 +235,7 @@
       (use-package spacemacs-theme
        :demand
        :defer t
-       :init
-       (load-theme 'spacemacs-dark t)
-       )
+       :init (load-theme 'spacemacs-dark t))
     #+END_SRC
 *** Minor mode lighters
     Delight is a package which allows to change the way specific minor modes show up in the modeline.
