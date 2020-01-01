@@ -26,6 +26,9 @@
       ;; Comment style
       (setq comment-style 'extra-line)
 
+      ;; Make complation buffers follow output
+      (setq compilation-scroll-output t)
+
       ;; Always use spaces
       (setq-default indent-tabs-mode nil
                     tab-width alx/indent-width)
@@ -121,7 +124,9 @@
    #+BEGIN_SRC emacs-lisp
      (use-package paren
        :ensure nil
-       :init (setq show-paren-delay 0)
+       :init
+       (setq show-paren-delay 0
+             show-paren-when-point-inside-paren t)
        :config (show-paren-mode))
 
      (use-package elec-pair
@@ -237,28 +242,6 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        :defer t
        :init (load-theme 'spacemacs-dark t))
     #+END_SRC
-*** Minor mode lighters
-    Delight is a package which allows to change the way specific minor modes show up in the modeline.
-    I use it to hide certain redundant minor mode indicators, and shorten others.
-    #+BEGIN_SRC emacs-lisp
-      (use-package delight
-       :config
-       (delight 'flycheck-mode " \u2714" 'flycheck)
-       (delight 'company-mode " \u2630" 'company)
-       (delight 'helm-mode nil 'helm)
-       (delight 'editorconfig-mode nil 'editorconfig)
-       (delight 'which-key-mode nil 'which-key)
-       (delight 'beacon-mode nil 'beacon)
-       (delight 'rainbow-mode nil 'rainbow-mode)
-       (delight 'auto-revert-mode nil 'autorevert)
-       (delight 'highlight-parentheses-mode nil 'highlight-parentheses)
-       (delight 'eldoc-mode nil 'eldoc)
-       (delight 'anzu-mode nil 'anzu)
-       (delight 'undo-tree-mode nil 'undo-tree)
-       (delight 'abbrev-mode nil 'abbrev)
-       (delight 'yas-minor-mode nil 'yasnippet)
-       )
-    #+END_SRC
 *** Modeline
     Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
     #+BEGIN_SRC emacs-lisp
@@ -271,10 +254,6 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
     Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
     Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
     #+BEGIN_SRC emacs-lisp
-      (use-package highlight-parentheses
-        :config
-        (global-highlight-parentheses-mode))
-
       (use-package dimmer
         :config
         (dimmer-mode))
@@ -293,18 +272,12 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
         (setq highlight-indent-guides-method 'character))
     #+END_SRC
 *** Dired icons
-    Small package for displaying neat icons in Dired buffers.
+Small package for displaying neat icons in Dired buffers.
     #+BEGIN_SRC emacs-lisp
       (use-package treemacs-icons-dired
         :after treemacs dired
-        :ensure t
         :config
         (treemacs-icons-dired-mode))
-    #+END_SRC
-*** Other
-    I want my Compilation buffers to follow the compiler output
-    #+BEGIN_SRC emacs-lisp
-      (setq compilation-scroll-output t)
     #+END_SRC
 ** Startup dashboard
    #+BEGIN_SRC emacs-lisp
@@ -324,7 +297,7 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
    #+BEGIN_SRC emacs-lisp
      ;; Helm configuration
      (use-package helm
-       :ensure t
+       :diminish
        :config
        (require 'helm-config)
        (setq helm-mode-fuzzy-match t
@@ -354,12 +327,12 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
      (use-package helm-ag)
 
      (use-package which-key
+       :diminish
        :config
        (setq which-key-idle-delay 0.5)
        (which-key-mode))
 
      (use-package exec-path-from-shell
-       :ensure t
        :config
        (when (memq window-system '(mac ns x))
          (exec-path-from-shell-initialize)))
@@ -372,22 +345,21 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        :config
        (magit-todos-mode 1))
 
-     (use-package undo-tree)
+     (use-package undo-tree
+       :diminish)
    #+END_SRC
 ** Navigation
    These packages provide various ways to navigate between buffers, windows and frames.
    Basically, these are used to change what's on my screen at any given time.
    #+BEGIN_SRC emacs-lisp
      (use-package projectile
-       :ensure t
-       :delight '(:eval (concat " <" (projectile-project-name) ">"))
+       :diminish
        :config
        (projectile-mode)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
      (use-package helm-projectile
        :after projectile
-       :ensure t
        :config
        (helm-projectile-on))
 
@@ -509,16 +481,14 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        :bind ("C-s" . swiper-helm))
 
      (use-package anzu
+       :diminish
        :config
        (global-anzu-mode +1))
-
-     (c-set-offset 'case-label '+)
    #+END_SRC
 ** LSP
    Language Server Protocol support for various languages.
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
-       :ensure t
        :config
        (setq lsp-prefer-flymake nil)
        (setq lsp-keep-workspace-alive nil)
@@ -529,12 +499,9 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        (add-hook 'tide-mode-hook 'lsp)
        )
 
-     (use-package helm-lsp
-       :ensure t
-       )
+     (use-package helm-lsp)
 
      (use-package lsp-ui
-       :ensure t
        :after lsp-mode
        :config
        (setq lsp-ui-doc-delay 0.5)
@@ -542,7 +509,6 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        )
 
      (use-package lsp-java
-       :ensure t
        :after lsp-mode
        :config
        (setq lsp-java-save-action-organize-imports nil)
@@ -558,7 +524,6 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
       (use-package tide
-        :ensure t
         :after (typescript-mode company flycheck)
         :config
         (add-hook 'typescript-mode-hook (lambda ()
@@ -610,14 +575,17 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 *** Development utilities
     #+BEGIN_SRC emacs-lisp
       (use-package dumb-jump
+        :diminish
         :config
         (dumb-jump-mode))
 
       (use-package flycheck
-        :ensure t
+        :diminish
+        :ensure
         :init (global-flycheck-mode))
 
       (use-package flycheck-popup-tip
+        :diminish
         :config
         (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
 
@@ -628,9 +596,11 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 
       (use-package elogcat)
 
-      (use-package yasnippet-snippets)
+      (use-package yasnippet-snippets
+        :diminish)
 
       (use-package yasnippet
+        :diminish
         :after yasnippet-snippets
         :config
         (yas-global-mode 1))
@@ -638,11 +608,13 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
       (use-package multi-term)
 
       (use-package editorconfig
+        :diminish 
         :config
         (editorconfig-mode 1))
 
       (use-package company
         :bind ("<backtab>" . company-complete)
+        :diminish
         :config
         (add-hook 'after-init-hook 'global-company-mode))
 
@@ -651,12 +623,7 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
         :init
         (push 'company-lsp company-backends))
 
-      (use-package docker
-        :ensure t)
-
-      (use-package rainbow-mode
-        :config
-        (rainbow-mode))
+      (use-package docker)
     #+END_SRC
 ** Elfeed
    #+BEGIN_SRC emacs-lisp
@@ -725,6 +692,11 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
        (keyfreq-mode 1)
        (keyfreq-autosave-mode 1))
    #+END_SRC
+** Diminish mode
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :demand t)
+#+END_SRC
 
 
 * Custom functions

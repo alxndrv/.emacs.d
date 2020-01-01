@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (keyfreq dashboard calfw latex-preview-pane flymd markdown-mode+ ox-twbs org-bullets htmlize elfeed-org elfeed rainbow-mode docker company-lsp company editorconfig multi-term yasnippet-snippets elogcat flycheck-kotlin flycheck-popup-tip dumb-jump dockerfile-mode yaml-mode php-mode swift-mode groovy-mode android-mode kotlin-mode omnisharp json-mode web-mode tide rjsx-mode lsp-java lsp-ui helm-lsp lsp-mode anzu swiper-helm evil-nerd-commenter general elscreen helm-projectile projectile magit-todos magit exec-path-from-shell which-key helm-ag helm treemacs-icons-dired highlight-indent-guides all-the-icons beacon dimmer highlight-parentheses powerline delight spacemacs-theme key-chord evil-surround use-package))))
+    (diminish yasnippet-snippets yaml-mode which-key web-mode use-package treemacs-icons-dired tide swiper-helm swift-mode spacemacs-theme rjsx-mode rainbow-mode powerline php-mode ox-twbs org-bullets omnisharp multi-term markdown-mode+ magit-todos lsp-ui lsp-java latex-preview-pane kotlin-mode keyfreq key-chord htmlize highlight-parentheses highlight-indent-guides helm-projectile helm-lsp helm-ag groovy-mode general flymd flycheck-popup-tip flycheck-kotlin exec-path-from-shell evil-surround evil-nerd-commenter elscreen elogcat elfeed-org editorconfig dumb-jump dockerfile-mode docker dimmer delight dashboard company-lsp calfw beacon anzu android-mode all-the-icons))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
