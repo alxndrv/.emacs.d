@@ -306,6 +306,20 @@
     #+BEGIN_SRC emacs-lisp
       (setq compilation-scroll-output t)
     #+END_SRC
+** Startup dashboard
+   #+BEGIN_SRC emacs-lisp
+     (use-package dashboard
+       :config
+       (dashboard-setup-startup-hook)
+       (setq dashboard-banner-logo-title "Welcome back!")
+       (setq dashboard-startup-banner 'logo)
+       (setq dashboard-items '((recents  . 5)
+                               (bookmarks . 5)
+                               (projects . 5)
+                               (agenda . 5)
+                               (registers . 5)))
+       )
+   #+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
      ;; Helm configuration
@@ -351,8 +365,7 @@
          (exec-path-from-shell-initialize)))
 
      (use-package magit
-       :config
-       (global-set-key (kbd "C-x g") 'magit-status))
+       :config (add-hook 'with-editor-mode-hook #'evil-insert-state))
 
      (use-package magit-todos
        :after magit
@@ -656,92 +669,56 @@
        (elfeed-org))
    #+END_SRC
 ** Org-mode and other stuff
-   #+BEGIN_SRC emacs-lisp
-     (use-package htmlize)
+*** Org-mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package org
+        :config
+        :hook ((org-mode . visual-line-mode)
+               (org-mode . org-indent-mode))
 
-     (use-package org
-       :config
-       (setq org-export-html-postamble nil)
-       (add-to-list 'org-structure-template-alist
-                    '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-       (setq org-log-done 'time)
-       (setq org-ellipsis "⤵")
-       (setq org-src-window-setup 'current-window)
+        (setq org-export-html-postamble nil
+              org-log-done 'time
+              org-ellipsis "⤵"
+              org-src-window-setup 'current-window)
 
-       (setq org-capture-templates
-             '(("w" "Work TODO"
-               entry
-               (file+headline "~/Dropbox/Org/work.org" "Todos")
-               "** TODO %? :work:\n")
-               ("n" "Note"
-                entry
-                (file+headline "~/Dropbox/Org/index.org" "Notes")
-                "** %?\n")
+        (add-to-list 'org-structure-template-alist
+                     '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+
+        (setq org-capture-templates
+              '(("w" "Work TODO"
+                 entry
+                 (file+headline "~/Dropbox/Org/work.org" "Todos")
+                 "** TODO %? :work:\n")
+                ("n" "Note"
+                 entry
+                 (file+headline "~/Dropbox/Org/index.org" "Notes")
+                 "** %?\n")
                 ("t" "Todo"
-                entry
-                (file+headline "~/Dropbox/Org/index.org" "Todos")
-                "** TODO %?\n")
-               )
-             )
+                 entry
+                 (file+headline "~/Dropbox/Org/index.org" "Todos")
+                 "** TODO %?\n")
+                )
+              )
 
-       (setq org-directory "~/Dropbox/Org")
-       (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
-       (add-hook 'org-capture-mode-hook 'evil-insert-state)
-       )
+        (setq org-directory "~/Dropbox/Org")
+        (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
+        (add-hook 'org-capture-mode-hook 'evil-insert-state)
+        )
 
-     (use-package org-bullets
-       :config
-       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+      (use-package org-bullets
+        :hook (org-mode . org-bullets-mode))
+    #+END_SRC
+*** Other
+      #+BEGIN_SRC emacs-lisp
+        (use-package htmlize)
 
-     (use-package ox-twbs)
+        (use-package ox-twbs)
 
-     (use-package markdown-mode+)
-     (use-package flymd)
+        (use-package markdown-mode+)
 
-     (use-package latex-preview-pane)
-   #+END_SRC
-** Misc.
-   #+BEGIN_SRC emacs-lisp
-     (use-package calfw)
-
-     (defun alx/reload-config ()
-         "Evaluate init.el file."
-         (interactive)
-         (load (expand-file-name (concat user-emacs-directory "init.el")))
-       )
-
-     (defun indent-buffer ()
-       "Indent an entire buffer using the default intenting scheme."
-       (interactive)
-       (save-excursion
-         (delete-trailing-whitespace)
-         (indent-region (point-min) (point-max) nil)
-         (untabify (point-min) (point-max))))
-
-                                             ; Flymd compatibility fix, ie. we force it to use Firefox
-     (defun flymd-browser-function-custom (url)
-       (let ((process-environment (browse-url-process-environment)))
-         (apply 'start-process
-                (concat "firefox " url)
-                nil
-                "/usr/bin/open"
-                (list "-a" "firefox" url))))
-
-     (setq flymd-browser-open-function 'flymd-browser-function-custom)
-
-     (use-package dashboard
-       :config
-       (dashboard-setup-startup-hook)
-       (setq dashboard-banner-logo-title "Welcome back!")
-       (setq dashboard-startup-banner 'logo)
-       (setq dashboard-items '((recents  . 5)
-                               (bookmarks . 5)
-                               (projects . 5)
-                               (agenda . 5)
-                               (registers . 5)))
-       )
-   #+END_SRC
-
+        (use-package latex-preview-pane)
+      #+END_SRC
+** Keyfreq
    I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
    #+BEGIN_SRC emacs-lisp
      (use-package keyfreq
@@ -749,6 +726,24 @@
        (keyfreq-mode 1)
        (keyfreq-autosave-mode 1))
    #+END_SRC
+
+
+* Custom functions
+  #+BEGIN_SRC emacs-lisp
+    (defun alx/reload-config ()
+      "Evaluate init.el file."
+      (interactive)
+      (load (expand-file-name (concat user-emacs-directory "init.el")))
+      )
+
+    (defun indent-buffer ()
+      "Indent an entire buffer using the default intenting scheme."
+      (interactive)
+      (save-excursion
+        (delete-trailing-whitespace)
+        (indent-region (point-min) (point-max) nil)
+        (untabify (point-min) (point-max))))
+  #+END_SRC
 
 
 * Feeds :elfeed:
