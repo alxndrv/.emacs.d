@@ -295,38 +295,50 @@ Small package for displaying neat icons in Dired buffers.
                                (registers . 5)))
        )
    #+END_SRC
-** Helm
+** Ivy
 #+BEGIN_SRC emacs-lisp
-  ;; Helm configuration
-  (use-package helm
+  (use-package counsel
+    :diminish
+    :hook (ivy-mode . counsel-mode))
+
+  (use-package counsel-projectile
+    :config (counsel-projectile-mode +1))
+
+  (use-package ivy
+    :diminish
+    :hook (after-init . ivy-mode)
+    :config
+    (setq ivy-display-style nil)
+    (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+    (define-key ivy-minibuffer-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+    (setq ivy-re-builders-alist
+          '((counsel-rg . ivy--regex-plus)
+            (counsel-projectile-rg . ivy--regex-plus)
+            (counsel-ag . ivy--regex-plus)
+            (counsel-projectile-ag . ivy--regex-plus)
+            (swiper . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
+
+    (setq ivy-use-virtual-buffers t
+          ivy-count-format "(%d/%d) "
+          ivy-initial-inputs-alist nil)
+    )
+
+  (use-package swiper
+    :after ivy
+    :config
+    (setq swiper-action-recenter t
+          swiper-goto-start-of-match t))
+
+  (use-package ivy-posframe
+    :after ivy
     :diminish
     :config
-    (require 'helm-config)
-    (setq helm-mode-fuzzy-match t
-          helm-completion-in-region-fuzzy-match t)
-    (setq helm-ff-skip-boring-files t
-          helm-ff-file-name-history-use-recentf t)
-    (setq helm-boring-file-regexp-list
-          '("\\.git$" "^.$" "^..$"))
-    ;; swap C-z and TAB in helm buffers
-    ;; stolen from spacemacs
-    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-    (define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
-    (define-key helm-map (kbd "C-z") 'helm-select-action)
-    (helm-mode)
-    :bind ("M-x" . helm-M-x)
-    :bind ("C-x C-f" . helm-find-files)
-    :bind ("C-x b" . helm-buffers-list)
-    :bind ("C-c G" . helm-google-suggest)
-    :bind ("C-c g" . helm-grep-do-git-grep)
-    :bind (:map helm-map
-                ("C-j" . helm-next-line)
-                ("C-k" . helm-previous-line)
-                ("C-h" . helm-next-source)
-                ("C-j" . helm-next-line)
-                ([escape] . helm-keyboard-quit)))
-
-  (use-package helm-ag)
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center))
+          ivy-posframe-height-alist '((t . 20))
+          ivy-posframe-parameters '((internal-border-width . 10)))
+    (setq ivy-posframe-width 70)
+    (ivy-posframe-mode +1))
 #+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
@@ -364,11 +376,6 @@ Small package for displaying neat icons in Dired buffers.
        (projectile-mode)
        (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-     (use-package helm-projectile
-       :after projectile
-       :config
-       (helm-projectile-on))
-
      (use-package ace-window
        :config
        (global-set-key (kbd "M-o") 'ace-window))
@@ -390,12 +397,12 @@ Small package for displaying neat icons in Dired buffers.
         :prefix "SPC"
         :non-normal-prefix "M-SPC"
         :keymaps 'override
-        "SPC" '(helm-M-x :which-key "Extended command")
+        "SPC" '(counsel-M-x :which-key "Extended command")
 
         ;; File actions
         "f" '(:ignore t :which-key "Files")
-        "ff" '(helm-find-files :which-key "Find file")
-        "fp" '(helm-projectile-find-file :which-key "File file in project")
+        "ff" '(counsel-find-file :which-key "Find file")
+        "fp" '(projectile-find-file :which-key "File file in project")
         "fs" '(save-buffer :which-key "Save buffer")
         "fS" '(save-some-buffers :which-key "Save all buffers")
 
@@ -407,14 +414,14 @@ Small package for displaying neat icons in Dired buffers.
         ;; Projectile actions
         "p" '(:ignore t :which-key "Projectile")
         "pp" '(projectile-switch-project :which-key "Switch project")
-        "pf" '(helm-projectile-find-file :which-key "Find file in project")
+        "pf" '(projectile-find-file :which-key "Find file in project")
         "pK" '(projectile-kill-buffers :which-key "Kill project buffers")
         "pss" '(projectile-ag :which-key "Search in project (ag)")
         "psg" '(projectile-grep :which-key "Search in project (grep)")
 
         ;; Search actions
         "s" '(:ignore t :which-key "Search")
-        "ss" '(swiper-helm :which-key "Swiper (helm)")
+        "ss" '(swiper :which-key "Swiper (ivy)")
 
         ;; Git actions
         "g" '(:ignore t :which-key "Git")
@@ -423,7 +430,7 @@ Small package for displaying neat icons in Dired buffers.
 
         ;; Buffer actions
         "b" '(:ignore t :which-key "Buffers")
-        "bb" '(helm-buffers-list :which-key "Buffer list (helm)")
+        "bb" '(counsel-buffer-or-recentf :which-key "Buffer list (ivy)")
         "bk" '(kill-buffer :which-key "Kill buffer")
         "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
@@ -465,8 +472,8 @@ Small package for displaying neat icons in Dired buffers.
 
         ;; LSP
         "l" '(:ignore t :which-key "LSP")
-        "ls" '(helm-lsp-workspace-symbol :which-key "Find symbol")
-        "lS" '(helm-lsp-global-workspace-symbol :which-key "Find symbol (global)")
+        "ls" '(ivy-lsp-workspace-symbol :which-key "Find symbol")
+        "lS" '(ivy-lsp-global-workspace-symbol :which-key "Find symbol (global)")
         "lc" '(lsp-execute-code-action :which-key "Code action")
 
         ;; Org
@@ -482,9 +489,6 @@ Small package for displaying neat icons in Dired buffers.
      (use-package evil-nerd-commenter
        :config
        (evilnc-default-hotkeys))
-
-     (use-package swiper-helm
-       :bind ("C-s" . swiper-helm))
 
      (use-package anzu
        :diminish
@@ -507,7 +511,7 @@ Small package for displaying neat icons in Dired buffers.
        (setq lsp-prefer-flymake nil)
        (setq lsp-keep-workspace-alive nil))
 
-     (use-package helm-lsp)
+     (use-package lsp-ivy)
 
      (use-package lsp-ui
        :after lsp
