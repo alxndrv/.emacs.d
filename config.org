@@ -532,9 +532,8 @@ Small package for displaying neat icons in Dired buffers.
 
   (use-package company-lsp
     :commands company-lsp
-    :init
-    (push 'company-lsp company-backends)
     :config
+    (push 'company-lsp company-backends)
     (setq company-lsp-cache-candidates 'auto)
     )
 #+END_SRC
