@@ -263,8 +263,6 @@ Beacon provides visual feedback highlighting the point after the user performs a
     :diminish
     :config
     (beacon-mode 1))
-
-  (use-package all-the-icons)
 #+END_SRC
 *** Indent guides
     Minor mode for highlighting indentation levels.
@@ -273,6 +271,14 @@ Beacon provides visual feedback highlighting the point after the user performs a
         :config
         (setq highlight-indent-guides-method 'character))
     #+END_SRC
+*** Icons
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons
+    :config (setq all-the-icons-scale-factor 1.0))
+
+  (use-package all-the-icons-ivy
+    :hook (after-init . all-the-icons-ivy-setup))
+#+END_SRC
 *** Dired icons
 Small package for displaying neat icons in Dired buffers.
     #+BEGIN_SRC emacs-lisp
@@ -304,6 +310,8 @@ Small package for displaying neat icons in Dired buffers.
   (use-package counsel-projectile
     :config (counsel-projectile-mode +1))
 
+  (use-package flx)
+
   (use-package ivy
     :diminish
     :hook (after-init . ivy-mode)
@@ -324,6 +332,30 @@ Small package for displaying neat icons in Dired buffers.
           ivy-initial-inputs-alist nil)
     )
 
+  (use-package ivy-rich
+    :preface
+    (defun ivy-rich-switch-buffer-icon (candidate)
+      (with-current-buffer
+          (get-buffer candidate)
+        (all-the-icons-icon-for-mode major-mode)))
+    :init
+    (setq ivy-rich-display-transformers-list ; max column width sum = (ivy-poframe-width - 1)
+          '(ivy-switch-buffer
+            (:columns
+             ((ivy-rich-switch-buffer-icon (:width 2))
+              (ivy-rich-candidate (:width 35))
+              (ivy-rich-switch-buffer-project (:width 15 :face success))
+              (ivy-rich-switch-buffer-major-mode (:width 13 :face warning)))
+             :predicate
+             #'(lambda (cand) (get-buffer cand)))
+            counsel-M-x
+            (:columns
+             ((counsel-M-x-transformer (:width 35))
+              (ivy-rich-counsel-function-docstring (:width 44 :face font-lock-doc-face))))))
+    :config
+    (ivy-rich-mode +1)
+    (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
+
   (use-package swiper
     :after ivy
     :config
@@ -337,7 +369,7 @@ Small package for displaying neat icons in Dired buffers.
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center))
           ivy-posframe-height-alist '((t . 20))
           ivy-posframe-parameters '((internal-border-width . 10)))
-    (setq ivy-posframe-width 70)
+    (setq ivy-posframe-width 80)
     (ivy-posframe-mode +1))
 #+END_SRC
 ** Utilities
@@ -430,7 +462,7 @@ Small package for displaying neat icons in Dired buffers.
 
         ;; Buffer actions
         "b" '(:ignore t :which-key "Buffers")
-        "bb" '(counsel-buffer-or-recentf :which-key "Buffer list (ivy)")
+        "bb" '(ivy-switch-buffer :which-key "Buffer list (ivy)")
         "bk" '(kill-buffer :which-key "Kill buffer")
         "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
