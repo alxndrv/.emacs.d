@@ -674,6 +674,23 @@ Small package for displaying neat icons in Dired buffers.
 
   (use-package docker)
  #+END_SRC
+** Prettier integration
+#+BEGIN_SRC emacs-lisp
+  (use-package add-node-modules-path)
+
+  (use-package prettier-js
+    :after add-node-modules-path
+    :hook ((web-mode . prettier-js-mode)
+           (js2-mode . prettier-js-mode)
+           (typescript-mode . prettier-js-mode))
+    :config
+    (eval-after-load 'web-mode
+      '(progn
+         (add-hook 'web-mode-hook #'add-node-modules-path)
+         (add-hook 'web-mode-hook #'prettier-js-mode)))
+    )
+
+#+END_SRC
 ** Elfeed
    #+BEGIN_SRC emacs-lisp
      (use-package elfeed)
