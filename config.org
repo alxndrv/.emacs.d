@@ -537,6 +537,7 @@ Small package for displaying neat icons in Dired buffers.
                js-mode
                tide-mode
                rjsx-mode
+               web-mode
                ) . lsp)
        :commands lsp
        :config
