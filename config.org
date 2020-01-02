@@ -255,9 +255,14 @@ Various packages used to highlight things.
 Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
 Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
 #+BEGIN_SRC emacs-lisp
-  (use-package dimmer
+  (use-package solaire-mode
+    :after spacemacs-theme
+    :hook
+    ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+    (minibuffer-setup . solaire-mode-in-minibuffer)
     :config
-    (dimmer-mode))
+    (solaire-global-mode +1)
+    (solaire-mode-swap-bg))
 
   (use-package beacon
     :diminish
