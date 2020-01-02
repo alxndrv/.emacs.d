@@ -347,7 +347,7 @@ Small package for displaying neat icons in Dired buffers.
               (ivy-rich-switch-buffer-project (:width 15 :face success))
               (ivy-rich-switch-buffer-major-mode (:width 13 :face warning)))
              :predicate
-             #'(lambda (cand) (get-buffer cand)))
+             (lambda (cand) (get-buffer cand)))
             counsel-M-x
             (:columns
              ((counsel-M-x-transformer (:width 35))
