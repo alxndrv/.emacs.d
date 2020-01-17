@@ -634,7 +634,9 @@ Small package for displaying neat icons in Dired buffers.
         )
 
       (use-package web-mode
+        :after flycheck
         :config
+        (flycheck-add-mode 'javascript-eslint 'web-mode)
         (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
 
       (use-package json-mode
