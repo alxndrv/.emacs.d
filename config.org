@@ -563,7 +563,7 @@ Small package for displaying neat icons in Dired buffers.
                kotlin-mode
                python-mode
                js-mode
-               tide-mode
+               typescript-mode
                rjsx-mode
                web-mode
                ) . lsp)
@@ -626,13 +626,12 @@ Small package for displaying neat icons in Dired buffers.
         :config
         (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-      (use-package tide
-        :after (typescript-mode company flycheck)
+      (use-package typescript-mode
+        :after (typescript-mode company flycheck add-node-modules-path)
         :config
-        (add-hook 'typescript-mode-hook (lambda ()
-                                         (tide-setup)
-                                         (setq flycheck-check-syntax-automatically '(save mode-enabled))
-                                         (tide-hl-identifier-mode +1))))
+        (flycheck-add-next-checker 'lsp-ui 'javascript-eslint 'append)
+        (add-hook 'typescript-mode-hook #'add-node-modules-path)
+        )
 
       (use-package web-mode
         :config
