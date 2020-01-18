@@ -244,12 +244,11 @@ Epa-file doesn't seem to work on Mac without this option
 ** Visual
 Packages and settings providing visual customization to Emacs
 *** Theme
-Use "spacemacs-theme"
+Use "doom-dracula" theme from doom-themes package
 #+BEGIN_SRC emacs-lisp
-  (use-package spacemacs-theme
-   :demand
-   :defer t
-   :init (load-theme 'spacemacs-dark t))
+  (use-package doom-themes
+   :config
+   (load-theme 'doom-dracula t))
 #+END_SRC
 *** Modeline
 Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
@@ -265,9 +264,8 @@ Beacon provides visual feedback highlighting the point after the user performs a
 #+BEGIN_SRC emacs-lisp
   (use-package solaire-mode
     :after spacemacs-theme
-    :hook
-    ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
-    (minibuffer-setup . solaire-mode-in-minibuffer)
+    :hook (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+           (minibuffer-setup . solaire-mode-in-minibuffer))
     :config
     (solaire-global-mode +1)
     (solaire-mode-swap-bg))
