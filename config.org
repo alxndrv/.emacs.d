@@ -153,6 +153,13 @@
        :ensure nil
        :config (setq python-indent-offset alx/indent-width))
    #+END_SRC
+** Delsel-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package delsel
+    :ensure nil
+    :config
+    (delete-selection-mode +1))
+#+END_SRC
 ** Winner-mode/windmove
 Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 #+BEGIN_SRC emacs-lisp
