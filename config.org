@@ -512,7 +512,6 @@ Small package for displaying neat icons in Dired buffers.
         "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
         "tf" '(text-scale-adjust :which-key "Adjust text size")
         "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
-        "tF" '(focus-mode :which-key "Focus mode")
         "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
 
         ;; Elscreen
