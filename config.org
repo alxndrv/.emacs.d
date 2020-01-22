@@ -419,11 +419,6 @@ Small package for displaying neat icons in Dired buffers.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config (add-hook 'with-editor-mode-hook #'evil-insert-state))
-
-  (use-package magit-todos
-    :after magit
-    :config
-    (magit-todos-mode 1))
 #+END_SRC
 ** Navigation
    These packages provide various ways to navigate between buffers, windows and frames.
