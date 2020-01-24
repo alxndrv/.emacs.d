@@ -408,6 +408,31 @@ Small package for displaying neat icons in Dired buffers.
     (setq ivy-posframe-width 80)
     (ivy-posframe-mode +1))
 #+END_SRC
+** Prescient
+#+BEGIN_SRC emacs-lisp
+  (use-package prescient
+    :custom
+    (prescient-filter-method '(literal regexp initialism fuzzy))
+    :config
+    (prescient-persist-mode +1))
+
+  (use-package ivy-prescient
+    :after (prescient ivy)
+    :custom
+    (ivy-prescient-sort-commands
+     '(:not swiper
+            counsel-projectile-rg
+            ivy-switch-buffer
+            counsel-switch-buffer))
+    (ivy-prescient-retain-classic-highlighting t)
+    :config
+    (ivy-prescient-mode +1))
+
+  (use-package company-prescient
+    :after (prescient company)
+    :config
+    (company-prescient-mode +1))
+#+END_SRC
 ** Utilities
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
