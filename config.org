@@ -711,6 +711,9 @@ Small package for displaying neat icons in Dired buffers.
 #+BEGIN_SRC emacs-lisp
   (use-package dumb-jump
     :diminish
+    :custom
+    (dumb-jump-selector 'ivy)
+    (dumb-jump-prefer-searcher 'rg)
     :config
     (dumb-jump-mode))
 
