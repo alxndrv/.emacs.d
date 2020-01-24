@@ -231,6 +231,7 @@ Epa-file doesn't seem to work on Mac without this option
         :init
         (setq evil-want-abbrev-expand-on-insert-exit nil
               evil-want-C-i-jump nil
+              evil-want-keybinding nil
               evil-search-module 'evil-search
               evil-ex-search-vim-style-regexp t)
         :config
@@ -244,6 +245,12 @@ Epa-file doesn't seem to work on Mac without this option
       (use-package evil-surround
         :after evil
         :config (global-evil-surround-mode 1))
+
+      (use-package evil-collection
+        :after evil
+        :config
+        (setq evil-collection-company-use-tng nil)
+        (evil-collection-init))
     #+END_SRC
 *** Keychords
     Return to normal mode with "kj" or "jk" instead of Esc
