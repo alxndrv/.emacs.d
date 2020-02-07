@@ -3,123 +3,123 @@
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
 * Basic settings
-  Settings which are not package-specific
+Settings which are not package-specific
 ** Emacs
-  #+BEGIN_SRC emacs-lisp
-    (use-package emacs
-      :preface
-      (defvar alx/indent-width 4)
+#+BEGIN_SRC emacs-lisp
+  (use-package emacs
+    :preface
+    (defvar alx/indent-width 4)
 
-      :config
-      (setq ring-bell-function 'ignore)
+    :config
+    (setq ring-bell-function 'ignore)
 
-      ;; Disable default toolbar and menubar
-      (tool-bar-mode -1)
-      (menu-bar-mode -1)
+    ;; Disable default toolbar and menubar
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
 
-      ;; Highlight active line
-      (global-hl-line-mode t)
+    ;; Highlight active line
+    (global-hl-line-mode t)
 
-      ;; Use Y/N instead of yes/no
-      (fset 'yes-or-no-p 'y-or-n-p)
+    ;; Use Y/N instead of yes/no
+    (fset 'yes-or-no-p 'y-or-n-p)
 
-      ;; Comment style
-      (setq comment-style 'extra-line)
+    ;; Comment style
+    (setq comment-style 'extra-line)
 
-      ;; Make complation buffers follow output
-      (setq compilation-scroll-output t)
+    ;; Make complation buffers follow output
+    (setq compilation-scroll-output t)
 
-      ;; Always use spaces
-      (setq-default indent-tabs-mode nil
-                    tab-width alx/indent-width)
-      )
-  #+END_SRC
+    ;; Always use spaces
+    (setq-default indent-tabs-mode nil
+                  tab-width alx/indent-width)
+    )
+#+END_SRC
 ** Custom file
-   Store all Custom settings in a separate file so it doesn't write into init.el
-   #+BEGIN_SRC emacs-lisp
-     (use-package cus-edit
-       :ensure nil
-       :config
-       (setq custom-file "~/.emacs.d/custom.el")
-       )
-   #+END_SRC
+Store all Custom settings in a separate file so it doesn't write into init.el
+#+BEGIN_SRC emacs-lisp
+  (use-package cus-edit
+    :ensure nil
+    :config
+    (setq custom-file "~/.emacs.d/custom.el")
+    )
+#+END_SRC
 ** Startup
-   Don't show default startup screen
-   #+BEGIN_SRC emacs-lisp
-     (use-package "startup"
-       :ensure nil
-       :config (setq inhibit-startup-screen t))
-   #+END_SRC
+Don't show default startup screen
+#+BEGIN_SRC emacs-lisp
+  (use-package "startup"
+    :ensure nil
+    :config (setq inhibit-startup-screen t))
+#+END_SRC
 ** Scrollbar
-   Disable scrollbar
-   #+BEGIN_SRC emacs-lisp
-     (use-package scroll-bar
-       :ensure nil
-       :config (scroll-bar-mode -1))
-   #+END_SRC
+Disable scrollbar
+#+BEGIN_SRC emacs-lisp
+  (use-package scroll-bar
+    :ensure nil
+    :config (scroll-bar-mode -1))
+#+END_SRC
 ** Column/line numbers
-   Enable column/line numbers in modeline
-   #+BEGIN_SRC emacs-lisp
-     (use-package simple
-       :ensure nil
-       :diminish visual-line-mode
-       :config
-       (line-number-mode +1)
-       (column-number-mode +1)
-       )
-   #+END_SRC
+Enable column/line numbers in modeline
+#+BEGIN_SRC emacs-lisp
+  (use-package simple
+    :ensure nil
+    :diminish visual-line-mode
+    :config
+    (line-number-mode +1)
+    (column-number-mode +1)
+    )
+#+END_SRC
 ** Auto-revert
-   Auto-reverting files edited outside of Emacs
-   #+BEGIN_SRC emacs-lisp
-     (use-package autorevert
-       :ensure nil
-       :config
-       (global-auto-revert-mode +1)
-       (setq auto-revert-interval 2
-             auto-revert-check-vc-info t
-             global-auto-revert-non-file-buffers t
-             auto-revert-verbose nil)
-       )
-   #+END_SRC
+Auto-reverting files edited outside of Emacs
+#+BEGIN_SRC emacs-lisp
+  (use-package autorevert
+    :ensure nil
+    :config
+    (global-auto-revert-mode +1)
+    (setq auto-revert-interval 2
+          auto-revert-check-vc-info t
+          global-auto-revert-non-file-buffers t
+          auto-revert-verbose nil)
+    )
+#+END_SRC
 ** Display time in modeline
-   #+BEGIN_SRC emacs-lisp
-     (use-package time
-       :ensure nil
-       :config
-       (setq display-time-24hr-format t
-             display-time-day-and-date t
-             display-time-format "%H:%M %d.%m.%Y"
-             display-time-load-average-threshold 100) ;; This makes the load always hidden
+#+BEGIN_SRC emacs-lisp
+  (use-package time
+    :ensure nil
+    :config
+    (setq display-time-24hr-format t
+          display-time-day-and-date t
+          display-time-format "%H:%M %d.%m.%Y"
+          display-time-load-average-threshold 100) ;; This makes the load always hidden
 
-       (display-time)
-       )
-   #+END_SRC
+    (display-time)
+    )
+#+END_SRC
 ** Backup directory and settings
-   Save backups in one directory, also dont create lockfiles since they're annoying
-   #+BEGIN_SRC emacs-lisp
-     (setq delete-by-moving-to-trash 't)
-     (setq backup-directory-alist
-     `(("." . ,(concat user-emacs-directory "backups"))))
+Save backups in one directory, also dont create lockfiles since they're annoying
+#+BEGIN_SRC emacs-lisp
+  (setq delete-by-moving-to-trash 't)
+  (setq backup-directory-alist
+  `(("." . ,(concat user-emacs-directory "backups"))))
 
-     (setq auto-save-file-name-transforms
-     `((".*" ,temporary-file-directory t)))
+  (setq auto-save-file-name-transforms
+  `((".*" ,temporary-file-directory t)))
 
-     (setq create-lockfiles nil)
-   #+END_SRC
+  (setq create-lockfiles nil)
+#+END_SRC
 ** Frame
-   Frame settings
-   #+BEGIN_SRC emacs-lisp
-     (use-package frame
-       :ensure nil
-       :config
-       (setq initial-frame-alist (quote ((fullscreen . maximized))))
+Frame settings
+#+BEGIN_SRC emacs-lisp
+  (use-package frame
+    :ensure nil
+    :config
+    (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
-       (when (member "DejaVu Sans Mono" (font-family-list))
-         (message "Font exists on system")
-         (set-frame-font "DejaVu Sans Mono-12" t t)
-         )
-       )
-   #+END_SRC
+    (when (member "DejaVu Sans Mono" (font-family-list))
+      (message "Font exists on system")
+      (set-frame-font "DejaVu Sans Mono-12" t t)
+      )
+    )
+#+END_SRC
 ** Dired
 #+BEGIN_SRC emacs-lisp
   (use-package dired
@@ -130,38 +130,38 @@
     (put 'dired-find-alternate-file 'disabled nil))
 #+END_SRC
 ** Parentheses
-   Show matching parentheses, automatically insert closing brackets.
-   #+BEGIN_SRC emacs-lisp
-     (use-package paren
-       :ensure nil
-       :init
-       (setq show-paren-delay 0
-             show-paren-when-point-inside-paren t)
-       :config (show-paren-mode))
+Show matching parentheses, automatically insert closing brackets.
+#+BEGIN_SRC emacs-lisp
+  (use-package paren
+    :ensure nil
+    :init
+    (setq show-paren-delay 0
+          show-paren-when-point-inside-paren t)
+    :config (show-paren-mode))
 
-     (use-package elec-pair
-       :ensure nil
-       :hook (prog-mode . electric-pair-mode))
-   #+END_SRC
+  (use-package elec-pair
+    :ensure nil
+    :hook (prog-mode . electric-pair-mode))
+#+END_SRC
 ** Indentation
-   #+BEGIN_SRC emacs-lisp
-     (use-package cc-vars
-       :ensure nil
-       :config
-       (setq-default c-basic-offset alx/indent-width)
-       (setq c-default-style '((java-mode . "java")
-                               (awk-mode . "awk")
-                               (other . "k&r")))
-       )
+#+BEGIN_SRC emacs-lisp
+  (use-package cc-vars
+    :ensure nil
+    :config
+    (setq-default c-basic-offset alx/indent-width)
+    (setq c-default-style '((java-mode . "java")
+                            (awk-mode . "awk")
+                            (other . "k&r")))
+    )
 
-     (use-package js
-       :ensure nil
-       :config (setq js-indent-level alx/indent-width))
+  (use-package js
+    :ensure nil
+    :config (setq js-indent-level alx/indent-width))
 
-     (use-package python
-       :ensure nil
-       :config (setq python-indent-offset alx/indent-width))
-   #+END_SRC
+  (use-package python
+    :ensure nil
+    :config (setq python-indent-offset alx/indent-width))
+#+END_SRC
 ** Delsel-mode
 #+BEGIN_SRC emacs-lisp
   (use-package delsel
@@ -181,14 +181,14 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
     :config (windmove-default-keybindings))
 #+END_SRC
 ** Ediff
-   Tell ediff to split windows horizontally.
-   #+BEGIN_SRC emacs-lisp
-     (use-package ediff
-       :ensure nil
-       :config
-       (setq ediff-split-window-function (quote split-window-horizontally))
-       )
-   #+END_SRC
+Tell ediff to split windows horizontally.
+#+BEGIN_SRC emacs-lisp
+  (use-package ediff
+    :ensure nil
+    :config
+    (setq ediff-split-window-function (quote split-window-horizontally))
+    )
+#+END_SRC
 ** Eldoc
 #+BEGIN_SRC emacs-lisp
   (use-package eldoc
@@ -199,70 +199,70 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 #+END_SRC
 ** EPG
 Epa-file doesn't seem to work on Mac without this option
- #+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp
    (use-package epa
      :config
      (setq epa-pinentry-mode 'loopback)
      )
 #+END_SRC
 ** Mouse wheel settings
-   #+BEGIN_SRC emacs-lisp
-     (use-package mwheel
-       :ensure nil
-       :config
-       (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-             mouse-wheel-progressive-speed nil))
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package mwheel
+    :ensure nil
+    :config
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+          mouse-wheel-progressive-speed nil))
+#+END_SRC
 ** Mac OS settings
-   Settings for the custom Mac OS build of Emacs.
-   #+BEGIN_SRC emacs-lisp
-     (setq ns-use-srgb-colorspace nil)
+Settings for the custom Mac OS build of Emacs.
+#+BEGIN_SRC emacs-lisp
+  (setq ns-use-srgb-colorspace nil)
 
-     (setq mac-option-modifier 'meta)
-     (setq mac-command-modifier 'super)
-   #+END_SRC
+  (setq mac-option-modifier 'meta)
+  (setq mac-command-modifier 'super)
+#+END_SRC
 
 
 * Packages
 ** Evil-mode
 *** Use evil-mode
-    #+BEGIN_SRC emacs-lisp
-      (use-package evil
-        :init
-        (setq evil-want-abbrev-expand-on-insert-exit nil
-              evil-want-C-i-jump nil
-              evil-want-keybinding nil
-              evil-search-module 'isearch
-              evil-ex-search-vim-style-regexp t)
-        :config
-        (define-key evil-motion-state-map (kbd "TAB") nil)
-        (add-to-list 'evil-emacs-state-modes 'magit-mode)
-        (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
-        (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
-        (evil-mode)
-        )
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :init
+    (setq evil-want-abbrev-expand-on-insert-exit nil
+          evil-want-C-i-jump nil
+          evil-want-keybinding nil
+          evil-search-module 'isearch
+          evil-ex-search-vim-style-regexp t)
+    :config
+    (define-key evil-motion-state-map (kbd "TAB") nil)
+    (add-to-list 'evil-emacs-state-modes 'magit-mode)
+    (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
+    (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
+    (evil-mode)
+    )
 
-      (use-package evil-surround
-        :after evil
-        :config (global-evil-surround-mode 1))
+  (use-package evil-surround
+    :after evil
+    :config (global-evil-surround-mode 1))
 
-      (use-package evil-collection
-        :after evil
-        :config
-        (setq evil-collection-company-use-tng nil)
-        (evil-collection-init))
-    #+END_SRC
+  (use-package evil-collection
+    :after evil
+    :config
+    (setq evil-collection-company-use-tng nil)
+    (evil-collection-init))
+#+END_SRC
 *** Keychords
-    Return to normal mode with "kj" or "jk" instead of Esc
-    Imagine having the Escape key on a touch bar...
-    #+BEGIN_SRC emacs-lisp
-      (use-package key-chord
-        :config
-        (setq key-chord-two-keys-delay 0.150)
-        (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-        (key-chord-mode 1)
-        )
-    #+END_SRC
+Return to normal mode with "kj" or "jk" instead of Esc
+Imagine having the Escape key on a touch bar...
+#+BEGIN_SRC emacs-lisp
+  (use-package key-chord
+    :config
+    (setq key-chord-two-keys-delay 0.150)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+    (key-chord-mode 1)
+    )
+#+END_SRC
 ** Visual
 Packages and settings providing visual customization to Emacs
 *** Theme
@@ -298,12 +298,12 @@ Beacon provides visual feedback highlighting the point after the user performs a
     (beacon-mode 1))
 #+END_SRC
 *** Indent guides
-    Minor mode for highlighting indentation levels.
-    #+BEGIN_SRC emacs-lisp
-      (use-package highlight-indent-guides
-        :config
-        (setq highlight-indent-guides-method 'character))
-    #+END_SRC
+Minor mode for highlighting indentation levels.
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-indent-guides
+    :config
+    (setq highlight-indent-guides-method 'character))
+#+END_SRC
 *** Icons
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons
@@ -314,24 +314,24 @@ Beacon provides visual feedback highlighting the point after the user performs a
 #+END_SRC
 *** Dired icons
 Small package for displaying neat icons in Dired buffers.
-    #+BEGIN_SRC emacs-lisp
-      (use-package all-the-icons-dired
-        :hook (dired-mode . all-the-icons-dired-mode))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
+#+END_SRC
 ** Startup dashboard
-   #+BEGIN_SRC emacs-lisp
-     (use-package dashboard
-       :config
-       (dashboard-setup-startup-hook)
-       (setq dashboard-banner-logo-title "Welcome back!")
-       (setq dashboard-startup-banner 'logo)
-       (setq dashboard-items '((recents  . 5)
-                               (bookmarks . 5)
-                               (projects . 5)
-                               (agenda . 5)
-                               (registers . 5)))
-       )
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-banner-logo-title "Welcome back!")
+    (setq dashboard-startup-banner 'logo)
+    (setq dashboard-items '((recents  . 5)
+                            (bookmarks . 5)
+                            (projects . 5)
+                            (agenda . 5)
+                            (registers . 5)))
+    )
+#+END_SRC
 ** Ivy
 #+BEGIN_SRC emacs-lisp
   (use-package counsel
@@ -440,190 +440,190 @@ Small package for displaying neat icons in Dired buffers.
     (company-prescient-mode +1))
 #+END_SRC
 ** Utilities
-   #+BEGIN_SRC emacs-lisp
-     (use-package which-key
-       :diminish
-       :config
-       (setq which-key-idle-delay 0.5)
-       (which-key-mode))
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :diminish
+    :config
+    (setq which-key-idle-delay 0.5)
+    (which-key-mode))
 
-     (use-package exec-path-from-shell
-       :config
-       (when (memq window-system '(mac ns x))
-         (exec-path-from-shell-initialize)))
+  (use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 
-     (use-package undo-tree
-       :diminish)
-   #+END_SRC
+  (use-package undo-tree
+    :diminish)
+#+END_SRC
 ** Git/VC
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config (add-hook 'with-editor-mode-hook #'evil-insert-state))
 #+END_SRC
 ** Navigation
-   These packages provide various ways to navigate between buffers, windows and frames.
-   Basically, these are used to change what's on my screen at any given time.
-   #+BEGIN_SRC emacs-lisp
-     (use-package projectile
-       :diminish
-       :config
-       (setq projectile-sort-order 'recentf
-             projectile-indexing-method 'hybrid
-             projectile-completion-system 'ivy)
-       (projectile-mode)
-       (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+These packages provide various ways to navigate between buffers, windows and frames.
+Basically, these are used to change what's on my screen at any given time.
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :diminish
+    :config
+    (setq projectile-sort-order 'recentf
+          projectile-indexing-method 'hybrid
+          projectile-completion-system 'ivy)
+    (projectile-mode)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-     (use-package ace-window
-       :config
-       (global-set-key (kbd "M-o") 'ace-window))
+  (use-package ace-window
+    :config
+    (global-set-key (kbd "M-o") 'ace-window))
 
-     (use-package elscreen
-       :config
-       (setq elscreen-prefix-key "\C-Q")
-       (elscreen-start))
+  (use-package elscreen
+    :config
+    (setq elscreen-prefix-key "\C-Q")
+    (elscreen-start))
 
-   #+END_SRC
+#+END_SRC
 ** Key bindings (general.el)
-   General.el for easily remapping keybindings
-   #+BEGIN_SRC emacs-lisp
-     (use-package general
-       :demand
-       :config
-       (general-define-key
-        :states '(normal visual insert emacs)
-        :prefix "SPC"
-        :non-normal-prefix "M-SPC"
-        :keymaps 'override
-        "SPC" '(counsel-M-x :which-key "Extended command")
+General.el for easily remapping keybindings
+#+BEGIN_SRC emacs-lisp
+  (use-package general
+    :demand
+    :config
+    (general-define-key
+     :states '(normal visual insert emacs)
+     :prefix "SPC"
+     :non-normal-prefix "M-SPC"
+     :keymaps 'override
+     "SPC" '(counsel-M-x :which-key "Extended command")
 
-        ;; File actions
-        "f" '(:ignore t :which-key "Files")
-        "ff" '(counsel-find-file :which-key "Find file")
-        "fp" '(projectile-find-file :which-key "File file in project")
-        "fs" '(save-buffer :which-key "Save buffer")
-        "fS" '(save-some-buffers :which-key "Save all buffers")
+     ;; File actions
+     "f" '(:ignore t :which-key "Files")
+     "ff" '(counsel-find-file :which-key "Find file")
+     "fp" '(projectile-find-file :which-key "File file in project")
+     "fs" '(save-buffer :which-key "Save buffer")
+     "fS" '(save-some-buffers :which-key "Save all buffers")
 
-        ;; Dired actions
-        "d" '(:ignore t :which-key "Dired")
-        "dd" '(dired :which-key "Open dired")
-        "dj" '(dired-jump :which-key "Dired jump")
+     ;; Dired actions
+     "d" '(:ignore t :which-key "Dired")
+     "dd" '(dired :which-key "Open dired")
+     "dj" '(dired-jump :which-key "Dired jump")
 
-        ;; Projectile actions
-        "p" '(:ignore t :which-key "Projectile")
-        "pp" '(projectile-switch-project :which-key "Switch project")
-        "pf" '(projectile-find-file :which-key "Find file in project")
-        "pK" '(projectile-kill-buffers :which-key "Kill project buffers")
-        "pss" '(projectile-ag :which-key "Search in project (ag)")
-        "psr" '(projectile-ripgrep :which-key "Search in project (ripgrep)")
-        "psg" '(projectile-grep :which-key "Search in project (grep)")
+     ;; Projectile actions
+     "p" '(:ignore t :which-key "Projectile")
+     "pp" '(projectile-switch-project :which-key "Switch project")
+     "pf" '(projectile-find-file :which-key "Find file in project")
+     "pK" '(projectile-kill-buffers :which-key "Kill project buffers")
+     "pss" '(projectile-ag :which-key "Search in project (ag)")
+     "psr" '(projectile-ripgrep :which-key "Search in project (ripgrep)")
+     "psg" '(projectile-grep :which-key "Search in project (grep)")
 
-        ;; Search actions
-        "s" '(:ignore t :which-key "Search")
-        "ss" '(swiper :which-key "Swiper (ivy)")
+     ;; Search actions
+     "s" '(:ignore t :which-key "Search")
+     "ss" '(swiper :which-key "Swiper (ivy)")
 
-        ;; Git actions
-        "g" '(:ignore t :which-key "Git")
-        "gs" '(magit-status :which-key "Magit status")
-        "gb" '(magit-blame :which-key "Magit blame")
+     ;; Git actions
+     "g" '(:ignore t :which-key "Git")
+     "gs" '(magit-status :which-key "Magit status")
+     "gb" '(magit-blame :which-key "Magit blame")
 
-        ;; Buffer actions
-        "b" '(:ignore t :which-key "Buffers")
-        "bb" '(ivy-switch-buffer :which-key "Buffer list (ivy)")
-        "bk" '(kill-buffer :which-key "Kill buffer")
-        "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
+     ;; Buffer actions
+     "b" '(:ignore t :which-key "Buffers")
+     "bb" '(ivy-switch-buffer :which-key "Buffer list (ivy)")
+     "bk" '(kill-buffer :which-key "Kill buffer")
+     "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
-        ;; Android-mode actions
-        "a" '(:ignore t :which-key "Android (gradle)")
-        "ai" '(android-gradle-installDebug :which-key "installDebug")
-        "ac" '(android-gradle-clean :which-key "clean")
-        "ar" '(android-gradle-assembleRelease :which-key "assembleRelease")
-        "ad" '(android-gradle-assembleDebug :which-key "assembleDebug")
+     ;; Android-mode actions
+     "a" '(:ignore t :which-key "Android (gradle)")
+     "ai" '(android-gradle-installDebug :which-key "installDebug")
+     "ac" '(android-gradle-clean :which-key "clean")
+     "ar" '(android-gradle-assembleRelease :which-key "assembleRelease")
+     "ad" '(android-gradle-assembleDebug :which-key "assembleDebug")
 
-        ;; Window actions
-        "w" '(:ignore t :which-key "Windows")
-        "wo" '(ace-window :which-key "Ace window")
-        "wk" '(delete-window :which-key "Close window")
-        "wr" '(split-window-right :which-key "Split window right")
-        "wd" '(split-window-below :which-key "Split window down")
-        "wb" '(balance-windows :which-key "Balance windows")
+     ;; Window actions
+     "w" '(:ignore t :which-key "Windows")
+     "wo" '(ace-window :which-key "Ace window")
+     "wk" '(delete-window :which-key "Close window")
+     "wr" '(split-window-right :which-key "Split window right")
+     "wd" '(split-window-below :which-key "Split window down")
+     "wb" '(balance-windows :which-key "Balance windows")
 
-        ;; Toggles and other adjustments
-        "t" '(:ignore t :which-key "Settings")
-        "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
-        "tf" '(text-scale-adjust :which-key "Adjust text size")
-        "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
-        "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
+     ;; Toggles and other adjustments
+     "t" '(:ignore t :which-key "Settings")
+     "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
+     "tf" '(text-scale-adjust :which-key "Adjust text size")
+     "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
+     "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
 
-        ;; Elscreen
-        "q" '(:ignore t :which-key "Elscreen")
-        "qn" '(elscreen-next :which-key "Next screen")
-        "qp" '(elscreen-previous :which-key "Prev. screen")
-        "qc" '(elscreen-create :which-key "New screen")
-        "qk" '(elscreen-kill :which-key "Kill screen")
+     ;; Elscreen
+     "q" '(:ignore t :which-key "Elscreen")
+     "qn" '(elscreen-next :which-key "Next screen")
+     "qp" '(elscreen-previous :which-key "Prev. screen")
+     "qc" '(elscreen-create :which-key "New screen")
+     "qk" '(elscreen-kill :which-key "Kill screen")
 
-        ;; Xref
-        "x" '(:ignore t :which-key "Xref")
-        "xd" '(xref-find-definitions :which-key "Find definitions")
-        "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
-        "xr" '(xref-find-references :which-key "Find references")
+     ;; Xref
+     "x" '(:ignore t :which-key "Xref")
+     "xd" '(xref-find-definitions :which-key "Find definitions")
+     "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
+     "xr" '(xref-find-references :which-key "Find references")
 
-        ;; LSP
-        "l" '(:ignore t :which-key "LSP")
-        "ls" '(ivy-lsp-workspace-symbol :which-key "Find symbol")
-        "lS" '(ivy-lsp-global-workspace-symbol :which-key "Find symbol (global)")
-        "lc" '(lsp-execute-code-action :which-key "Code action")
+     ;; LSP
+     "l" '(:ignore t :which-key "LSP")
+     "ls" '(ivy-lsp-workspace-symbol :which-key "Find symbol")
+     "lS" '(ivy-lsp-global-workspace-symbol :which-key "Find symbol (global)")
+     "lc" '(lsp-execute-code-action :which-key "Code action")
 
-        ;; Org
-        "o" '(:ignore t :which-key "Org")
-        "oc" '(org-capture :which-key "Org Capture")
-        "oa" '(org-agenda :which-key "Org Agenda")
-        "ol" '(org-store-link :which-key "Store link")
-        "oL" '(org-insert-link :which-key "Insert link")
-        ))
-   #+END_SRC
+     ;; Org
+     "o" '(:ignore t :which-key "Org")
+     "oc" '(org-capture :which-key "Org Capture")
+     "oa" '(org-agenda :which-key "Org Agenda")
+     "ol" '(org-store-link :which-key "Store link")
+     "oL" '(org-insert-link :which-key "Insert link")
+     ))
+#+END_SRC
 ** Editing
-   #+BEGIN_SRC emacs-lisp
-     (use-package evil-nerd-commenter
-       :config
-       (evilnc-default-hotkeys))
+#+BEGIN_SRC emacs-lisp
+  (use-package evil-nerd-commenter
+    :config
+    (evilnc-default-hotkeys))
 
-     (use-package anzu
-       :diminish
-       :config
-       (global-anzu-mode +1))
-   #+END_SRC
+  (use-package anzu
+    :diminish
+    :config
+    (global-anzu-mode +1))
+#+END_SRC
 ** LSP
-   Language Server Protocol support for various languages.
-   #+BEGIN_SRC emacs-lisp
-     (use-package lsp-mode
-       :hook ((java-mode
-               kotlin-mode
-               python-mode
-               js-mode
-               typescript-mode
-               rjsx-mode
-               web-mode
-               ) . lsp)
-       :commands lsp
-       :config
-       (setq lsp-prefer-flymake nil)
-       (setq lsp-keep-workspace-alive nil))
+Language Server Protocol support for various languages.
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :hook ((java-mode
+            kotlin-mode
+            python-mode
+            js-mode
+            typescript-mode
+            rjsx-mode
+            web-mode
+            ) . lsp)
+    :commands lsp
+    :config
+    (setq lsp-prefer-flymake nil)
+    (setq lsp-keep-workspace-alive nil))
 
-     (use-package lsp-ivy)
+  (use-package lsp-ivy)
 
-     (use-package lsp-ui
-       :after lsp
-       :config
-       (setq lsp-ui-doc-delay 0.5)
-       (setq lsp-ui-sideline-enable nil)
-       )
+  (use-package lsp-ui
+    :after lsp
+    :config
+    (setq lsp-ui-doc-delay 0.5)
+    (setq lsp-ui-sideline-enable nil)
+    )
 
-     (use-package lsp-java
-       :after lsp
-       :config
-       (setq lsp-java-save-action-organize-imports nil)
-       )
-   #+END_SRC
+  (use-package lsp-java
+    :after lsp
+    :config
+    (setq lsp-java-save-action-organize-imports nil)
+    )
+#+END_SRC
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
@@ -657,62 +657,62 @@ Small package for displaying neat icons in Dired buffers.
 #+END_SRC
 ** Programming
 *** Language support
-    Various packages providing modes for specific programming (and markup) languages
-    #+BEGIN_SRC emacs-lisp
-      (use-package rjsx-mode
-        :config
-        (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
+Various packages providing modes for specific programming (and markup) languages
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
 
-      (use-package typescript-mode
-        :after (typescript-mode company flycheck add-node-modules-path)
-        :config
-        (flycheck-add-next-checker 'lsp-ui 'javascript-eslint 'append)
-        (add-hook 'typescript-mode-hook #'add-node-modules-path)
-        )
+  (use-package typescript-mode
+    :after (typescript-mode company flycheck add-node-modules-path)
+    :config
+    (flycheck-add-next-checker 'lsp-ui 'javascript-eslint 'append)
+    (add-hook 'typescript-mode-hook #'add-node-modules-path)
+    )
 
-      (use-package web-mode
-        :after flycheck
-        :config
-        (flycheck-add-mode 'javascript-eslint 'web-mode)
-        (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
+  (use-package web-mode
+    :after flycheck
+    :config
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+    (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
 
-      (use-package json-mode
-        :config
-        (defun my-json-indent ()
-          "Set tab width to 2 when entering json-mode"
-          (setq js-indent-level 2))
-        (add-hook 'json-mode-hook 'my-json-indent)
-        )
+  (use-package json-mode
+    :config
+    (defun my-json-indent ()
+      "Set tab width to 2 when entering json-mode"
+      (setq js-indent-level 2))
+    (add-hook 'json-mode-hook 'my-json-indent)
+    )
 
-      (use-package omnisharp
-        :after company
-        :init
-        (setenv "PATH" (concat (getenv "PATH") ":/Library/Frameworks/Mono.framework/Versions/Current/Commands"))
-        (setq exec-path (append exec-path '("/Library/Frameworks/Mono.framework/Versions/Current/Commands")))
-        (add-to-list 'company-backends #'company-omnisharp)
-        ;; (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
-        :config
-        (add-hook 'csharp-mode-hook 'omnisharp-mode)
-        )
+  (use-package omnisharp
+    :after company
+    :init
+    (setenv "PATH" (concat (getenv "PATH") ":/Library/Frameworks/Mono.framework/Versions/Current/Commands"))
+    (setq exec-path (append exec-path '("/Library/Frameworks/Mono.framework/Versions/Current/Commands")))
+    (add-to-list 'company-backends #'company-omnisharp)
+    ;; (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
+    :config
+    (add-hook 'csharp-mode-hook 'omnisharp-mode)
+    )
 
-      (use-package kotlin-mode)
+  (use-package kotlin-mode)
 
-      (use-package android-mode)
+  (use-package android-mode)
 
-      (use-package groovy-mode)
+  (use-package groovy-mode)
 
-      (use-package swift-mode)
+  (use-package swift-mode)
 
-      (use-package php-mode)
+  (use-package php-mode)
 
-      (use-package yaml-mode
-        :config
-        (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
+  (use-package yaml-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
 
-      (use-package dockerfile-mode
-        :config
-        (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
-    #+END_SRC
+  (use-package dockerfile-mode
+    :config
+    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+#+END_SRC
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
   (use-package dumb-jump
@@ -760,73 +760,73 @@ Small package for displaying neat icons in Dired buffers.
 
 #+END_SRC
 ** Elfeed
-   #+BEGIN_SRC emacs-lisp
-     (use-package elfeed)
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed)
 
-     (use-package elfeed-org
-       :after elfeed
-       :config
-       (setq rmh-elfeed-org-files (list "~/.emacs.d/config.org"))
-       (elfeed-org))
-   #+END_SRC
+  (use-package elfeed-org
+    :after elfeed
+    :config
+    (setq rmh-elfeed-org-files (list "~/.emacs.d/config.org"))
+    (elfeed-org))
+#+END_SRC
 ** Org-mode and other stuff
 *** Org-mode
-    #+BEGIN_SRC emacs-lisp
-      (use-package org
-        :diminish org-indent-mode
-        :hook ((org-mode . visual-line-mode)
-               (org-mode . org-indent-mode))
-        :config
-        (setq org-export-html-postamble nil
-              org-log-done 'time
-              org-ellipsis "⤵"
-              org-src-window-setup 'current-window)
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :diminish org-indent-mode
+    :hook ((org-mode . visual-line-mode)
+           (org-mode . org-indent-mode))
+    :config
+    (setq org-export-html-postamble nil
+          org-log-done 'time
+          org-ellipsis "⤵"
+          org-src-window-setup 'current-window)
 
-        (add-to-list 'org-structure-template-alist
-                     '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+    (add-to-list 'org-structure-template-alist
+                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
 
-        (setq org-capture-templates
-              '(("w" "Work TODO"
-                 entry
-                 (file+headline "~/Dropbox/Org/work.org" "Todos")
-                 "** TODO %? :work:\n")
-                ("n" "Note"
-                 entry
-                 (file+headline "~/Dropbox/Org/index.org" "Notes")
-                 "** %?\n")
-                ("t" "Todo"
-                 entry
-                 (file+headline "~/Dropbox/Org/index.org" "Todos")
-                 "** TODO %?\n")
-                )
-              )
+    (setq org-capture-templates
+          '(("w" "Work TODO"
+             entry
+             (file+headline "~/Dropbox/Org/work.org" "Todos")
+             "** TODO %? :work:\n")
+            ("n" "Note"
+             entry
+             (file+headline "~/Dropbox/Org/index.org" "Notes")
+             "** %?\n")
+            ("t" "Todo"
+             entry
+             (file+headline "~/Dropbox/Org/index.org" "Todos")
+             "** TODO %?\n")
+            )
+          )
 
-        (setq org-directory "~/Dropbox/Org")
-        (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
-        (add-hook 'org-capture-mode-hook 'evil-insert-state)
-        )
+    (setq org-directory "~/Dropbox/Org")
+    (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
+    (add-hook 'org-capture-mode-hook 'evil-insert-state)
+    )
 
-      (use-package org-bullets
-        :hook (org-mode . org-bullets-mode))
-    #+END_SRC
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode))
+#+END_SRC
 *** Other
-      #+BEGIN_SRC emacs-lisp
-        (use-package htmlize)
+#+BEGIN_SRC emacs-lisp
+  (use-package htmlize)
 
-        (use-package ox-twbs)
+  (use-package ox-twbs)
 
-        (use-package markdown-mode+)
+  (use-package markdown-mode+)
 
-        (use-package latex-preview-pane)
-      #+END_SRC
+  (use-package latex-preview-pane)
+#+END_SRC
 ** Keyfreq
-   I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
-   #+BEGIN_SRC emacs-lisp
-     (use-package keyfreq
-       :init
-       (keyfreq-mode 1)
-       (keyfreq-autosave-mode 1))
-   #+END_SRC
+I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
+#+BEGIN_SRC emacs-lisp
+  (use-package keyfreq
+    :init
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+END_SRC
 ** Diminish mode
 #+BEGIN_SRC emacs-lisp
   (use-package diminish
@@ -835,21 +835,21 @@ Small package for displaying neat icons in Dired buffers.
 
 
 * Custom functions
-  #+BEGIN_SRC emacs-lisp
-    (defun alx/reload-config ()
-      "Evaluate init.el file."
-      (interactive)
-      (load (expand-file-name (concat user-emacs-directory "init.el")))
-      )
+#+BEGIN_SRC emacs-lisp
+  (defun alx/reload-config ()
+    "Evaluate init.el file."
+    (interactive)
+    (load (expand-file-name (concat user-emacs-directory "init.el")))
+    )
 
-    (defun indent-buffer ()
-      "Indent an entire buffer using the default intenting scheme."
-      (interactive)
-      (save-excursion
-        (delete-trailing-whitespace)
-        (indent-region (point-min) (point-max) nil)
-        (untabify (point-min) (point-max))))
-  #+END_SRC
+  (defun indent-buffer ()
+    "Indent an entire buffer using the default intenting scheme."
+    (interactive)
+    (save-excursion
+      (delete-trailing-whitespace)
+      (indent-region (point-min) (point-max) nil)
+      (untabify (point-min) (point-max))))
+#+END_SRC
 
 
 * Feeds :elfeed:
