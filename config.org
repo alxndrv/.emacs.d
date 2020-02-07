@@ -232,7 +232,7 @@ Epa-file doesn't seem to work on Mac without this option
         (setq evil-want-abbrev-expand-on-insert-exit nil
               evil-want-C-i-jump nil
               evil-want-keybinding nil
-              evil-search-module 'evil-search
+              evil-search-module 'isearch
               evil-ex-search-vim-style-regexp t)
         :config
         (define-key evil-motion-state-map (kbd "TAB") nil)
@@ -723,8 +723,6 @@ Small package for displaying neat icons in Dired buffers.
     :config
     (dumb-jump-mode))
 
-  (use-package elogcat)
-
   (use-package yasnippet-snippets
     :diminish)
 
@@ -734,14 +732,10 @@ Small package for displaying neat icons in Dired buffers.
     :config
     (yas-global-mode 1))
 
-  (use-package multi-term)
-
   (use-package editorconfig
     :diminish
     :config
     (editorconfig-mode 1))
-
-  (use-package docker)
  #+END_SRC
 ** Prettier integration
 #+BEGIN_SRC emacs-lisp
