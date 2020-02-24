@@ -1,3 +1,4 @@
+.DS_Store
 ido**
 elpa
 auto-save-list
@@ -6,4 +7,11 @@ backups
 meghanada
 .cache/
 projectile.cache
+projectile-bookmarks.eld
 eclipse.jdt.ls/
+recentf
+transient/
+url/
+var/
+workspace/
+config.el
