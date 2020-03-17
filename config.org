@@ -762,16 +762,6 @@ Various packages providing modes for specific programming (and markup) languages
     )
 
 #+END_SRC
-** Elfeed
-#+BEGIN_SRC emacs-lisp
-  (use-package elfeed)
-
-  (use-package elfeed-org
-    :after elfeed
-    :config
-    (setq rmh-elfeed-org-files (list "~/.emacs.d/config.org"))
-    (elfeed-org))
-#+END_SRC
 ** Org-mode and other stuff
 *** Org-mode
 #+BEGIN_SRC emacs-lisp
@@ -846,11 +836,3 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
     )
 #+END_SRC
 
-
-* Feeds :elfeed:
-** Technology :tech:
-*** Emacs :emacs:
-*** React :react:
-**** [[http://reactjs.org/feed.xml][React Dev Blog]]
-** Casual :casual:
-*** [[https://www.hltv.org/rss/news][HLTV News]]
