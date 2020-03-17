@@ -844,14 +844,6 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
     (interactive)
     (load (expand-file-name (concat user-emacs-directory "init.el")))
     )
-
-  (defun indent-buffer ()
-    "Indent an entire buffer using the default intenting scheme."
-    (interactive)
-    (save-excursion
-      (delete-trailing-whitespace)
-      (indent-region (point-min) (point-max) nil)
-      (untabify (point-min) (point-max))))
 #+END_SRC
 
 
