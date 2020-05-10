@@ -606,6 +606,7 @@ Language Server Protocol support for various languages.
             typescript-mode
             rjsx-mode
             web-mode
+            rust-mode
             ) . lsp)
     :commands lsp
     :config
@@ -703,6 +704,8 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package android-mode)
 
   (use-package groovy-mode)
+
+  (use-package rust-mode)
 
   (use-package swift-mode)
 
@@ -835,4 +838,3 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
     (load (expand-file-name (concat user-emacs-directory "init.el")))
     )
 #+END_SRC
-
