@@ -616,7 +616,7 @@ Language Server Protocol support for various languages.
   (use-package lsp-ivy)
 
   (use-package lsp-ui
-    :after lsp
+    :after lsp-mode
     :config
     (setq lsp-ui-doc-delay 0.5)
     (setq lsp-ui-sideline-enable nil)
