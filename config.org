@@ -649,10 +649,10 @@ Language Server Protocol support for various languages.
     :diminish
     :hook (prog-mode . flycheck-mode))
 
-  (use-package flycheck-popup-tip
+  (use-package flycheck-posframe
     :diminish
     :config
-    (add-hook 'flycheck-mode-hook 'flycheck-popup-tip-mode))
+    (add-hook 'flycheck-mode-hook 'flycheck-posframe-mode))
 
   (use-package flycheck-kotlin
     :after flycheck
