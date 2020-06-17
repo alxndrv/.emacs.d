@@ -780,26 +780,6 @@ Various packages providing modes for specific programming (and markup) languages
 
     (add-to-list 'org-structure-template-alist
                  '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-
-    (setq org-capture-templates
-          '(("w" "Work TODO"
-             entry
-             (file+headline "~/Dropbox/Org/work.org" "Todos")
-             "** TODO %? :work:\n")
-            ("n" "Note"
-             entry
-             (file+headline "~/Dropbox/Org/index.org" "Notes")
-             "** %?\n")
-            ("t" "Todo"
-             entry
-             (file+headline "~/Dropbox/Org/index.org" "Todos")
-             "** TODO %?\n")
-            )
-          )
-
-    (setq org-directory "~/Dropbox/Org")
-    (setq org-agenda-files '("~/Dropbox/Org/index.org" "~/Dropbox/Org/work.org"))
-    (add-hook 'org-capture-mode-hook 'evil-insert-state)
     )
 
   (use-package org-bullets
