@@ -607,6 +607,7 @@ Language Server Protocol support for various languages.
             rjsx-mode
             web-mode
             rust-mode
+            csharp-mode
             ) . lsp)
     :commands lsp
     :config
@@ -686,17 +687,6 @@ Various packages providing modes for specific programming (and markup) languages
       "Set tab width to 2 when entering json-mode"
       (setq js-indent-level 2))
     (add-hook 'json-mode-hook 'my-json-indent)
-    )
-
-  (use-package omnisharp
-    :after company
-    :init
-    (setenv "PATH" (concat (getenv "PATH") ":/Library/Frameworks/Mono.framework/Versions/Current/Commands"))
-    (setq exec-path (append exec-path '("/Library/Frameworks/Mono.framework/Versions/Current/Commands")))
-    (add-to-list 'company-backends #'company-omnisharp)
-    ;; (setq omnisharp-server-executable-path (expand-file-name (concat user-emacs-directory ".cache/omnisharp/server/v1.32.9/run")))
-    :config
-    (add-hook 'csharp-mode-hook 'omnisharp-mode)
     )
 
   (use-package kotlin-mode)
