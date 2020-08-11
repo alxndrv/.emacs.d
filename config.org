@@ -130,7 +130,8 @@ Frame settings
     :custom
     (delete-by-moving-to-trash t)
     :config
-    (put 'dired-find-alternate-file 'disabled nil))
+    (put 'dired-find-alternate-file 'disabled nil)
+    (setq dired-listing-switches "-alh"))
 #+END_SRC
 ** Parentheses
 Show matching parentheses, automatically insert closing brackets.
