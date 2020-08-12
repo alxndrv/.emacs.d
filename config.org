@@ -688,6 +688,8 @@ Various packages providing modes for specific programming (and markup) languages
     (add-hook 'json-mode-hook 'my-json-indent)
     )
 
+  (use-package csharp-mode)
+
   (use-package kotlin-mode)
 
   (use-package android-mode)
