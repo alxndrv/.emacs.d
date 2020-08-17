@@ -769,9 +769,7 @@ Various packages providing modes for specific programming (and markup) languages
           org-ellipsis "⤵"
           org-src-window-setup 'current-window)
 
-    (add-to-list 'org-structure-template-alist
-                 '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
-    )
+    (add-to-list 'org-modules 'org-tempo)
 
   (use-package org-bullets
     :hook (org-mode . org-bullets-mode))
