@@ -784,6 +784,10 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package latex-preview-pane)
 #+END_SRC
+** Mu4e
+#+BEGIN_SRC emacs-lisp
+  (use-package mu4e)
+#+END_SRC
 ** Keyfreq
 I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
 #+BEGIN_SRC emacs-lisp
