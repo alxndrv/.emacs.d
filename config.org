@@ -769,7 +769,7 @@ Various packages providing modes for specific programming (and markup) languages
           org-ellipsis "⤵"
           org-src-window-setup 'current-window)
 
-    (add-to-list 'org-modules 'org-tempo)
+    (add-to-list 'org-modules 'org-tempo))
 
   (use-package org-bullets
     :hook (org-mode . org-bullets-mode))
