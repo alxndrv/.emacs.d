@@ -460,7 +460,11 @@ Small package for displaying neat icons in Dired buffers.
 ** Git/VC
 #+BEGIN_SRC emacs-lisp
   (use-package magit
-    :config (add-hook 'with-editor-mode-hook #'evil-insert-state))
+    :config
+    (add-hook 'with-editor-mode-hook #'evil-insert-state)
+    (transient-append-suffix 'magit-commit "-A"
+      '("-N" "Don't sign with GPG" "--no-gpg-sign"))
+    )
 #+END_SRC
 ** Navigation
 These packages provide various ways to navigate between buffers, windows and frames.
