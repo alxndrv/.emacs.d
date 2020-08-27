@@ -527,6 +527,11 @@ General.el for easily remapping keybindings
      "g" '(:ignore t :which-key "Git")
      "gs" '(magit-status :which-key "Magit status")
      "gb" '(magit-blame :which-key "Magit blame")
+     "gmn" '(smerge-next :which-key "SMerge: Next")
+     "gmp" '(smerge-prev :which-key "SMerge: Prev")
+     "gmU" '(smerge-keep-upper :which-key "SMerge: Keep upper")
+     "gmL" '(smerge-keep-lower :which-key "SMerge: Keep lower")
+     "gmA" '(smerge-keep-all :which-key "SMerge: Keep all")
 
      ;; Buffer actions
      "b" '(:ignore t :which-key "Buffers")
