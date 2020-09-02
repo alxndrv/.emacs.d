@@ -564,6 +564,7 @@ General.el for easily remapping keybindings
      "tf" '(text-scale-adjust :which-key "Adjust text size")
      "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
      "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
+     "tR" '(rainbow-mode :which-key "Rainbow-mode")
 
      ;; Elscreen
      "q" '(:ignore t :which-key "Elscreen")
@@ -742,6 +743,9 @@ Various packages providing modes for specific programming (and markup) languages
     :diminish
     :config
     (editorconfig-mode 1))
+
+  (use-package rainbow-mode
+    :diminish)
  #+END_SRC
 ** Prettier integration
 #+BEGIN_SRC emacs-lisp
