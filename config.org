@@ -581,8 +581,8 @@ General.el for easily remapping keybindings
 
      ;; LSP
      "l" '(:ignore t :which-key "LSP")
-     "ls" '(ivy-lsp-workspace-symbol :which-key "Find symbol")
-     "lS" '(ivy-lsp-global-workspace-symbol :which-key "Find symbol (global)")
+     "ls" '(lsp-ivy-workspace-symbol :which-key "Find symbol")
+     "lS" '(lsp-ivy-global-workspace-symbol :which-key "Find symbol (global)")
      "lc" '(lsp-execute-code-action :which-key "Code action")
 
      ;; Org
