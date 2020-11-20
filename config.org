@@ -34,7 +34,8 @@ Settings which are not package-specific
 
     ;; Always use spaces
     (setq-default indent-tabs-mode nil
-                  tab-width alx/indent-width)
+                  tab-width alx/indent-width
+                  js-indent-level 2)
     )
 #+END_SRC
 ** Custom file
@@ -345,6 +346,9 @@ Small package for displaying neat icons in Dired buffers.
   (use-package counsel-projectile
     :config (counsel-projectile-mode +1))
 
+  (use-package wgrep
+    :diminish)
+
   (use-package ivy
     :diminish
     :hook (after-init . ivy-mode)
@@ -501,6 +505,7 @@ General.el for easily remapping keybindings
      :non-normal-prefix "M-SPC"
      :keymaps 'override
      "SPC" '(counsel-M-x :which-key "Extended command")
+     "R" '(ivy-resume :which-key "Resume ivy session")
 
      ;; File actions
      "f" '(:ignore t :which-key "Files")
