@@ -650,13 +650,6 @@ Language Server Protocol support for various languages.
     :diminish
     :hook (prog-mode . company-mode)
     )
-
-  (use-package company-lsp
-    :commands company-lsp
-    :config
-    (push 'company-lsp company-backends)
-    (setq company-lsp-cache-candidates 'auto)
-    )
 #+END_SRC
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
