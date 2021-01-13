@@ -256,6 +256,11 @@ Settings for the custom Mac OS build of Emacs.
     :config
     (setq evil-collection-company-use-tng nil)
     (evil-collection-init))
+
+  (use-package evil-matchit
+    :after evil
+    :config
+    (global-evil-matchit-mode))
 #+END_SRC
 *** Keychords
 Return to normal mode with "kj" or "jk" instead of Esc
