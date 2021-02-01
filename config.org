@@ -255,7 +255,7 @@ Settings for the custom Mac OS build of Emacs.
     :after evil
     :config
     (setq evil-collection-company-use-tng nil)
-    (evil-collection-init))
+    (evil-collection-init '(dired)))
 
   (use-package evil-matchit
     :after evil
