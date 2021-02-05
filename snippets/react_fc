@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# key: react_fc
+# name React FC
+# expand-env: ((component-name (read-string "Component name: ")))
+# --
+
+import * as React from "react";
+
+type `component-name`Props = {};
+
+export const `component-name`: React.FC<`component-name`Props> = (props) => {
+  return null;
+}
