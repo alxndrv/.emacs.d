@@ -709,7 +709,11 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package groovy-mode)
 
-  (use-package rust-mode)
+  (use-package rust-mode
+    :config
+    (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
+                                             (lsp-format-buffer))))
+    )
 
   (use-package swift-mode)
 
