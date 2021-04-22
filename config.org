@@ -488,6 +488,8 @@ Basically, these are used to change what's on my screen at any given time.
     (projectile-mode)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
+  (use-package treemacs)
+
   (use-package ace-window
     :config
     (global-set-key (kbd "M-o") 'ace-window))
@@ -588,6 +590,8 @@ General.el for easily remapping keybindings
      "xd" '(xref-find-definitions :which-key "Find definitions")
      "xD" '(xref-find-definitions-other-window :which-key "Find definitions (other window)")
      "xr" '(xref-find-references :which-key "Find references")
+     "xR" '(lsp-treemacs-references :which-key "Show reference tree")
+     "xI" '(lsp-treemacs-implementations :which-key "Show implementation tree")
 
      ;; LSP
      "l" '(:ignore t :which-key "LSP")
@@ -634,6 +638,9 @@ Language Server Protocol support for various languages.
     (setq lsp-keep-workspace-alive nil))
 
   (use-package lsp-ivy)
+
+  (use-package lsp-treemacs
+    :after treemacs)
 
   (use-package lsp-ui
     :after lsp-mode
