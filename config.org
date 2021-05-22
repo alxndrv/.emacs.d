@@ -631,6 +631,7 @@ Language Server Protocol support for various languages.
             web-mode
             rust-mode
             csharp-mode
+            elixir-mode
             ) . lsp)
     :commands lsp
     :config
@@ -722,9 +723,11 @@ Various packages providing modes for specific programming (and markup) languages
                                              (lsp-format-buffer))))
     )
 
-  (use-package swift-mode)
-
-  (use-package php-mode)
+  (use-package elixir-mode
+    :config
+    (add-hook 'before-save-hook (lambda () (when (eq 'elixir-mode major-mode)
+                                             (lsp-format-buffer))))
+    )
 
   (use-package yaml-mode
     :config
