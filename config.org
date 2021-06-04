@@ -166,6 +166,11 @@ Show matching parentheses, automatically insert closing brackets.
   (use-package python
     :ensure nil
     :config (setq python-indent-offset alx/indent-width))
+
+  (use-package python-black
+    :after python
+    :config
+    (add-hook 'python-mode-hook 'python-black-on-save-mode))
 #+END_SRC
 ** Delsel-mode
 #+BEGIN_SRC emacs-lisp
