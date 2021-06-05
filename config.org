@@ -638,6 +638,7 @@ Language Server Protocol support for various languages.
             rust-mode
             csharp-mode
             elixir-mode
+            haskell-mode
             ) . lsp)
     :commands lsp
     :config
@@ -661,6 +662,9 @@ Language Server Protocol support for various languages.
     :config
     (setq lsp-java-save-action-organize-imports nil)
     )
+
+  (use-package lsp-haskell
+    :after lsp)
 #+END_SRC
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
@@ -734,6 +738,8 @@ Various packages providing modes for specific programming (and markup) languages
     (add-hook 'before-save-hook (lambda () (when (eq 'elixir-mode major-mode)
                                              (lsp-format-buffer))))
     )
+
+  (use-package haskell-mode)
 
   (use-package yaml-mode
     :config
