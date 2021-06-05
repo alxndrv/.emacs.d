@@ -816,8 +816,6 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package ox-twbs)
 
-  (use-package markdown-mode+)
-
   (use-package latex-preview-pane)
 #+END_SRC
 ** Mu4e Alert
