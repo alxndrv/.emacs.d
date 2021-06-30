@@ -289,11 +289,11 @@ Use "doom-dracula" theme from doom-themes package
    (load-theme 'doom-dracula t))
 #+END_SRC
 *** Modeline
-Stopped usign smart-mode-line as it appeared to cause issues, will look into a new package later.
+Using doom-modeline, it's pretty and just works.
 #+BEGIN_SRC emacs-lisp
-  (use-package powerline
+  (use-package doom-modeline
     :config
-    (powerline-center-evil-theme))
+    (doom-modeline-mode))
 #+END_SRC
 *** Highlighting
 Various packages used to highlight things.
@@ -513,7 +513,7 @@ General.el for easily remapping keybindings
     :demand
     :config
     (general-define-key
-     :states '(normal visual insert emacs)
+     :states '(normal visual motion insert emacs)
      :prefix "SPC"
      :non-normal-prefix "M-SPC"
      :keymaps 'override
