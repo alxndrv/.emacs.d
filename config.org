@@ -391,15 +391,15 @@ Small package for displaying neat icons in Dired buffers.
           '(ivy-switch-buffer
             (:columns
              ((ivy-rich-switch-buffer-icon (:width 2))
-              (ivy-rich-candidate (:width 55))
-              (ivy-rich-switch-buffer-project (:width 15 :face success))
-              (ivy-rich-switch-buffer-major-mode (:width 12 :face warning)))
+              (ivy-rich-candidate (:width 80))
+              (ivy-rich-switch-buffer-project (:width 40 :face success))
+              (ivy-rich-switch-buffer-major-mode (:width 40 :face warning)))
              :predicate
              (lambda (cand) (get-buffer cand)))
             counsel-M-x
             (:columns
-             ((counsel-M-x-transformer (:width 35))
-              (ivy-rich-counsel-function-docstring (:width 64 :face font-lock-doc-face))))))
+             ((counsel-M-x-transformer (:width 55))
+              (ivy-rich-counsel-function-docstring (:width 154 :face font-lock-doc-face))))))
     :config
     (ivy-rich-mode +1)
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
@@ -425,10 +425,13 @@ Small package for displaying neat icons in Dired buffers.
     :after ivy
     :diminish
     :config
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center))
-          ivy-posframe-height-alist '((t . 20))
-          ivy-posframe-parameters '((internal-border-width . 10)))
-    (setq ivy-posframe-width 100)
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+    (setq ivy-posframe-parameters '((internal-border-width . 10)
+                                    (left-fringe . 8)
+                                    (right-fringe . 8)))
+    (setq ivy-posframe-width 200)
+    (setq ivy-posframe-min-height 40)
+    (setq ivy-posframe-height 40)
     (ivy-posframe-mode +1))
 #+END_SRC
 ** Prescient
