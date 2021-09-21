@@ -14,6 +14,9 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; Ensure use-package is loaded
+(straight-use-package 'use-package)
+
 ;; Load org-mode and tangle the main config file
 (require 'org)
 (org-babel-load-file (concat user-emacs-directory "config.org"))
