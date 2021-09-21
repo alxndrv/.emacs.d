@@ -1,10 +1,10 @@
 .DS_Store
-ido**
-elpa
+elpa/
+eln-cache/
+eshell/history
 auto-save-list
 network-security.data
 backups
-meghanada
 .cache/
 projectile.cache
 projectile-bookmarks.eld
