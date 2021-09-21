@@ -286,7 +286,7 @@ Use "doom-dracula" theme from doom-themes package
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
    :config
-   (load-theme 'doom-dracula t))
+   (load-theme 'doom-solarized-light t))
 #+END_SRC
 *** Modeline
 Using doom-modeline, it's pretty and just works.
