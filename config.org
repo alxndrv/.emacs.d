@@ -568,7 +568,7 @@ General.el for easily remapping keybindings
 
      ;; Buffer actions
      "b" '(:ignore t :which-key "Buffers")
-     "bb" '(perps-ivy-switch-buffer :which-key "Buffer list (perspective)")
+     "bb" '(persp-ivy-switch-buffer :which-key "Buffer list (perspective)")
      "bB" '(ivy-switch-buffer :which-key "Buffer list (all)")
      "bk" '(kill-buffer :which-key "Kill buffer")
      "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
