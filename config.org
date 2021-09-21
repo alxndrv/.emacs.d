@@ -501,11 +501,19 @@ Basically, these are used to change what's on my screen at any given time.
     :config
     (global-set-key (kbd "M-o") 'ace-window))
 
+  ;; Temporarily disabled while I test out `perspective'
   (use-package elscreen
+    :disabled
     :config
     (setq elscreen-prefix-key "\C-Q")
     (setq elscreen-display-tab nil)
     (elscreen-start))
+
+  (use-package perspective
+    :demand t
+    :config
+    (unless (equal persp-mode t)
+      (persp-mode)))
 
 #+END_SRC
 ** Key bindings (general.el)
@@ -587,11 +595,16 @@ General.el for easily remapping keybindings
      "tR" '(rainbow-mode :which-key "Rainbow-mode")
 
      ;; Elscreen
+     ;;"q" '(:ignore t :which-key "Elscreen")
+     ;;"qn" '(elscreen-next :which-key "Next screen")
+     ;;"qp" '(elscreen-previous :which-key "Prev. screen")
+     ;;"qc" '(elscreen-create :which-key "New screen")
+     ;;"qk" '(elscreen-kill :which-key "Kill screen")
+
      "q" '(:ignore t :which-key "Elscreen")
-     "qn" '(elscreen-next :which-key "Next screen")
-     "qp" '(elscreen-previous :which-key "Prev. screen")
-     "qc" '(elscreen-create :which-key "New screen")
-     "qk" '(elscreen-kill :which-key "Kill screen")
+     "qn" '(persp-next :which-key "Next screen")
+     "qp" '(persp-prev :which-key "Prev. screen")
+     "qs" '(persp-switch :which-key "Switch perspective")
 
      ;; Xref
      "x" '(:ignore t :which-key "Xref")
