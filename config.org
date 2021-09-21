@@ -703,7 +703,6 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package typescript-mode
     :after (typescript-mode company flycheck add-node-modules-path)
     :config
-    (flycheck-add-next-checker 'lsp 'javascript-eslint 'append)
     (add-hook 'typescript-mode-hook #'add-node-modules-path)
     )
 
