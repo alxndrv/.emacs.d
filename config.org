@@ -515,6 +515,7 @@ Basically, these are used to change what's on my screen at any given time.
     (unless (equal persp-mode t)
       (persp-mode)))
 
+  (use-package persp-projectile)
 #+END_SRC
 ** Key bindings (general.el)
 General.el for easily remapping keybindings
@@ -567,7 +568,8 @@ General.el for easily remapping keybindings
 
      ;; Buffer actions
      "b" '(:ignore t :which-key "Buffers")
-     "bb" '(ivy-switch-buffer :which-key "Buffer list (ivy)")
+     "bb" '(perps-ivy-switch-buffer :which-key "Buffer list (perspective)")
+     "bB" '(ivy-switch-buffer :which-key "Buffer list (all)")
      "bk" '(kill-buffer :which-key "Kill buffer")
      "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
@@ -605,6 +607,7 @@ General.el for easily remapping keybindings
      "qn" '(persp-next :which-key "Next screen")
      "qp" '(persp-prev :which-key "Prev. screen")
      "qs" '(persp-switch :which-key "Switch perspective")
+     "qk" '(persp-kill :which-key "Kill perspective")
 
      ;; Xref
      "x" '(:ignore t :which-key "Xref")
