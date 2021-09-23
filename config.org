@@ -163,6 +163,10 @@ Show matching parentheses, automatically insert closing brackets.
     :straight nil
     :config (setq js-indent-level alx/indent-width))
 
+  (use-package css-mode
+    :straight nil
+    :config (setq css-indent-offset alx/indent-width))
+
   (use-package python
     :straight nil
     :config (setq python-indent-offset alx/indent-width))
