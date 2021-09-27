@@ -551,6 +551,7 @@ General.el for easily remapping keybindings
      "p" '(:ignore t :which-key "Projectile")
      "pp" '(projectile-switch-project :which-key "Switch project")
      "pf" '(projectile-find-file :which-key "Find file in project")
+     "pd" '(projectile-find-dir :which-key "Open directory in project")
      "pK" '(projectile-kill-buffers :which-key "Kill project buffers")
      "pss" '(projectile-ag :which-key "Search in project (ag)")
      "psr" '(projectile-ripgrep :which-key "Search in project (ripgrep)")
