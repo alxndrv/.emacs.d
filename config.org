@@ -770,6 +770,8 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package dockerfile-mode
     :config
     (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+
+  (use-package terraform-mode)
 #+END_SRC
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
