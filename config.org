@@ -725,13 +725,15 @@ Various packages providing modes for specific programming (and markup) languages
     :after (typescript-mode company flycheck add-node-modules-path)
     :config
     (add-hook 'typescript-mode-hook #'add-node-modules-path)
+    (add-to-list 'auto-mode-alist '("\\.tsx?$" . typescript-mode))
     )
 
   (use-package web-mode
     :after flycheck
     :config
     (flycheck-add-mode 'javascript-eslint 'web-mode)
-    (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode)))
+    ;;(add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
+    )
 
   (use-package json-mode
     :config
