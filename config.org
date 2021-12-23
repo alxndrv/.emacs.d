@@ -362,7 +362,6 @@ Small package for displaying neat icons in Dired buffers.
     :diminish
     :hook (after-init . ivy-mode)
     :config
-    (setq ivy-display-style nil)
     (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
     (define-key ivy-minibuffer-map (kbd "<escape>") #'minibuffer-keyboard-quit)
     (setq ivy-re-builders-alist
@@ -371,7 +370,7 @@ Small package for displaying neat icons in Dired buffers.
             (counsel-ag . ivy--regex-plus)
             (counsel-projectile-ag . ivy--regex-plus)
             (swiper . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))
+            (t . ivy--regex-plus)))
 
     (setq ivy-use-virtual-buffers t
           ivy-count-format "(%d/%d) "
