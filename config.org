@@ -350,7 +350,7 @@ Small package for displaying neat icons in Dired buffers.
     )
 #+END_SRC
 ** Ivy
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package counsel
     :diminish
     :hook (ivy-mode . counsel-mode))
@@ -436,6 +436,47 @@ Small package for displaying neat icons in Dired buffers.
     (setq ivy-posframe-height 40)
     (ivy-posframe-mode +1))
 #+END_SRC
+** Vertico
+#+BEGIN_SRC emacs-lisp
+  (use-package vertico
+    :custom
+    (vertico-cycle t)
+    (vertico-count 40)
+    :config
+    (vertico-mode))
+
+  (use-package consult
+    :demand t)
+
+  (use-package consult-projectile)
+
+  (use-package marginalia
+    :after vertico
+    :custom
+    (marginalia-margin-threshold 300) ;; Make this larger than the posframe width so column spacing is correct
+    :config
+    (marginalia-mode))
+
+  (use-package vertico-posframe
+    :straight '(vertico-posframe :host github
+                                 :repo "tumashu/vertico-posframe")
+    :config
+    (setq vertico-posframe-display-functions-alist '((t . vertico-posframe-display-at-frame-center)))
+    (setq vertico-posframe-parameters '((internal-border-width . 10)
+                                        (left-fringe . 8)
+                                        (right-fringe . 8)))
+    (setq vertico-posframe-height-alist '((t . 40)))
+    (setq vertico-posframe-min-width 200)
+    (setq vertico-posframe-width 200)
+    (setq vertico-posframe-min-height 40)
+    (setq vertico-posframe-height 40)
+    (vertico-posframe-mode 1))
+
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)
+          completion-category-defaults nil))
+#+END_SRC
 ** Prescient
 #+BEGIN_SRC emacs-lisp
   (use-package prescient
@@ -494,8 +535,7 @@ Basically, these are used to change what's on my screen at any given time.
     :diminish
     :config
     (setq projectile-sort-order 'recentf
-          projectile-indexing-method 'hybrid
-          projectile-completion-system 'ivy)
+          projectile-indexing-method 'hybrid)
     (projectile-mode)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
@@ -532,12 +572,12 @@ General.el for easily remapping keybindings
      :prefix "SPC"
      :non-normal-prefix "M-SPC"
      :keymaps 'override
-     "SPC" '(counsel-M-x :which-key "Extended command")
+     "SPC" '(execute-extended-command :which-key "Extended command")
      "R" '(ivy-resume :which-key "Resume ivy session")
 
      ;; File actions
      "f" '(:ignore t :which-key "Files")
-     "ff" '(counsel-find-file :which-key "Find file")
+     "ff" '(find-file :which-key "Find file")
      "fp" '(projectile-find-file :which-key "File file in project")
      "fs" '(save-buffer :which-key "Save buffer")
      "fS" '(save-some-buffers :which-key "Save all buffers")
@@ -559,7 +599,7 @@ General.el for easily remapping keybindings
 
      ;; Search actions
      "s" '(:ignore t :which-key "Search")
-     "ss" '(swiper :which-key "Swiper (ivy)")
+     "ss" '(consult-line :which-key "Consult")
 
      ;; Git actions
      "g" '(:ignore t :which-key "Git")
@@ -573,8 +613,8 @@ General.el for easily remapping keybindings
 
      ;; Buffer actions
      "b" '(:ignore t :which-key "Buffers")
-     "bb" '(persp-ivy-switch-buffer :which-key "Buffer list (perspective)")
-     "bB" '(ivy-switch-buffer :which-key "Buffer list (all)")
+     "bb" '(persp-switch-to-buffer* :which-key "Buffer list (perspective)")
+     "bB" '(switch-to-buffer :which-key "Buffer list (all)")
      "bk" '(kill-buffer :which-key "Kill buffer")
      "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
@@ -668,7 +708,7 @@ Language Server Protocol support for various languages.
     (setq lsp-prefer-flymake nil)
     (setq lsp-keep-workspace-alive nil))
 
-  (use-package lsp-ivy)
+  (use-package lsp-ivy :disabled)
 
   (use-package lsp-treemacs
     :after treemacs)
@@ -692,10 +732,18 @@ Language Server Protocol support for various languages.
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
+    :disabled
     :bind ("<backtab>" . company-complete)
     :diminish
     :hook (prog-mode . company-mode)
     )
+
+
+  (use-package corfu
+    :custom
+    (corfu-cycle t)
+    :config
+    (corfu-global-mode))
 #+END_SRC
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
