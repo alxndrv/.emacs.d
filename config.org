@@ -358,9 +358,6 @@ Small package for displaying neat icons in Dired buffers.
   (use-package counsel-projectile
     :config (counsel-projectile-mode +1))
 
-  (use-package wgrep
-    :diminish)
-
   (use-package ivy
     :diminish
     :hook (after-init . ivy-mode)
@@ -809,6 +806,9 @@ Various packages providing modes for specific programming (and markup) languages
     (editorconfig-mode 1))
 
   (use-package rainbow-mode
+    :diminish)
+
+  (use-package wgrep
     :diminish)
  #+END_SRC
 ** Prettier integration
