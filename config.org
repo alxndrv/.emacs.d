@@ -850,6 +850,7 @@ Various packages providing modes for specific programming (and markup) languages
     (add-to-list 'org-modules 'org-tempo))
 
   (use-package org-bullets
+    :after org
     :hook (org-mode . org-bullets-mode))
 #+END_SRC
 *** Other
