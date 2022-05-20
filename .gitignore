@@ -6,11 +6,13 @@ auto-save-list
 network-security.data
 backups
 .cache/
+.extension
 projectile.cache
 projectile-bookmarks.eld
 eclipse.jdt.ls/
 recentf
 transient/
+straight/
 url/
 var/
 workspace/
