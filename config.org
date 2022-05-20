@@ -36,6 +36,8 @@ Settings which are not package-specific
     (setq-default indent-tabs-mode nil
                   tab-width alx/indent-width
                   js-indent-level 2)
+
+    (setq warning-suppress-types '((comp)))
     )
 #+END_SRC
 ** Custom file
