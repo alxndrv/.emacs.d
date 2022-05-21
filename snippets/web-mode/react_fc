@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # key: react_fc
-# name React FC
+# name: React FC
 # expand-env: ((component-name (read-string "Component name: ")))
 # --
 
