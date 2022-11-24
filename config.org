@@ -345,10 +345,7 @@ Small package for displaying neat icons in Dired buffers.
     (setq dashboard-banner-logo-title "Welcome back!")
     (setq dashboard-startup-banner 'logo)
     (setq dashboard-items '((recents  . 5)
-                            (bookmarks . 5)
-                            (projects . 5)
-                            (agenda . 5)
-                            (registers . 5)))
+                            (projects . 5)))
     )
 #+END_SRC
 ** Ivy
@@ -499,18 +496,6 @@ Basically, these are used to change what's on my screen at any given time.
 
   (use-package treemacs)
 
-  (use-package ace-window
-    :config
-    (global-set-key (kbd "M-o") 'ace-window))
-
-  ;; Temporarily disabled while I test out `perspective'
-  (use-package elscreen
-    :disabled
-    :config
-    (setq elscreen-prefix-key "\C-Q")
-    (setq elscreen-display-tab nil)
-    (elscreen-start))
-
   (use-package perspective
     :demand t
     :config
@@ -576,13 +561,6 @@ General.el for easily remapping keybindings
      "bk" '(kill-buffer :which-key "Kill buffer")
      "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
 
-     ;; Android-mode actions
-     "a" '(:ignore t :which-key "Android (gradle)")
-     "ai" '(android-gradle-installDebug :which-key "installDebug")
-     "ac" '(android-gradle-clean :which-key "clean")
-     "ar" '(android-gradle-assembleRelease :which-key "assembleRelease")
-     "ad" '(android-gradle-assembleDebug :which-key "assembleDebug")
-
      ;; Window actions
      "w" '(:ignore t :which-key "Windows")
      "wo" '(ace-window :which-key "Ace window")
@@ -598,13 +576,6 @@ General.el for easily remapping keybindings
      "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
      "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
      "tR" '(rainbow-mode :which-key "Rainbow-mode")
-
-     ;; Elscreen
-     ;;"q" '(:ignore t :which-key "Elscreen")
-     ;;"qn" '(elscreen-next :which-key "Next screen")
-     ;;"qp" '(elscreen-previous :which-key "Prev. screen")
-     ;;"qc" '(elscreen-create :which-key "New screen")
-     ;;"qk" '(elscreen-kill :which-key "Kill screen")
 
      "q" '(:ignore t :which-key "Elscreen")
      "qn" '(persp-next :which-key "Next screen")
@@ -660,9 +631,11 @@ Language Server Protocol support for various languages.
             csharp-mode
             elixir-mode
             haskell-mode
+            terraform-mode
             ) . lsp)
     :commands lsp
     :config
+    (setq lsp-enable-links t)
     (setq lsp-prefer-flymake nil)
     (setq lsp-keep-workspace-alive nil))
 
@@ -705,11 +678,6 @@ Language Server Protocol support for various languages.
     :diminish
     :config
     (add-hook 'flycheck-mode-hook 'flycheck-posframe-mode))
-
-  (use-package flycheck-kotlin
-    :after flycheck
-    :config
-    (flycheck-kotlin-setup))
 #+END_SRC
 ** Programming
 *** Language support
@@ -742,12 +710,6 @@ Various packages providing modes for specific programming (and markup) languages
     )
 
   (use-package csharp-mode)
-
-  (use-package kotlin-mode)
-
-  (use-package android-mode)
-
-  (use-package groovy-mode)
 
   (use-package rust-mode
     :config
@@ -786,14 +748,6 @@ Various packages providing modes for specific programming (and markup) languages
 #+end_src
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
-  (use-package dumb-jump
-    :diminish
-    :custom
-    (dumb-jump-selector 'ivy)
-    (dumb-jump-prefer-searcher 'rg)
-    :config
-    (dumb-jump-mode))
-
   (use-package yasnippet-snippets
     :diminish)
 
@@ -854,22 +808,6 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package org-bullets
     :after org
     :hook (org-mode . org-bullets-mode))
-#+END_SRC
-*** Other
-#+BEGIN_SRC emacs-lisp
-  (use-package htmlize)
-
-  (use-package ox-twbs)
-
-  (use-package latex-preview-pane)
-#+END_SRC
-** Mu4e Alert
-#+BEGIN_SRC emacs-lisp
-  (use-package mu4e-alert
-    :config
-    (when (eq system-type 'darwin)
-      (mu4e-alert-set-default-style 'notifier))
-    (mu4e-alert-enable-notifications))
 #+END_SRC
 ** Keyfreq
 I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
