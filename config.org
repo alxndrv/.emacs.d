@@ -16,6 +16,8 @@ Settings which are not package-specific
           gc-cons-threshold alx/gc-threshold
           gc-cons-percentage 0.1)
 
+    (setq read-process-output-max (* 1024 1024)) ;; 1mb
+
     ;; Disable default toolbar and menubar
     (tool-bar-mode -1)
     (menu-bar-mode -1)
@@ -468,9 +470,6 @@ Small package for displaying neat icons in Dired buffers.
     :config
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
-
-  (use-package undo-tree
-    :diminish)
 #+END_SRC
 ** Git/VC
 #+BEGIN_SRC emacs-lisp
@@ -665,6 +664,9 @@ Language Server Protocol support for various languages.
   (use-package company
     :bind ("<backtab>" . company-complete)
     :diminish
+    :config
+    (setq company-minimum-prefix-length 1
+      company-idle-delay 0.0)
     :hook (prog-mode . company-mode)
     )
 #+END_SRC
@@ -722,6 +724,8 @@ Various packages providing modes for specific programming (and markup) languages
     )
 
   (use-package haskell-mode)
+
+  (use-package powershell)
 
   (use-package yaml-mode
     :config
