@@ -679,6 +679,7 @@ Language Server Protocol support for various languages.
   (use-package flycheck-posframe
     :diminish
     :config
+    (setq flycheck-posframe-position 'point-bottom-left-corner-upward)
     (add-hook 'flycheck-mode-hook 'flycheck-posframe-mode))
 #+END_SRC
 ** Programming
