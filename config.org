@@ -339,6 +339,11 @@ Small package for displaying neat icons in Dired buffers.
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
 #+END_SRC
+*** Zoom-frm
+Utility package for adjusting font size for the entire frame
+#+BEGIN_SRC emacs-lisp
+  (use-package zoom-frm)
+#+END_SRC
 ** Startup dashboard
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
@@ -636,7 +641,8 @@ Language Server Protocol support for various languages.
     :config
     (setq lsp-enable-links t)
     (setq lsp-prefer-flymake nil)
-    (setq lsp-keep-workspace-alive nil))
+    (setq lsp-keep-workspace-alive nil)
+    (setq lsp-terraform-ls-prefill-required-fields t))
 
   (use-package lsp-ivy)
 

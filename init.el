@@ -18,6 +18,7 @@
 (straight-use-package 'use-package)
 
 ;; Load org-mode and tangle the main config file
-(require 'org)
+;;(require 'org)
+(use-package org)
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
