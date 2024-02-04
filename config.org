@@ -122,9 +122,9 @@ Frame settings
     :config
     (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
-    (when (member "DejaVu Sans Mono" (font-family-list))
+    (when (member "MesloLGS Nerd Font" (font-family-list))
       (message "Font exists on system")
-      (set-frame-font "DejaVu Sans Mono-12" t t)
+      (set-frame-font "MesloLGS Nerd Font" t t)
       )
     )
 #+END_SRC
