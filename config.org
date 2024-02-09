@@ -484,6 +484,8 @@ Utility package for adjusting font size for the entire frame
     (transient-append-suffix 'magit-commit "-A"
       '("-N" "Don't sign with GPG" "--no-gpg-sign"))
     )
+
+  (use-package browse-at-remote)
 #+END_SRC
 ** Navigation
 These packages provide various ways to navigate between buffers, windows and frames.
@@ -550,6 +552,7 @@ General.el for easily remapping keybindings
 
      ;; Git actions
      "g" '(:ignore t :which-key "Git")
+     "gl" '(browse-at-remote :which-key "Browse at remote")
      "gs" '(magit-status :which-key "Magit status")
      "gb" '(magit-blame :which-key "Magit blame")
      "gmn" '(smerge-next :which-key "SMerge: Next")
