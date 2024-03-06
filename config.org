@@ -236,7 +236,6 @@ Settings for the custom Mac OS build of Emacs.
   (setq mac-command-modifier 'super)
 #+END_SRC
 
-
 * Packages
 ** Evil-mode
 *** Use evil-mode
@@ -723,13 +722,13 @@ Various packages providing modes for specific programming (and markup) languages
     (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 #+END_SRC
 *** Tree-sitter
+Emacs 29 introduced native treesitter support
 #+begin_src emacs-lisp
-  (use-package tree-sitter)
-
-  (use-package tree-sitter-langs
+  (use-package treesit-auto
+    :custom
+    (treesit-auto-install 'prompt)
     :config
-    (global-tree-sitter-mode)
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+    (global-treesit-auto-mode))
 #+end_src
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
