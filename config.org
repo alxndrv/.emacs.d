@@ -190,10 +190,6 @@ Show matching parentheses, automatically insert closing brackets.
 ** Winner-mode/windmove
 Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 #+BEGIN_SRC emacs-lisp
-  (use-package winner
-    :straight nil
-    :config (winner-mode t))
-
   (use-package windmove
     :straight nil
     :config (windmove-default-keybindings))
@@ -276,17 +272,6 @@ Settings for the custom Mac OS build of Emacs.
     :config
     (global-evil-matchit-mode))
 #+END_SRC
-*** Keychords
-Return to normal mode with "kj" or "jk" instead of Esc
-Imagine having the Escape key on a touch bar...
-#+BEGIN_SRC emacs-lisp
-  (use-package key-chord
-    :config
-    (setq key-chord-two-keys-delay 0.150)
-    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-    (key-chord-mode 1)
-    )
-#+END_SRC
 ** Visual
 Packages and settings providing visual customization to Emacs
 *** Theme
@@ -304,15 +289,8 @@ Using doom-modeline, it's pretty and just works.
     (doom-modeline-mode))
 #+END_SRC
 *** Highlighting
-Various packages used to highlight things.
-Dimmer allows Emacs to "dim" buffers which are not in focus thus "highlighting" the buffer in which is currently focused.
 Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
 #+BEGIN_SRC emacs-lisp
-  (use-package solaire-mode
-    :after spacemacs-theme
-    :config
-    (solaire-global-mode +1))
-
   (use-package beacon
     :diminish
     :config
@@ -338,11 +316,6 @@ Small package for displaying neat icons in Dired buffers.
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
-#+END_SRC
-*** Zoom-frm
-Utility package for adjusting font size for the entire frame
-#+BEGIN_SRC emacs-lisp
-  (use-package zoom-frm)
 #+END_SRC
 ** Startup dashboard
 #+BEGIN_SRC emacs-lisp
@@ -567,10 +540,10 @@ General.el for easily remapping keybindings
      "bB" '(ivy-switch-buffer :which-key "Buffer list (all)")
      "bk" '(kill-buffer :which-key "Kill buffer")
      "bc" '(whitespace-cleanup :which-key "Whitespace cleanup")
+     "bs" '(scratch-buffer :which-key "Open scratch buffer")
 
      ;; Window actions
      "w" '(:ignore t :which-key "Windows")
-     "wo" '(ace-window :which-key "Ace window")
      "wk" '(delete-window :which-key "Close window")
      "wr" '(split-window-right :which-key "Split window right")
      "wd" '(split-window-below :which-key "Split window down")
@@ -579,14 +552,14 @@ General.el for easily remapping keybindings
      ;; Toggles and other adjustments
      "t" '(:ignore t :which-key "Settings")
      "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
-     "tf" '(text-scale-adjust :which-key "Adjust text size")
+     "tf" '(global-text-scale-adjust :which-key "Adjust text size")
      "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
      "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
      "tR" '(rainbow-mode :which-key "Rainbow-mode")
 
-     "q" '(:ignore t :which-key "Elscreen")
-     "qn" '(persp-next :which-key "Next screen")
-     "qp" '(persp-prev :which-key "Prev. screen")
+     "q" '(:ignore t :which-key "Perspective")
+     "qn" '(persp-next :which-key "Next perspective")
+     "qp" '(persp-prev :which-key "Prev. perspective")
      "qs" '(persp-switch :which-key "Switch perspective")
      "qk" '(persp-kill :which-key "Kill perspective")
 
