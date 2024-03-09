@@ -628,6 +628,7 @@ Language Server Protocol support for various languages.
     :after lsp-mode
     :config
     (setq lsp-ui-doc-delay 0.5)
+    (setq lsp-ui-docs-show-with-cursor t)
     (setq lsp-ui-sideline-enable nil)
     )
 
