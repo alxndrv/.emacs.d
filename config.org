@@ -575,6 +575,7 @@ General.el for easily remapping keybindings
      "ls" '(lsp-ivy-workspace-symbol :which-key "Find symbol")
      "lS" '(lsp-ivy-global-workspace-symbol :which-key "Find symbol (global)")
      "lc" '(lsp-execute-code-action :which-key "Code action")
+     "li" '(lsp-ui-imenu :which-key "Open imenu side window")
 
      ;; Org
      "o" '(:ignore t :which-key "Org")
