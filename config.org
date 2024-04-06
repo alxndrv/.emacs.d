@@ -294,6 +294,10 @@ Beacon provides visual feedback highlighting the point after the user performs a
     :diminish
     :config
     (beacon-mode 1))
+
+  (use-package solaire-mode
+    :config
+    (solaire-global-mode))
 #+END_SRC
 *** Indent guides
 Minor mode for highlighting indentation levels.
