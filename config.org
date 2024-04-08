@@ -96,7 +96,7 @@ Auto-reverting files edited outside of Emacs
     :config
     (setq display-time-24hr-format t
           display-time-day-and-date t
-          display-time-format "%H:%M %d.%m.%Y"
+          display-time-format "%H:%M"
           display-time-load-average-threshold 100) ;; This makes the load always hidden
 
     (display-time)
@@ -278,7 +278,7 @@ Use "doom-dracula" theme from doom-themes package
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
    :config
-   (load-theme 'doom-solarized-light t))
+   (load-theme 'doom-shades-of-purple t))
 #+END_SRC
 *** Modeline
 Using doom-modeline, it's pretty and just works.
@@ -319,6 +319,16 @@ Small package for displaying neat icons in Dired buffers.
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
+#+END_SRC
+*** Window sizing
+#+BEGIN_SRC emacs-lisp
+  (use-package golden-ratio
+    :config
+    (golden-ratio-mode))
+
+  (use-package spacious-padding
+    :config
+    (spacious-padding-mode))
 #+END_SRC
 ** Startup dashboard
 #+BEGIN_SRC emacs-lisp
@@ -481,6 +491,7 @@ Basically, these are used to change what's on my screen at any given time.
   (use-package perspective
     :demand t
     :config
+    (setq persp-modestring-short t)
     (unless (equal persp-mode t)
       (persp-mode)))
 
