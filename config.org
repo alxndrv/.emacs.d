@@ -83,8 +83,8 @@ Auto-reverting files edited outside of Emacs
     :straight nil
     :config
     (global-auto-revert-mode +1)
-    (setq auto-revert-interval 2
-          auto-revert-check-vc-info t
+    (setq auto-revert-interval 3
+          auto-revert-check-vc-info nil
           global-auto-revert-non-file-buffers t
           auto-revert-verbose nil)
     )
