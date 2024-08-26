@@ -303,6 +303,14 @@ Beacon provides visual feedback highlighting the point after the user performs a
     :config
     (beacon-mode 1))
 
+  (use-package dimmer
+    :config
+    (setq dimmer-fraction 0.4)
+    (dimmer-configure-posframe)
+    (dimmer-configure-magit)
+    (dimmer-configure-which-key)
+    (dimmer-mode))
+
   (use-package solaire-mode
     :config
     (solaire-global-mode))
@@ -577,6 +585,7 @@ General.el for easily remapping keybindings
      "tf" '(global-text-scale-adjust :which-key "Adjust text size")
      "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
      "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
+     "td" '(dimmer-mode :which-key "Dimmer-mode")
      "tR" '(rainbow-mode :which-key "Rainbow-mode")
 
      "q" '(:ignore t :which-key "Perspective")
