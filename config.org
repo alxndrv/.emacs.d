@@ -733,6 +733,10 @@ Various packages providing modes for specific programming (and markup) languages
                                              (lsp-format-buffer))))
     )
 
+  (use-package go-mode
+    :hook (go-mode . lsp)
+    )
+
   (use-package elixir-mode
     :config
     (add-hook 'before-save-hook (lambda () (when (eq 'elixir-mode major-mode)
