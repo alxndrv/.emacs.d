@@ -285,7 +285,15 @@ Using doom-modeline, it's pretty and just works.
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
     :config
-    (doom-modeline-mode))
+    (doom-modeline-def-modeline 'alx-custom
+      '(eldoc bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+      '(compilation objed-state misc-info persp-name battery grip irc mu4e gnus github debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process check time))
+
+    (add-hook 'doom-modeline-mode-hook
+              (lambda ()
+                (doom-modeline-set-modeline 'alx-custom 'default)))
+    (doom-modeline-mode)
+    )
 #+END_SRC
 *** Highlighting
 Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
