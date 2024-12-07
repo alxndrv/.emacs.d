@@ -766,6 +766,7 @@ Emacs 29 introduced native treesitter support
     :custom
     (treesit-auto-install 'prompt)
     :config
+    (delete 'yaml treesit-auto-langs) ;; Yaml-ts-mode is bad.
     (global-treesit-auto-mode))
 #+end_src
 *** Development utilities
