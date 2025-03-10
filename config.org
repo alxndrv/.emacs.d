@@ -252,6 +252,7 @@ Settings for the custom Mac OS build of Emacs.
     (add-to-list 'evil-emacs-state-modes 'magit-mode)
     (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
     (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
+    (add-to-list 'evil-emacs-state-modes 'lsp-ui-imenu-mode)
     (evil-mode)
     )
 
@@ -608,6 +609,7 @@ General.el for easily remapping keybindings
      "lS" '(lsp-ivy-global-workspace-symbol :which-key "Find symbol (global)")
      "lc" '(lsp-execute-code-action :which-key "Code action")
      "li" '(lsp-ui-imenu :which-key "Open imenu side window")
+     "ld" '(lsp-ui-doc-glance :which-key "Glance at docs")
 
      ;; Org
      "o" '(:ignore t :which-key "Org")
@@ -633,16 +635,16 @@ Language Server Protocol support for various languages.
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     :hook ((java-mode
-            kotlin-mode
             python-mode
             js-mode
             typescript-mode
+            typescript-ts-mode
             rjsx-mode
             web-mode
             rust-mode
+            rust-ts-mode
             csharp-mode
-            elixir-mode
-            haskell-mode
+            csharp-ts-mode
             terraform-mode
             ) . lsp)
     :commands lsp
@@ -664,15 +666,6 @@ Language Server Protocol support for various languages.
     (setq lsp-ui-docs-show-with-cursor t)
     (setq lsp-ui-sideline-enable nil)
     )
-
-  (use-package lsp-java
-    :after lsp
-    :config
-    (setq lsp-java-save-action-organize-imports nil)
-    )
-
-  (use-package lsp-haskell
-    :after lsp)
 #+END_SRC
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
@@ -737,12 +730,6 @@ Various packages providing modes for specific programming (and markup) languages
     :hook (go-mode . lsp)
     )
 
-  (use-package elixir-mode
-    :config
-    (add-hook 'before-save-hook (lambda () (when (eq 'elixir-mode major-mode)
-                                             (lsp-format-buffer))))
-    )
-
   (use-package haskell-mode)
 
   (use-package powershell)
@@ -771,15 +758,6 @@ Emacs 29 introduced native treesitter support
 #+end_src
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet-snippets
-    :diminish)
-
-  (use-package yasnippet
-    :diminish yas-minor-mode
-    :after yasnippet-snippets
-    :config
-    (yas-global-mode 1))
-
   (use-package editorconfig
     :diminish
     :config
