@@ -1,7 +1,7 @@
 .DS_Store
 elpa/
 eln-cache/
-eshell/history
+eshell/
 auto-save-list
 network-security.data
 backups
@@ -12,8 +12,13 @@ projectile-bookmarks.eld
 eclipse.jdt.ls/
 recentf
 transient/
+tree-sitter/
 straight/
 url/
 var/
 workspace/
 config.el
+.emacs.desktop
+.lsp-session-v1
+.dap-breakpoints
+org-persist/
