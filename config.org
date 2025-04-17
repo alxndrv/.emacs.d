@@ -54,7 +54,7 @@ Store all Custom settings in a separate file so it doesn't write into init.el
 ** Startup
 Don't show default startup screen
 #+BEGIN_SRC emacs-lisp
-  (use-package "startup"
+  (use-package startup
     :straight nil
     :config (setq inhibit-startup-screen t))
 #+END_SRC
@@ -469,6 +469,7 @@ Small package for displaying neat icons in Dired buffers.
 ** Utilities
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
+    :straight nil
     :diminish
     :config
     (setq which-key-idle-delay 0.5)
@@ -527,6 +528,7 @@ General.el for easily remapping keybindings
      :keymaps 'override
      "SPC" '(counsel-M-x :which-key "Extended command")
      "R" '(ivy-resume :which-key "Resume ivy session")
+     "e" '(ellama :which-key "Ellama")
 
      ;; File actions
      "f" '(:ignore t :which-key "Files")
@@ -823,7 +825,18 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
   (use-package diminish
     :demand t)
 #+END_SRC
-
+** AI
+#+BEGIN_SRC emacs-lisp
+  (use-package ellama
+    ;; send last message in chat buffer with C-c C-c
+    :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
+    :init (setopt ellama-auto-scroll t)
+    :config
+    ;; Dont show ellama context in header line in all buffers
+    (ellama-context-header-line-global-mode nil)
+    ;; Dont show ellama session id in header line in all buffers
+    (ellama-session-header-line-global-mode nil))
+#+END_SRC
 
 * Custom functions
 #+BEGIN_SRC emacs-lisp

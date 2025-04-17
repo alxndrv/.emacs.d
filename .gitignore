@@ -22,3 +22,4 @@ config.el
 .lsp-session-v1
 .dap-breakpoints
 org-persist/
+ellama-sessions/
