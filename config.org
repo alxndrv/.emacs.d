@@ -639,13 +639,10 @@ Language Server Protocol support for various languages.
     :hook ((java-mode
             python-mode
             js-mode
-            typescript-mode
             typescript-ts-mode
-            rjsx-mode
             web-mode
-            rust-mode
             rust-ts-mode
-            csharp-mode
+            go-ts-mode
             csharp-ts-mode
             terraform-mode
             ) . lsp)
@@ -696,17 +693,6 @@ Language Server Protocol support for various languages.
 *** Language support
 Various packages providing modes for specific programming (and markup) languages
 #+BEGIN_SRC emacs-lisp
-  (use-package rjsx-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.jsx?$" . rjsx-mode)))
-
-  (use-package typescript-mode
-    :after (typescript-mode company flycheck add-node-modules-path)
-    :config
-    (add-hook 'typescript-mode-hook #'add-node-modules-path)
-    (add-to-list 'auto-mode-alist '("\\.tsx?$" . typescript-mode))
-    )
-
   (use-package web-mode
     :after flycheck
     :config
@@ -714,35 +700,26 @@ Various packages providing modes for specific programming (and markup) languages
     ;;(add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
     )
 
-  (use-package json-mode
+  (use-package json-ts-mode
+    :straight nil
     :config
     (defun my-json-indent ()
-      "Set tab width to 2 when entering json-mode"
+      "Set tab width to 2 when entering json-ts-mode"
       (setq js-indent-level 2))
-    (add-hook 'json-mode-hook 'my-json-indent)
+    (add-hook 'json-ts-mode-hook 'my-json-indent)
     )
 
-  (use-package rust-mode
-    :config
-    (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
-                                             (lsp-format-buffer))))
-    )
-
-  (use-package go-mode
-    :hook (go-mode . lsp)
-    )
-
-  (use-package haskell-mode)
-
-  (use-package powershell)
+  (use-package go-ts-mode
+    :straight nil)
 
   (use-package yaml-mode
     :config
     (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
 
-  (use-package dockerfile-mode
+  (use-package dockerfile-ts-mode
+    :straight nil
     :config
-    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
+    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode)))
 
   (use-package terraform-mode
     :config
@@ -761,12 +738,10 @@ Emacs 29 introduced native treesitter support
 *** Development utilities
 #+BEGIN_SRC emacs-lisp
   (use-package editorconfig
+    :straight nil
     :diminish
     :config
     (editorconfig-mode 1))
-
-  (use-package rainbow-mode
-    :diminish)
 
   (use-package wgrep
     :diminish)
@@ -780,16 +755,16 @@ Emacs 29 introduced native treesitter support
     :diminish
     :hook ((web-mode . prettier-js-mode)
            (js2-mode . prettier-js-mode)
-           (typescript-mode . prettier-js-mode))
+           (typescript-ts-mode . prettier-js-mode))
     :config
     (eval-after-load 'web-mode
       '(progn
          (add-hook 'web-mode-hook #'add-node-modules-path)
          (add-hook 'web-mode-hook #'prettier-js-mode)))
-    (eval-after-load 'typescript-mode
+    (eval-after-load 'typescript-ts-mode
       '(progn
-         (add-hook 'typescript-mode-hook #'add-node-modules-path)
-         (add-hook 'typescript-mode-hook #'prettier-js-mode)))
+         (add-hook 'typescript-ts-mode-hook #'add-node-modules-path)
+         (add-hook 'typescript-ts-mode-hook #'prettier-js-mode)))
     )
 
 #+END_SRC
