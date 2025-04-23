@@ -473,6 +473,7 @@ Small package for displaying neat icons in Dired buffers.
     :diminish
     :config
     (setq which-key-idle-delay 0.5)
+    (which-key-setup-minibuffer)
     (which-key-mode))
 
   (use-package exec-path-from-shell
@@ -509,6 +510,7 @@ Basically, these are used to change what's on my screen at any given time.
   (use-package perspective
     :demand t
     :config
+    (setq persp-suppress-no-prefix-key-warning t)
     (setq persp-modestring-short t)
     (unless (equal persp-mode t)
       (persp-mode)))
@@ -587,9 +589,9 @@ General.el for easily remapping keybindings
      "tw" '(global-whitespace-mode :which-key "Toggle whitespace-mode")
      "tf" '(global-text-scale-adjust :which-key "Adjust text size")
      "tg" '(highlight-indent-guides-mode :which-key "Indent guides")
-     "tl" '(global-display-line-numbers-mode :which-key "Line numbers")
+     "tl" '(global-display-line-numbers-mode :which-key "Toggle line numbers")
+     "tL" '(alx/toggle-line-number-type :which-key "Toggle line numbering style")
      "td" '(dimmer-mode :which-key "Dimmer-mode")
-     "tR" '(rainbow-mode :which-key "Rainbow-mode")
 
      "q" '(:ignore t :which-key "Perspective")
      "qn" '(persp-next :which-key "Next perspective")
@@ -612,13 +614,6 @@ General.el for easily remapping keybindings
      "lc" '(lsp-execute-code-action :which-key "Code action")
      "li" '(lsp-ui-imenu :which-key "Open imenu side window")
      "ld" '(lsp-ui-doc-glance :which-key "Glance at docs")
-
-     ;; Org
-     "o" '(:ignore t :which-key "Org")
-     "oc" '(org-capture :which-key "Org Capture")
-     "oa" '(org-agenda :which-key "Org Agenda")
-     "ol" '(org-store-link :which-key "Store link")
-     "oL" '(org-insert-link :which-key "Insert link")
      ))
 #+END_SRC
 ** Editing
@@ -819,5 +814,17 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
     "Evaluate init.el file."
     (interactive)
     (load (expand-file-name (concat user-emacs-directory "init.el")))
+    )
+
+  (defun alx/toggle-line-number-type ()
+    (interactive)
+    (if (eq display-line-numbers-type 'relative)
+        (setq display-line-numbers-type 't)
+      (setq display-line-numbers-type 'relative)
+      )
+    (message (format "Line number type is now: %s" display-line-numbers-type))
+    ;; "Reload" global line number mode if its already enabled when the setting is changed
+    (if global-display-line-numbers-mode
+        (global-display-line-numbers-mode +1))
     )
 #+END_SRC
