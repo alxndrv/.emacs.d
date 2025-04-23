@@ -15,6 +15,6 @@
   (load bootstrap-file nil 'nomessage))
 
 ;; Load org-mode and tangle the main config file
-(use-package org)
+(use-package org :straight (:type built-in))
 (org-babel-load-file (concat user-emacs-directory "config.org"))
 
