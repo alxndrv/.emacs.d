@@ -2,7 +2,7 @@
 #+AUTHOR: Andrey Aleksandrov
 #+OPTIONS: num:nil toc:nil html-postamble:nil
 
-* Basic settings
+* Basic settings and built-in packages
 Settings which are not package-specific
 ** Emacs
 #+BEGIN_SRC emacs-lisp
@@ -42,6 +42,16 @@ Settings which are not package-specific
     (setq warning-suppress-types '((comp)))
     )
 #+END_SRC
+** Which-key
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :straight nil
+    :diminish
+    :config
+    (setq which-key-idle-delay 0.5)
+    (which-key-setup-minibuffer)
+    (which-key-mode))
+#+END_SRC
 ** Custom file
 Store all Custom settings in a separate file so it doesn't write into init.el
 #+BEGIN_SRC emacs-lisp
@@ -72,8 +82,7 @@ Enable column/line numbers in modeline
     :diminish visual-line-mode
     :config
     (line-number-mode +1)
-    (column-number-mode +1)
-    )
+    (column-number-mode +1))
 #+END_SRC
 ** Auto-revert
 Auto-reverting files edited outside of Emacs
@@ -85,8 +94,7 @@ Auto-reverting files edited outside of Emacs
     (setq auto-revert-interval 3
           auto-revert-check-vc-info nil
           global-auto-revert-non-file-buffers t
-          auto-revert-verbose nil)
-    )
+          auto-revert-verbose nil))
 #+END_SRC
 ** Display time in modeline
 #+BEGIN_SRC emacs-lisp
@@ -176,6 +184,14 @@ Show matching parentheses, automatically insert closing brackets.
     :config
     (add-hook 'python-mode-hook 'python-black-on-save-mode))
 #+END_SRC
+** EditorConfig support
+#+BEGIN_SRC emacs-lisp
+  (use-package editorconfig
+    :straight nil
+    :diminish
+    :config
+    (editorconfig-mode 1))
+ #+END_SRC
 ** Delsel-mode
 #+BEGIN_SRC emacs-lisp
   (use-package delsel
@@ -197,14 +213,6 @@ Tell ediff to split windows horizontally.
     :straight nil
     :config
     (setq ediff-split-window-function 'split-window-horizontally))
-#+END_SRC
-** Eldoc
-#+BEGIN_SRC emacs-lisp
-  (use-package eldoc
-    :straight nil
-    :diminish
-    :hook (prog-mode . eldoc-mode)
-    :config (setq eldoc-idle-delay 0.4))
 #+END_SRC
 ** EPG
 Epa-file doesn't seem to work on Mac without this option
@@ -229,7 +237,6 @@ Settings for the custom Mac OS build of Emacs.
   (setq mac-option-modifier 'meta)
   (setq mac-command-modifier 'super)
 #+END_SRC
-
 * Packages
 ** Evil-mode
 *** Use evil-mode
@@ -316,9 +323,7 @@ Minor mode for highlighting indentation levels.
 #+END_SRC
 *** Icons
 #+BEGIN_SRC emacs-lisp
-  (use-package all-the-icons
-    :config (setq all-the-icons-scale-factor 1.0))
-
+  (use-package all-the-icons)
   (use-package all-the-icons-ivy
     :hook (after-init . all-the-icons-ivy-setup))
 #+END_SRC
@@ -458,18 +463,13 @@ Small package for displaying neat icons in Dired buffers.
 #+END_SRC
 ** Utilities
 #+BEGIN_SRC emacs-lisp
-  (use-package which-key
-    :straight nil
-    :diminish
-    :config
-    (setq which-key-idle-delay 0.5)
-    (which-key-setup-minibuffer)
-    (which-key-mode))
-
   (use-package exec-path-from-shell
     :config
     (when (memq window-system '(mac ns x))
       (exec-path-from-shell-initialize)))
+
+  (use-package wgrep
+    :diminish)
 #+END_SRC
 ** Git/VC
 #+BEGIN_SRC emacs-lisp
@@ -680,18 +680,13 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package web-mode
     :after flycheck
     :config
-    (flycheck-add-mode 'javascript-eslint 'web-mode)
-    ;;(add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
-    )
+    (flycheck-add-mode 'javascript-eslint 'web-mode))
+
+  (use-package typescript-ts-mode
+    :straight nil)
 
   (use-package json-ts-mode
-    :straight nil
-    :config
-    (defun my-json-indent ()
-      "Set tab width to 2 when entering json-ts-mode"
-      (setq js-indent-level 2))
-    (add-hook 'json-ts-mode-hook 'my-json-indent)
-    )
+    :straight nil)
 
   (use-package go-ts-mode
     :straight nil)
@@ -719,38 +714,16 @@ Emacs 29 introduced native treesitter support
     (delete 'yaml treesit-auto-langs) ;; Yaml-ts-mode is bad.
     (global-treesit-auto-mode))
 #+end_src
-*** Development utilities
-#+BEGIN_SRC emacs-lisp
-  (use-package editorconfig
-    :straight nil
-    :diminish
-    :config
-    (editorconfig-mode 1))
-
-  (use-package wgrep
-    :diminish)
- #+END_SRC
 ** Prettier integration
 #+BEGIN_SRC emacs-lisp
-  (use-package add-node-modules-path)
+  (use-package add-node-modules-path
+    :hook ((web-mode typescript-ts-mode js-ts-mode) . add-node-modules-path))
 
   (use-package prettier-js
-    :after add-node-modules-path
     :diminish
     :hook ((web-mode . prettier-js-mode)
-           (js2-mode . prettier-js-mode)
-           (typescript-ts-mode . prettier-js-mode))
-    :config
-    (eval-after-load 'web-mode
-      '(progn
-         (add-hook 'web-mode-hook #'add-node-modules-path)
-         (add-hook 'web-mode-hook #'prettier-js-mode)))
-    (eval-after-load 'typescript-ts-mode
-      '(progn
-         (add-hook 'typescript-ts-mode-hook #'add-node-modules-path)
-         (add-hook 'typescript-ts-mode-hook #'prettier-js-mode)))
-    )
-
+           (js-ts-mode . prettier-js-mode)
+           (typescript-ts-mode . prettier-js-mode)))
 #+END_SRC
 ** Org-mode and other stuff
 *** Org-mode
