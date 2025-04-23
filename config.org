@@ -48,8 +48,7 @@ Store all Custom settings in a separate file so it doesn't write into init.el
   (use-package cus-edit
     :straight nil
     :config
-    (setq custom-file "~/.emacs.d/custom.el")
-    )
+    (setq custom-file "~/.emacs.d/custom.el"))
 #+END_SRC
 ** Startup
 Don't show default startup screen
@@ -98,9 +97,7 @@ Auto-reverting files edited outside of Emacs
           display-time-day-and-date t
           display-time-format "%H:%M"
           display-time-load-average-threshold 100) ;; This makes the load always hidden
-
-    (display-time)
-    )
+    (display-time))
 #+END_SRC
 ** Backup directory and settings
 Save backups in one directory, also dont create lockfiles since they're annoying
@@ -125,8 +122,7 @@ Frame settings
     (when (member "MesloLGS Nerd Font" (font-family-list))
       (message "Font exists on system")
       (set-frame-font "MesloLGS Nerd Font" t t)
-      )
-    )
+      ))
 #+END_SRC
 ** Dired
 #+BEGIN_SRC emacs-lisp
@@ -200,8 +196,7 @@ Tell ediff to split windows horizontally.
   (use-package ediff
     :straight nil
     :config
-    (setq ediff-split-window-function (quote split-window-horizontally))
-    )
+    (setq ediff-split-window-function 'split-window-horizontally))
 #+END_SRC
 ** Eldoc
 #+BEGIN_SRC emacs-lisp
@@ -216,8 +211,7 @@ Epa-file doesn't seem to work on Mac without this option
 #+BEGIN_SRC emacs-lisp
    (use-package epa
      :config
-     (setq epa-pinentry-mode 'loopback)
-     )
+     (setq epa-pinentry-mode 'loopback))
 #+END_SRC
 ** Mouse wheel settings
 #+BEGIN_SRC emacs-lisp
@@ -253,8 +247,7 @@ Settings for the custom Mac OS build of Emacs.
     (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
     (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
     (add-to-list 'evil-emacs-state-modes 'lsp-ui-imenu-mode)
-    (evil-mode)
-    )
+    (evil-mode))
 
   (use-package evil-surround
     :after evil
@@ -275,7 +268,6 @@ Settings for the custom Mac OS build of Emacs.
 ** Visual
 Packages and settings providing visual customization to Emacs
 *** Theme
-Use "doom-dracula" theme from doom-themes package
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
    :config
@@ -293,8 +285,7 @@ Using doom-modeline, it's pretty and just works.
     (add-hook 'doom-modeline-mode-hook
               (lambda ()
                 (doom-modeline-set-modeline 'alx-custom 'default)))
-    (doom-modeline-mode)
-    )
+    (doom-modeline-mode))
 #+END_SRC
 *** Highlighting
 Beacon provides visual feedback highlighting the point after the user performs any kind of jump (switching buffers, jumping pages in a file etc.)
@@ -383,8 +374,7 @@ Small package for displaying neat icons in Dired buffers.
 
     (setq ivy-use-virtual-buffers t
           ivy-count-format "(%d/%d) "
-          ivy-initial-inputs-alist nil)
-    )
+          ivy-initial-inputs-alist nil))
 
   (use-package ivy-rich
     :preface
