@@ -477,8 +477,7 @@ Small package for displaying neat icons in Dired buffers.
     :config
     (add-hook 'with-editor-mode-hook #'evil-insert-state)
     (transient-append-suffix 'magit-commit "-A"
-      '("-N" "Don't sign with GPG" "--no-gpg-sign"))
-    )
+      '("-N" "Don't sign with GPG" "--no-gpg-sign")))
 
   (use-package browse-at-remote)
 #+END_SRC

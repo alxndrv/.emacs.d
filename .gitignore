@@ -18,6 +18,7 @@ url/
 var/
 workspace/
 config.el
+custom.el
 .emacs.desktop
 .lsp-session-v1
 .dap-breakpoints
