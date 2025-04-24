@@ -125,7 +125,7 @@ Frame settings
   (use-package frame
     :straight nil
     :config
-    (setq initial-frame-alist (quote ((fullscreen . maximized))))
+    (setq initial-frame-alist '((fullscreen . maximized)))
 
     (when (member "MesloLGS Nerd Font" (font-family-list))
       (message "Font exists on system")
@@ -166,23 +166,6 @@ Show matching parentheses, automatically insert closing brackets.
                             (awk-mode . "awk")
                             (other . "k&r")))
     )
-
-  (use-package js
-    :straight nil
-    :config (setq js-indent-level alx/indent-width))
-
-  (use-package css-mode
-    :straight nil
-    :config (setq css-indent-offset alx/indent-width))
-
-  (use-package python
-    :straight nil
-    :config (setq python-indent-offset alx/indent-width))
-
-  (use-package python-black
-    :after python
-    :config
-    (add-hook 'python-mode-hook 'python-black-on-save-mode))
 #+END_SRC
 ** EditorConfig support
 #+BEGIN_SRC emacs-lisp
@@ -326,10 +309,6 @@ Minor mode for highlighting indentation levels.
   (use-package all-the-icons)
   (use-package all-the-icons-ivy
     :hook (after-init . all-the-icons-ivy-setup))
-#+END_SRC
-*** Dired icons
-Small package for displaying neat icons in Dired buffers.
-#+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
 #+END_SRC
@@ -407,14 +386,7 @@ Small package for displaying neat icons in Dired buffers.
 
   (use-package ivy-xref
     :init
-    ;; xref initialization is different in Emacs 27 - there are two different
-    ;; variables which can be set rather than just one
-    (when (>= emacs-major-version 27)
-      (setq xref-show-definitions-function #'ivy-xref-show-defs))
-    ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
-    ;; commands other than xref-find-definitions (e.g. project-find-regexp)
-    ;; as well
-    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+    (setq xref-show-definitions-function #'ivy-xref-show-defs))
 
   (use-package swiper
     :after ivy
@@ -446,14 +418,8 @@ Small package for displaying neat icons in Dired buffers.
 
   (use-package ivy-prescient
     :after (prescient ivy)
-    :custom
-    (ivy-prescient-sort-commands
-     '(:not swiper
-            counsel-projectile-rg
-            ivy-switch-buffer
-            counsel-switch-buffer))
-    (ivy-prescient-retain-classic-highlighting t)
     :config
+    (setq ivy-prescient-retain-classic-highlighting t)
     (ivy-prescient-mode +1))
 
   (use-package company-prescient
@@ -621,7 +587,7 @@ Language Server Protocol support for various languages.
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     :hook ((java-mode
-            python-mode
+            python-ts-mode
             js-mode
             typescript-ts-mode
             web-mode
@@ -677,10 +643,27 @@ Language Server Protocol support for various languages.
 *** Language support
 Various packages providing modes for specific programming (and markup) languages
 #+BEGIN_SRC emacs-lisp
+  (use-package python
+    :straight nil
+    :config (setq python-indent-offset alx/indent-width))
+
+  (use-package python-black
+    :after python
+    :config
+    (add-hook 'python-ts-mode-hook 'python-black-on-save-mode))
+
   (use-package web-mode
     :after flycheck
     :config
     (flycheck-add-mode 'javascript-eslint 'web-mode))
+
+  (use-package js
+    :straight nil
+    :config (setq js-indent-level alx/indent-width))
+
+  (use-package css-mode
+    :straight nil
+    :config (setq css-indent-offset alx/indent-width))
 
   (use-package typescript-ts-mode
     :straight nil)
