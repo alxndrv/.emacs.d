@@ -11,11 +11,17 @@ Settings which are not package-specific
     (defvar alx/indent-width 2)
     (defvar alx/gc-threshold 100000000) ; 100mb
 
-    :config
-    (setq ring-bell-function 'ignore
-          gc-cons-threshold alx/gc-threshold
-          gc-cons-percentage 0.1)
+    :custom
+    (ring-bell-function 'ignore)
+    (gc-cons-threshold alx/gc-threshold)
+    (gc-cons-percentage 0.1)
+    ;; Comment style
+    (comment-style 'extra-line)
+    ;; Make complation buffers follow output
+    (compilation-scroll-output t)
+    (warning-suppress-types '((comp)))
 
+    :config
     (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
     ;; Disable default toolbar and menubar
@@ -28,18 +34,10 @@ Settings which are not package-specific
     ;; Use Y/N instead of yes/no
     (fset 'yes-or-no-p 'y-or-n-p)
 
-    ;; Comment style
-    (setq comment-style 'extra-line)
-
-    ;; Make complation buffers follow output
-    (setq compilation-scroll-output t)
-
     ;; Always use spaces
     (setq-default indent-tabs-mode nil
                   tab-width alx/indent-width
                   js-indent-level 2)
-
-    (setq warning-suppress-types '((comp)))
     )
 #+END_SRC
 ** Which-key
@@ -47,8 +45,9 @@ Settings which are not package-specific
   (use-package which-key
     :straight nil
     :diminish
+    :custom
+    (which-key-idle-delay 0.5)
     :config
-    (setq which-key-idle-delay 0.5)
     (which-key-setup-minibuffer)
     (which-key-mode))
 #+END_SRC
@@ -57,15 +56,14 @@ Store all Custom settings in a separate file so it doesn't write into init.el
 #+BEGIN_SRC emacs-lisp
   (use-package cus-edit
     :straight nil
-    :config
-    (setq custom-file "~/.emacs.d/custom.el"))
+    :custom (custom-file "~/.emacs.d/custom.el"))
 #+END_SRC
 ** Startup
 Don't show default startup screen
 #+BEGIN_SRC emacs-lisp
   (use-package startup
     :straight nil
-    :config (setq inhibit-startup-screen t))
+    :custom (inhibit-startup-screen t))
 #+END_SRC
 ** Scrollbar
 Disable scrollbar
@@ -89,35 +87,37 @@ Auto-reverting files edited outside of Emacs
 #+BEGIN_SRC emacs-lisp
   (use-package autorevert
     :straight nil
+    :custom
+    (auto-revert-interval 3)
+    (auto-revert-check-vc-info nil)
+    (global-auto-revert-non-file-buffers t)
+    (auto-revert-verbose nil)
     :config
-    (global-auto-revert-mode +1)
-    (setq auto-revert-interval 3
-          auto-revert-check-vc-info nil
-          global-auto-revert-non-file-buffers t
-          auto-revert-verbose nil))
+    (global-auto-revert-mode +1))
 #+END_SRC
 ** Display time in modeline
 #+BEGIN_SRC emacs-lisp
   (use-package time
     :straight nil
+    :custom
+    (display-time-24hr-format t)
+    (display-time-day-and-date t)
+    (display-time-format "%H:%M")
+    (display-time-load-average-threshold 100) ;; This makes the load always hidden
     :config
-    (setq display-time-24hr-format t
-          display-time-day-and-date t
-          display-time-format "%H:%M"
-          display-time-load-average-threshold 100) ;; This makes the load always hidden
     (display-time))
 #+END_SRC
 ** Backup directory and settings
 Save backups in one directory, also dont create lockfiles since they're annoying
 #+BEGIN_SRC emacs-lisp
-  (setq delete-by-moving-to-trash 't)
-  (setq backup-directory-alist
+  (setopt delete-by-moving-to-trash 't)
+  (setopt backup-directory-alist
   `(("." . ,(concat user-emacs-directory "backups"))))
 
-  (setq auto-save-file-name-transforms
+  (setopt auto-save-file-name-transforms
   `((".*" ,temporary-file-directory t)))
 
-  (setq create-lockfiles nil)
+  (setopt create-lockfiles nil)
 #+END_SRC
 ** Frame
 Frame settings
@@ -138,18 +138,18 @@ Frame settings
     :straight nil
     :custom
     (delete-by-moving-to-trash t)
+    (dired-listing-switches "-alh")
     :config
-    (put 'dired-find-alternate-file 'disabled nil)
-    (setq dired-listing-switches "-alh"))
+    (put 'dired-find-alternate-file 'disabled nil))
 #+END_SRC
 ** Parentheses
 Show matching parentheses, automatically insert closing brackets.
 #+BEGIN_SRC emacs-lisp
   (use-package paren
     :straight nil
-    :init
-    (setq show-paren-delay 0
-          show-paren-when-point-inside-paren t)
+    :custom
+    (show-paren-delay 0)
+    (show-paren-when-point-inside-paren t)
     :config (show-paren-mode))
 
   (use-package elec-pair
@@ -194,43 +194,42 @@ Tell ediff to split windows horizontally.
 #+BEGIN_SRC emacs-lisp
   (use-package ediff
     :straight nil
-    :config
-    (setq ediff-split-window-function 'split-window-horizontally))
+    :custom (ediff-split-window-function 'split-window-horizontally))
 #+END_SRC
 ** EPG
 Epa-file doesn't seem to work on Mac without this option
 #+BEGIN_SRC emacs-lisp
-   (use-package epa
-     :config
-     (setq epa-pinentry-mode 'loopback))
+  (use-package epa
+    :custom (epa-pinentry-mode 'loopback))
 #+END_SRC
 ** Mouse wheel settings
 #+BEGIN_SRC emacs-lisp
   (use-package mwheel
     :straight nil
-    :config
-    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
-          mouse-wheel-progressive-speed nil))
+    :custom
+    (mouse-wheel-progressive-speed nil)
+    (mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+    )
 #+END_SRC
 ** Mac OS settings
 Settings for the custom Mac OS build of Emacs.
 #+BEGIN_SRC emacs-lisp
-  (setq ns-use-srgb-colorspace nil)
+  (setopt ns-use-srgb-colorspace nil)
 
-  (setq mac-option-modifier 'meta)
-  (setq mac-command-modifier 'super)
+  (setopt mac-option-modifier 'meta)
+  (setopt mac-command-modifier 'super)
 #+END_SRC
 * Packages
 ** Evil-mode
 *** Use evil-mode
 #+BEGIN_SRC emacs-lisp
   (use-package evil
-    :init
-    (setq evil-want-abbrev-expand-on-insert-exit nil
-          evil-want-C-i-jump nil
-          evil-want-keybinding nil
-          evil-search-module 'isearch
-          evil-ex-search-vim-style-regexp t)
+    :custom
+    (evil-want-abbrev-expand-on-insert-exit nil)
+    (evil-want-C-i-jump nil)
+    (evil-want-keybinding nil)
+    (evil-search-module 'isearch)
+    (evil-ex-search-vim-style-regexp t)
     :config
     (define-key evil-motion-state-map (kbd "TAB") nil)
     (add-to-list 'evil-emacs-state-modes 'magit-mode)
@@ -247,7 +246,6 @@ Settings for the custom Mac OS build of Emacs.
     :after evil
     :diminish evil-collection-unimpaired-mode
     :config
-    (setq evil-collection-company-use-tng nil)
     (evil-collection-init '(dired)))
 
   (use-package evil-matchit
@@ -261,7 +259,7 @@ Packages and settings providing visual customization to Emacs
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
    :config
-   (load-theme 'doom-shades-of-purple t))
+   (load-theme 'doom-nord-light t))
 #+END_SRC
 *** Modeline
 Using doom-modeline, it's pretty and just works.
@@ -286,8 +284,9 @@ Beacon provides visual feedback highlighting the point after the user performs a
     (beacon-mode 1))
 
   (use-package dimmer
+    :custom
+    (dimmer-fraction 0.4)
     :config
-    (setq dimmer-fraction 0.4)
     (dimmer-configure-posframe)
     (dimmer-configure-magit)
     (dimmer-configure-which-key)
@@ -301,8 +300,7 @@ Beacon provides visual feedback highlighting the point after the user performs a
 Minor mode for highlighting indentation levels.
 #+BEGIN_SRC emacs-lisp
   (use-package highlight-indent-guides
-    :config
-    (setq highlight-indent-guides-method 'character))
+    :custom (highlight-indent-guides-method 'character))
 #+END_SRC
 *** Icons
 #+BEGIN_SRC emacs-lisp
@@ -325,13 +323,13 @@ Minor mode for highlighting indentation levels.
 ** Startup dashboard
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
+    :custom
+    (dashboard-banner-logo-title "Welcome back!")
+    (dashboard-startup-banner 'logo)
+    (dashboard-items '((recents  . 5)
+                       (projects . 5)))
     :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-banner-logo-title "Welcome back!")
-    (setq dashboard-startup-banner 'logo)
-    (setq dashboard-items '((recents  . 5)
-                            (projects . 5)))
-    )
+    (dashboard-setup-startup-hook))
 #+END_SRC
 ** Ivy
 #+BEGIN_SRC emacs-lisp
@@ -345,6 +343,10 @@ Minor mode for highlighting indentation levels.
   (use-package ivy
     :diminish
     :hook (after-init . ivy-mode)
+    :custom
+    (ivy-use-virtual-buffers t)
+    (ivy-count-format "(%d/%d) ")
+    (ivy-initial-inputs-alist nil)
     :config
     (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
     (define-key ivy-minibuffer-map (kbd "<escape>") #'minibuffer-keyboard-quit)
@@ -355,10 +357,7 @@ Minor mode for highlighting indentation levels.
             (counsel-projectile-ag . ivy--regex-plus)
             (swiper . ivy--regex-plus)
             (t . ivy--regex-plus)))
-
-    (setq ivy-use-virtual-buffers t
-          ivy-count-format "(%d/%d) "
-          ivy-initial-inputs-alist nil))
+    )
 
   (use-package ivy-rich
     :preface
@@ -385,27 +384,27 @@ Minor mode for highlighting indentation levels.
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
 
   (use-package ivy-xref
-    :init
-    (setq xref-show-definitions-function #'ivy-xref-show-defs))
+    :custom (xref-show-definitions-function #'ivy-xref-show-defs))
 
   (use-package swiper
     :after ivy
-    :config
-    (setq swiper-action-recenter t
-          swiper-goto-start-of-match t))
+    :custom
+    (swiper-action-recenter t)
+    (swiper-goto-start-of-match t))
 
   (use-package ivy-posframe
     :after ivy
     :diminish
+    :custom
+    (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+    (ivy-posframe-parameters '((internal-border-width . 10)
+                               (left-fringe . 8)
+                               (right-fringe . 8)))
+    (ivy-posframe-height-alist '((t . 40)))
+    (ivy-posframe-width 200)
+    (ivy-posframe-min-height 40)
+    (ivy-posframe-height 40)
     :config
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-    (setq ivy-posframe-parameters '((internal-border-width . 10)
-                                    (left-fringe . 8)
-                                    (right-fringe . 8)))
-    (setq ivy-posframe-height-alist '((t . 40)))
-    (setq ivy-posframe-width 200)
-    (setq ivy-posframe-min-height 40)
-    (setq ivy-posframe-height 40)
     (ivy-posframe-mode +1))
 #+END_SRC
 ** Prescient
@@ -418,8 +417,9 @@ Minor mode for highlighting indentation levels.
 
   (use-package ivy-prescient
     :after (prescient ivy)
+    :custom
+    (ivy-prescient-retain-classic-highlighting t)
     :config
-    (setq ivy-prescient-retain-classic-highlighting t)
     (ivy-prescient-mode +1))
 
   (use-package company-prescient
@@ -453,10 +453,11 @@ Basically, these are used to change what's on my screen at any given time.
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :diminish
+    :custom
+    (projectile-sort-order 'recentf)
+    (projectile-indexing-method 'hybrid)
+    (projectile-completion-system 'ivy)
     :config
-    (setq projectile-sort-order 'recentf
-          projectile-indexing-method 'hybrid
-          projectile-completion-system 'ivy)
     (projectile-mode)
     (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
@@ -464,9 +465,10 @@ Basically, these are used to change what's on my screen at any given time.
 
   (use-package perspective
     :demand t
+    :custom
+    (persp-suppress-no-prefix-key-warning t)
+    (persp-modestring-short t)
     :config
-    (setq persp-suppress-no-prefix-key-warning t)
-    (setq persp-modestring-short t)
     (unless (equal persp-mode t)
       (persp-mode)))
 
@@ -597,11 +599,11 @@ Language Server Protocol support for various languages.
             terraform-mode
             ) . lsp)
     :commands lsp
-    :config
-    (setq lsp-enable-links t)
-    (setq lsp-prefer-flymake nil)
-    (setq lsp-keep-workspace-alive nil)
-    (setq lsp-terraform-ls-prefill-required-fields t))
+    :custom
+    (lsp-enable-links t)
+    (lsp-prefer-flymake nil)
+    (lsp-keep-workspace-alive nil)
+    (lsp-terraform-ls-prefill-required-fields t))
 
   (use-package lsp-ivy)
 
@@ -610,20 +612,18 @@ Language Server Protocol support for various languages.
 
   (use-package lsp-ui
     :after lsp-mode
-    :config
-    (setq lsp-ui-doc-delay 0.5)
-    (setq lsp-ui-docs-show-with-cursor t)
-    (setq lsp-ui-sideline-enable nil)
-    )
+    :custom
+    (lsp-ui-doc-delay 0.5)
+    (lsp-ui-sideline-enable nil))
 #+END_SRC
 ** Autocomplete
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :bind ("<backtab>" . company-complete)
     :diminish
-    :config
-    (setq company-minimum-prefix-length 1
-      company-idle-delay 0.0)
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0)
     :hook (prog-mode . company-mode))
 #+END_SRC
 ** Flycheck
@@ -635,8 +635,8 @@ Language Server Protocol support for various languages.
   (use-package flycheck-posframe
     :diminish
     :hook (flycheck-mode . flycheck-posframe-mode)
-    :config
-    (setq flycheck-posframe-position 'point-bottom-left-corner-upward))
+    :custom
+    (flycheck-posframe-position 'point-bottom-left-corner-upward))
 #+END_SRC
 ** Programming
 *** Language support
@@ -644,7 +644,7 @@ Various packages providing modes for specific programming (and markup) languages
 #+BEGIN_SRC emacs-lisp
   (use-package python
     :straight nil
-    :config (setq python-indent-offset alx/indent-width))
+    :custom (python-indent-offset alx/indent-width))
 
   (use-package python-black
     :after python
@@ -657,11 +657,11 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package js
     :straight nil
-    :config (setq js-indent-level alx/indent-width))
+    :custom (js-indent-level alx/indent-width))
 
   (use-package css-mode
     :straight nil
-    :config (setq css-indent-offset alx/indent-width))
+    :custom (css-indent-offset alx/indent-width))
 
   (use-package typescript-ts-mode
     :straight nil)
@@ -683,7 +683,6 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package terraform-mode
     :hook (terraform-mode . terraform-format-on-save-mode))
-    :config
 #+END_SRC
 *** Tree-sitter
 Emacs 29 introduced native treesitter support
@@ -713,12 +712,11 @@ Emacs 29 introduced native treesitter support
     :diminish org-indent-mode
     :hook ((org-mode . visual-line-mode)
            (org-mode . org-indent-mode))
+    :custom
+    (org-log-done 'time)
+    (org-ellipsis "⤵")
+    (org-src-window-setup 'current-window)
     :config
-    (setq org-export-html-postamble nil
-          org-log-done 'time
-          org-ellipsis "⤵"
-          org-src-window-setup 'current-window)
-
     (add-to-list 'org-modules 'org-tempo))
 
   (use-package org-bullets
@@ -743,8 +741,8 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
   (use-package ellama
     ;; send last message in chat buffer with C-c C-c
     :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
-    :init (setopt ellama-auto-scroll t)
-    :config
+    :custom
+    (ellama-auto-scroll t)
     ;; Dont show ellama context in header line in all buffers
     (ellama-context-header-line-global-mode nil)
     ;; Dont show ellama session id in header line in all buffers
@@ -756,14 +754,14 @@ I want to use `keyfreq` to identify which commands I use the most, so I can assi
   (defun alx/reload-config ()
     "Evaluate init.el file."
     (interactive)
-    (load (expand-file-name (concat user-emacs-directory "init.el")))
+    (load user-init-file)
     )
 
   (defun alx/toggle-line-number-type ()
     (interactive)
     (if (eq display-line-numbers-type 'relative)
-        (setq display-line-numbers-type 't)
-      (setq display-line-numbers-type 'relative)
+        (setopt display-line-numbers-type 't)
+      (setopt display-line-numbers-type 'relative)
       )
     (message (format "Line number type is now: %s" display-line-numbers-type))
     ;; "Reload" global line number mode if its already enabled when the setting is changed
