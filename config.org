@@ -624,8 +624,7 @@ Language Server Protocol support for various languages.
     :config
     (setq company-minimum-prefix-length 1
       company-idle-delay 0.0)
-    :hook (prog-mode . company-mode)
-    )
+    :hook (prog-mode . company-mode))
 #+END_SRC
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
@@ -635,9 +634,9 @@ Language Server Protocol support for various languages.
 
   (use-package flycheck-posframe
     :diminish
+    :hook (flycheck-mode . flycheck-posframe-mode)
     :config
-    (setq flycheck-posframe-position 'point-bottom-left-corner-upward)
-    (add-hook 'flycheck-mode-hook 'flycheck-posframe-mode))
+    (setq flycheck-posframe-position 'point-bottom-left-corner-upward))
 #+END_SRC
 ** Programming
 *** Language support
@@ -649,8 +648,7 @@ Various packages providing modes for specific programming (and markup) languages
 
   (use-package python-black
     :after python
-    :config
-    (add-hook 'python-ts-mode-hook 'python-black-on-save-mode))
+    :hook (python-ts-mode . python-black-on-save-mode))
 
   (use-package web-mode
     :after flycheck
@@ -684,8 +682,8 @@ Various packages providing modes for specific programming (and markup) languages
     (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode)))
 
   (use-package terraform-mode
+    :hook (terraform-mode . terraform-format-on-save-mode))
     :config
-    (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 #+END_SRC
 *** Tree-sitter
 Emacs 29 introduced native treesitter support
