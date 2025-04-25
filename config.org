@@ -12,6 +12,7 @@ Settings which are not package-specific
     (defvar alx/gc-threshold 100000000) ; 100mb
 
     :custom
+    (inhibit-startup-screen t)
     (ring-bell-function 'ignore)
     (gc-cons-threshold alx/gc-threshold)
     (gc-cons-percentage 0.1)
@@ -57,13 +58,6 @@ Store all Custom settings in a separate file so it doesn't write into init.el
   (use-package cus-edit
     :straight nil
     :custom (custom-file "~/.emacs.d/custom.el"))
-#+END_SRC
-** Startup
-Don't show default startup screen
-#+BEGIN_SRC emacs-lisp
-  (use-package startup
-    :straight nil
-    :custom (inhibit-startup-screen t))
 #+END_SRC
 ** Scrollbar
 Disable scrollbar
@@ -230,17 +224,17 @@ Settings for the custom Mac OS build of Emacs.
     (evil-want-keybinding nil)
     (evil-search-module 'isearch)
     (evil-ex-search-vim-style-regexp t)
+    :hook (after-init . evil-mode)
     :config
     (define-key evil-motion-state-map (kbd "TAB") nil)
     (add-to-list 'evil-emacs-state-modes 'magit-mode)
     (add-to-list 'evil-emacs-state-modes 'magit-blame-mode)
     (add-to-list 'evil-emacs-state-modes 'xref--xref-buffer-mode)
-    (add-to-list 'evil-emacs-state-modes 'lsp-ui-imenu-mode)
-    (evil-mode))
+    (add-to-list 'evil-emacs-state-modes 'lsp-ui-imenu-mode))
 
   (use-package evil-surround
     :after evil
-    :config (global-evil-surround-mode 1))
+    :hook (evil-mode . global-evil-surround-mode))
 
   (use-package evil-collection
     :after evil
@@ -250,8 +244,7 @@ Settings for the custom Mac OS build of Emacs.
 
   (use-package evil-matchit
     :after evil
-    :config
-    (global-evil-matchit-mode))
+    :hook (evil-mode . global-evil-matchit-mode))
 #+END_SRC
 ** Visual
 Packages and settings providing visual customization to Emacs
@@ -280,8 +273,7 @@ Beacon provides visual feedback highlighting the point after the user performs a
 #+BEGIN_SRC emacs-lisp
   (use-package beacon
     :diminish
-    :config
-    (beacon-mode 1))
+    :hook (after-init . beacon-mode))
 
   (use-package dimmer
     :custom
@@ -293,8 +285,7 @@ Beacon provides visual feedback highlighting the point after the user performs a
     (dimmer-mode))
 
   (use-package solaire-mode
-    :config
-    (solaire-global-mode))
+    :hook (after-init . solaire-global-mode))
 #+END_SRC
 *** Indent guides
 Minor mode for highlighting indentation levels.
@@ -313,12 +304,10 @@ Minor mode for highlighting indentation levels.
 *** Window sizing
 #+BEGIN_SRC emacs-lisp
   (use-package golden-ratio
-    :config
-    (golden-ratio-mode))
+    :hook (after-init . golden-ratio-mode))
 
   (use-package spacious-padding
-    :config
-    (spacious-padding-mode))
+    :hook (after-init . spacious-padding-mode))
 #+END_SRC
 ** Startup dashboard
 #+BEGIN_SRC emacs-lisp
@@ -338,7 +327,8 @@ Minor mode for highlighting indentation levels.
     :hook (ivy-mode . counsel-mode))
 
   (use-package counsel-projectile
-    :config (counsel-projectile-mode +1))
+    :demand ;; load this right away, it needs to be loaded BEFORE `persp-projectile`
+    :config (counsel-projectile-mode))
 
   (use-package ivy
     :diminish
@@ -404,28 +394,24 @@ Minor mode for highlighting indentation levels.
     (ivy-posframe-width 200)
     (ivy-posframe-min-height 40)
     (ivy-posframe-height 40)
-    :config
-    (ivy-posframe-mode +1))
+    :hook (ivy-mode . ivy-posframe-mode))
 #+END_SRC
 ** Prescient
 #+BEGIN_SRC emacs-lisp
   (use-package prescient
     :custom
     (prescient-filter-method '(literal regexp initialism fuzzy))
-    :config
-    (prescient-persist-mode +1))
+    :hook (after-init . prescient-persist-mode))
 
   (use-package ivy-prescient
     :after (prescient ivy)
+    :hook (ivy-mode . ivy-prescient-mode)
     :custom
-    (ivy-prescient-retain-classic-highlighting t)
-    :config
-    (ivy-prescient-mode +1))
+    (ivy-prescient-retain-classic-highlighting t))
 
   (use-package company-prescient
     :after (prescient company)
-    :config
-    (company-prescient-mode +1))
+    :hook (company-mode . company-prescient-mode))
 #+END_SRC
 ** Utilities
 #+BEGIN_SRC emacs-lisp
@@ -453,13 +439,12 @@ Basically, these are used to change what's on my screen at any given time.
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :diminish
+    :bind-keymap ("C-c p" . projectile-command-map)
     :custom
     (projectile-sort-order 'recentf)
     (projectile-indexing-method 'hybrid)
     (projectile-completion-system 'ivy)
-    :config
-    (projectile-mode)
-    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+    :hook (after-init . projectile-mode))
 
   (use-package treemacs)
 
@@ -472,7 +457,7 @@ Basically, these are used to change what's on my screen at any given time.
     (unless (equal persp-mode t)
       (persp-mode)))
 
-  (use-package persp-projectile)
+  (use-package persp-projectile :after (counsel-projectile))
 #+END_SRC
 ** Key bindings (general.el)
 General.el for easily remapping keybindings
@@ -576,13 +561,11 @@ General.el for easily remapping keybindings
 ** Editing
 #+BEGIN_SRC emacs-lisp
   (use-package evil-nerd-commenter
-    :config
-    (evilnc-default-hotkeys))
+    :hook (after-init . evilnc-default-hotkeys))
 
   (use-package anzu
     :diminish
-    :config
-    (global-anzu-mode +1))
+    :hook (after-init . global-anzu-mode))
 #+END_SRC
 ** LSP
 Language Server Protocol support for various languages.
@@ -673,13 +656,11 @@ Various packages providing modes for specific programming (and markup) languages
     :straight nil)
 
   (use-package yaml-mode
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" .  yaml-mode)))
+    :mode ("\\.yml\\'" .  yaml-mode))
 
   (use-package dockerfile-ts-mode
     :straight nil
-    :config
-    (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode)))
+    :mode ("Dockerfile\\'" . dockerfile-ts-mode))
 
   (use-package terraform-mode
     :hook (terraform-mode . terraform-format-on-save-mode))
@@ -701,9 +682,7 @@ Emacs 29 introduced native treesitter support
 
   (use-package prettier-js
     :diminish
-    :hook ((web-mode . prettier-js-mode)
-           (js-ts-mode . prettier-js-mode)
-           (typescript-ts-mode . prettier-js-mode)))
+    :hook ((web-mode typescript-ts-mode js-ts-mode) . prettier-js-mode))
 #+END_SRC
 ** Org-mode and other stuff
 *** Org-mode
@@ -727,7 +706,7 @@ Emacs 29 introduced native treesitter support
 I want to use `keyfreq` to identify which commands I use the most, so I can assign keybinds to common commands.
 #+BEGIN_SRC emacs-lisp
   (use-package keyfreq
-    :init
+    :config
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
 #+END_SRC
