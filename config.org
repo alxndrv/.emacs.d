@@ -181,7 +181,7 @@ Windmove-keybinding for switching windows using <shift>+[up|down|right|left].
 #+BEGIN_SRC emacs-lisp
   (use-package windmove
     :straight nil
-    :config (windmove-default-keybindings))
+    :hook (after-init . windmove-default-keybindings))
 #+END_SRC
 ** Ediff
 Tell ediff to split windows horizontally.
@@ -278,11 +278,11 @@ Beacon provides visual feedback highlighting the point after the user performs a
   (use-package dimmer
     :custom
     (dimmer-fraction 0.4)
+    :hook (after-init . dimmer-mode)
     :config
     (dimmer-configure-posframe)
     (dimmer-configure-magit)
-    (dimmer-configure-which-key)
-    (dimmer-mode))
+    (dimmer-configure-which-key))
 
   (use-package solaire-mode
     :hook (after-init . solaire-global-mode))
@@ -333,21 +333,13 @@ Minor mode for highlighting indentation levels.
   (use-package ivy
     :diminish
     :hook (after-init . ivy-mode)
+    :bind (:map ivy-minibuffer-map
+                ("RET" . ivy-alt-done)
+                ("<escape>" . minibuffer-keyboard-quit))
     :custom
     (ivy-use-virtual-buffers t)
     (ivy-count-format "(%d/%d) ")
-    (ivy-initial-inputs-alist nil)
-    :config
-    (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-    (define-key ivy-minibuffer-map (kbd "<escape>") #'minibuffer-keyboard-quit)
-    (setq ivy-re-builders-alist
-          '((counsel-rg . ivy--regex-plus)
-            (counsel-projectile-rg . ivy--regex-plus)
-            (counsel-ag . ivy--regex-plus)
-            (counsel-projectile-ag . ivy--regex-plus)
-            (swiper . ivy--regex-plus)
-            (t . ivy--regex-plus)))
-    )
+    (ivy-initial-inputs-alist nil))
 
   (use-package ivy-rich
     :preface
