@@ -46,11 +46,9 @@ Settings which are not package-specific
   (use-package which-key
     :straight nil
     :diminish
-    :custom
-    (which-key-idle-delay 0.5)
-    :config
-    (which-key-setup-minibuffer)
-    (which-key-mode))
+    :custom (which-key-idle-delay 0.5)
+    :hook (after-init . which-key-mode)
+    :config (which-key-setup-minibuffer))
 #+END_SRC
 ** Custom file
 Store all Custom settings in a separate file so it doesn't write into init.el
@@ -339,7 +337,9 @@ Minor mode for highlighting indentation levels.
     :custom
     (ivy-use-virtual-buffers t)
     (ivy-count-format "(%d/%d) ")
-    (ivy-initial-inputs-alist nil))
+    (ivy-initial-inputs-alist nil)
+    :config
+    (setq ivy-re-builders-alist '((t . ivy--regex-plus))))
 
   (use-package ivy-rich
     :preface
@@ -377,10 +377,11 @@ Minor mode for highlighting indentation levels.
   (use-package ivy-posframe
     :after ivy
     :diminish
+    :custom-face
+    (ivy-posframe-border ((t (:background "#000000"))))
     :custom
     (ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-    (ivy-posframe-parameters '((internal-border-width . 10)
-                               (left-fringe . 8)
+    (ivy-posframe-parameters '((left-fringe . 8)
                                (right-fringe . 8)))
     (ivy-posframe-height-alist '((t . 40)))
     (ivy-posframe-width 200)
@@ -569,7 +570,7 @@ Language Server Protocol support for various languages.
             typescript-ts-mode
             web-mode
             rust-ts-mode
-            go-ts-mode
+            go-mode
             csharp-ts-mode
             terraform-mode
             ) . lsp)
@@ -605,13 +606,18 @@ Language Server Protocol support for various languages.
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :diminish
+    :custom (flycheck-auto-display-errors-after-checking nil)
     :hook (prog-mode . flycheck-mode))
 
   (use-package flycheck-posframe
     :diminish
     :hook (flycheck-mode . flycheck-posframe-mode)
+    :config
+    (flycheck-posframe-configure-pretty-defaults)
     :custom
-    (flycheck-posframe-position 'point-bottom-left-corner-upward))
+    (flycheck-posframe-border-use-error-face 't)
+    (flycheck-posframe-border-width 1)
+    (flycheck-posframe-position 'window-top-right-corner))
 #+END_SRC
 ** Programming
 *** Language support
@@ -644,8 +650,7 @@ Various packages providing modes for specific programming (and markup) languages
   (use-package json-ts-mode
     :straight nil)
 
-  (use-package go-ts-mode
-    :straight nil)
+  (use-package go-mode)
 
   (use-package yaml-mode
     :mode ("\\.yml\\'" .  yaml-mode))
@@ -663,9 +668,9 @@ Emacs 29 introduced native treesitter support
   (use-package treesit-auto
     :custom
     (treesit-auto-install 'prompt)
+    :hook (after-init . global-treesit-auto-mode)
     :config
-    (delete 'yaml treesit-auto-langs) ;; Yaml-ts-mode is bad.
-    (global-treesit-auto-mode))
+    (delete 'yaml treesit-auto-langs)) ;; Yaml-ts-mode is bad.
 #+end_src
 ** Prettier integration
 #+BEGIN_SRC emacs-lisp
@@ -691,7 +696,6 @@ Emacs 29 introduced native treesitter support
     (add-to-list 'org-modules 'org-tempo))
 
   (use-package org-bullets
-    :after org
     :hook (org-mode . org-bullets-mode))
 #+END_SRC
 ** Keyfreq
