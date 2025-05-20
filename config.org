@@ -416,13 +416,16 @@ Minor mode for highlighting indentation levels.
   (use-package wgrep
     :diminish)
 #+END_SRC
-** Git/VC
+** Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :config
     (add-hook 'with-editor-mode-hook #'evil-insert-state)
     (transient-append-suffix 'magit-commit "-A"
       '("-N" "Don't sign with GPG" "--no-gpg-sign")))
+
+  (use-package transient-posframe
+    :hook (after-init . transient-posframe-mode))
 
   (use-package browse-at-remote)
 #+END_SRC
