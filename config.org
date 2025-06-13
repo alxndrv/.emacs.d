@@ -604,6 +604,10 @@ Language Server Protocol support for various languages.
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.0)
     :hook (prog-mode . company-mode))
+
+  (use-package company-box
+    :diminish
+    :hook (company-mode . company-box-mode))
 #+END_SRC
 ** Flycheck
 #+BEGIN_SRC emacs-lisp
